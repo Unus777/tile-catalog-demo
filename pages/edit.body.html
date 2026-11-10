@@ -1,0 +1,46 @@
+<main class="ed"><div class="wrap">
+  <div class="ed-hd">
+    <p class="eyebrow">Только в этом браузере</p>
+    <h2>Редактор <em>фото</em></h2>
+    <p>Кисть размытия, заливка и пипетка. Сохранение не меняет исходные файлы: правка пишется в память браузера (IndexedDB) и скачивается отдельно. Чтобы поставить фото на хостинг, скачайте файл и замените оригинал вручную.</p>
+  </div>
+  <div class="ed-layout">
+    <aside class="ed-side">
+      <input type="search" id="edQ" placeholder="Поиск модели" aria-label="Поиск модели">
+      <div class="ed-list" id="edList" role="listbox" aria-label="Модели"></div>
+    </aside>
+    <section class="ed-main">
+      <div class="ed-thumbs" id="edThumbs" aria-label="Фото модели"></div>
+      <div class="ed-stage-wrap">
+        <div class="ed-stage" id="edStage">
+          <canvas id="edCv" width="800" height="600" aria-label="Холст редактора"></canvas>
+          <div class="ed-empty" id="edEmpty">Выберите модель и фото или откройте файл с компьютера.</div>
+        </div>
+        <div class="ed-tools" id="edTools">
+          <div class="ed-tools-row">
+            <div class="seg" id="edTool" role="radiogroup" aria-label="Инструмент">
+              <button type="button" data-tool="blur" class="on">Размытие</button>
+              <button type="button" data-tool="fill">Заливка</button>
+              <button type="button" data-tool="drop">Пипетка</button>
+            </div>
+            <button type="button" class="btn sm" id="edUndo" disabled>Отменить</button>
+            <button type="button" class="btn sm" id="edRedo" disabled>Повторить</button>
+          </div>
+          <div class="ed-tools-row">
+            <label class="ed-rng">Диаметр <input type="range" id="edDiam" min="8" max="160" value="48"><b id="edDiamV">48</b></label>
+            <label class="ed-rng" id="edStrWrap">Сила <input type="range" id="edStr" min="10" max="100" value="60"><b id="edStrV">60%</b></label>
+            <label class="ed-color" id="edColorWrap" hidden>Цвет <input type="color" id="edColor" value="#c9b79c"><span id="edColorHex">#c9b79c</span></label>
+          </div>
+          <div class="ed-tools-row">
+            <button type="button" class="btn gold sm" id="edSave" disabled>Сохранить в браузере</button>
+            <button type="button" class="btn sm" id="edJpg" disabled>Скачать JPEG</button>
+            <button type="button" class="btn sm" id="edPng" disabled>Скачать PNG</button>
+            <button type="button" class="btn sm" id="edReset" disabled>Вернуть оригинал</button>
+            <label class="btn sm" style="cursor:pointer">Открыть файл<input type="file" id="edFile" accept="image/jpeg,image/png,image/webp" hidden></label>
+          </div>
+          <p class="ed-note" id="edNote"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div></main>

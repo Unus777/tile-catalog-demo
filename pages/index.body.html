@@ -1,0 +1,75 @@
+<main>
+<section class="hero" id="top">
+  <div class="hero-slides" id="heroSlides"></div>
+  <div class="hero-inner">
+    <p class="eyebrow" data-cfg="hero-eyebrow">Каталог керамогранита</p>
+    <h1 id="heroTitle" data-text="Керамогранит, который видно в интерьере">Керамогранит, который видно в&nbsp;интерьере</h1>
+    <p class="lead" data-cfg="hero-lead">Форматы 60×60 и 60×120 под мрамор, бетон и камень. Каждую модель можно увидеть в интерьере и проверить остаток на складах.</p>
+    <div class="ctas"><a class="btn gold" href="#catalog">Смотреть каталог <i aria-hidden="true">→</i></a><a class="btn" href="#showroom">Приехать в шоу-рум</a></div>
+    <div class="stats">
+      <div><b class="num" id="s-models">90</b><span>моделей в каталоге</span></div>
+      <div><b class="num">2</b><span>склада: Москва и Тверь</span></div>
+      <div><b class="num">1 день</b><span>довоз из Твери</span></div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+  <a class="hero-chip" id="heroChip" href="#"><img id="chipImg" alt="" width="52" height="52"><div><small id="chipArt"></small><b id="chipName"></b><span id="chipPrice"></span></div></a>
+</section>
+
+<section class="cat" id="catalog" aria-labelledby="cat-h">
+  <div class="wrap">
+    <div class="cat-hd reveal"><div><p class="eyebrow">Каталог</p><h2 id="cat-h">Выберите <em>фактуру</em></h2></div><span class="count" id="count" role="status">90 моделей</span></div>
+    <div class="tools" id="tools">
+      <div class="tools-row">
+        <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="vh">Поиск модели</span><input type="search" id="q" placeholder="Название или артикул" autocomplete="off" enterkeyhint="search"></label>
+        <button type="button" class="fbtn" id="fbtn" aria-haspopup="dialog">Фильтры <b id="fcount">0</b></button>
+      </div>
+      <div class="filters" id="filters">
+        <div id="fmt" class="filters-g" role="group" aria-label="Формат" style="display:contents"></div>
+        <span class="fsep" aria-hidden="true"></span>
+        <div id="srf" role="group" aria-label="Поверхность" style="display:contents"></div>
+        <span class="fsep" aria-hidden="true"></span>
+        <div id="ton" role="group" aria-label="Цвет" style="display:contents"></div>
+        <span class="fsep" aria-hidden="true"></span>
+        <button type="button" class="chip" id="fStock" aria-pressed="false">В наличии</button>
+        <button type="button" class="chip" id="fNew" aria-pressed="false">Новинки</button>
+        <select class="sort" id="sort" aria-label="Сортировка"><option value="">По умолчанию</option><option value="price-asc">Сначала дешевле</option><option value="price-desc">Сначала дороже</option><option value="stock">Больше в наличии</option><option value="name">По названию</option></select>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="room" id="room" aria-labelledby="room-h">
+  <div class="wrap">
+    <div class="room-hd reveal"><p class="eyebrow">Примерочная</p><h2 id="room-h">Плитка в <em>комнате</em> до покупки</h2><p>Реальный размер 60×60 и 60×120, шов, раскладка и блик глянца. Выберите модель внизу — пол или стены перекладываются сразу.</p></div>
+    {{room}}
+    <div class="swatches-wrap"><div class="swatches" id="swatches" aria-label="Модели для примерки"></div></div>
+  </div>
+</section>
+
+<section class="showroom" id="showroom" aria-labelledby="sr-h">
+  <div class="wrap">
+    <div class="sr reveal">
+      <div class="img"><picture><source type="image/webp" srcset="assets/showroom-skyli.webp"><img src="assets/showroom-skyli.jpg" alt="Керамогранит Скайли в спальне" loading="lazy" width="1086" height="1448"></picture></div>
+      <div class="txt">
+        <p class="eyebrow">Шоу-рум и офис продаж</p>
+        <h2 id="sr-h">Посмотрите плитку <em>вживую</em>, при дневном свете</h2>
+        <p data-cfg="showroom-text">Подберём модель под ваш интерьер и посчитаем упаковки. Контакты и адрес можно указать в config.js.</p>
+        <div class="lines"><a data-cfg="phone" hidden></a><a data-cfg="phone2" hidden></a><a data-cfg="email" hidden></a><span data-cfg="hours" hidden></span></div>
+        <div class="ctas" data-cfg="showroom-ctas" hidden><a class="btn gold" data-cfg="phone">Позвонить</a><a class="btn" data-cfg="whatsapp" target="_blank" rel="noopener">Написать в WhatsApp</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Фильтры" aria-hidden="true"><div class="in">
+  <div class="grab"></div>
+  <h4>Формат</h4><div class="opts" id="sFmt"></div>
+  <h4>Поверхность</h4><div class="opts" id="sSrf"></div>
+  <h4>Цвет</h4><div class="opts" id="sTon"></div>
+  <h4>Ещё</h4><div class="opts" id="sMore"></div>
+  <h4>Сортировка</h4><div class="opts" id="sSort"></div>
+  <div class="foot-btns"><button type="button" class="btn" id="sReset">Сбросить</button><button type="button" class="btn gold wide" id="sDone">Показать</button></div>
+</div></div>
