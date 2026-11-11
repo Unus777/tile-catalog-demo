@@ -1,0 +1,3276 @@
+{
+  "ok": [
+    {
+      "art": "VHP612038",
+      "name": "Айссноу",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-i/12880982070.jpg",
+      "ozon_size": [
+        1800,
+        2400
+      ],
+      "hits": [
+        {
+          "name": "logo-diamond",
+          "score": 0.94,
+          "box": [
+            733,
+            2077,
+            1069,
+            2291
+          ]
+        },
+        {
+          "name": "VHP612038-bottom-ru",
+          "score": 0.884,
+          "box": [
+            439,
+            2057,
+            1363,
+            2400
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.744,
+          "box": [
+            1586,
+            2142,
+            1710,
+            2194
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.661,
+          "box": [
+            1598,
+            2134,
+            1800,
+            2222
+          ]
+        },
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.614,
+          "box": [
+            0,
+            2048,
+            170,
+            2106
+          ]
+        },
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.613,
+          "box": [
+            539,
+            2119,
+            729,
+            2181
+          ]
+        }
+      ],
+      "local": {
+        "dist": 13,
+        "file": "img2/VHP612038/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHF612802",
+      "name": "Асфальт Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-m/21058375990.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.813,
+          "box": [
+            7,
+            0,
+            820,
+            133
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.654,
+          "box": [
+            765,
+            1242,
+            889,
+            1294
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.598,
+          "box": [
+            468,
+            1236,
+            652,
+            1314
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.588,
+          "box": [
+            723,
+            1231,
+            938,
+            1321
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612802/09.ccc5f327.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612803",
+      "name": "Асфальт Грей Дарк",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-p/14488137457.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF612803-bottom-flower",
+          "score": 0.774,
+          "box": [
+            226,
+            1201,
+            859,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.658,
+          "box": [
+            569,
+            1222,
+            693,
+            1274
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612803/01.b2b4099e.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612801",
+      "name": "Асфальт Грей Лайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-3/14600671779.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.676,
+          "box": [
+            505,
+            166,
+            688,
+            200
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.664,
+          "box": [
+            946,
+            1256,
+            1070,
+            1308
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.6,
+          "box": [
+            128,
+            1277,
+            1021,
+            1448
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612801/01.8e007922.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612503",
+      "name": "Бетон Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-3/14748528207.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.648,
+          "box": [
+            917,
+            1152,
+            1041,
+            1204
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHF612503/poster-1200.jpg",
+        "size": [
+          1200,
+          1600
+        ]
+      }
+    },
+    {
+      "art": "VHFZ612810",
+      "name": "Бетон Крем",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-l/14722632993.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.661,
+          "box": [
+            969,
+            1211,
+            1086,
+            1263
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHFZ612810/01.12247809.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612501",
+      "name": "Бетон Лайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-8/20885924672.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.613,
+          "box": [
+            96,
+            1392,
+            220,
+            1444
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612501/01.67d97378.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612441",
+      "name": "Дженнифер Скай",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-b/21082759535.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.675,
+          "box": [
+            683,
+            1401,
+            807,
+            1448
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612441/01.923ca62e.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612816",
+      "name": "Каро Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-y/14751768238.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.599,
+          "box": [
+            0,
+            1187,
+            116,
+            1239
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.594,
+          "box": [
+            340,
+            1244,
+            538,
+            1289
+          ]
+        }
+      ],
+      "local": {
+        "dist": 1,
+        "file": "img2/VHF612816/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHP612390",
+      "name": "Лейла",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-n/12822289151.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.911,
+          "box": [
+            288,
+            1250,
+            797,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.65,
+          "box": [
+            312,
+            1304,
+            436,
+            1356
+          ]
+        },
+        {
+          "name": "logo-diamond",
+          "score": 0.629,
+          "box": [
+            457,
+            1285,
+            639,
+            1400
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.604,
+          "box": [
+            305,
+            1284,
+            520,
+            1374
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.595,
+          "box": [
+            571,
+            1282,
+            796,
+            1377
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612390/01.d3d6f123.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612392",
+      "name": "Лемур Бианко",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-m/13006515514.jpg",
+      "ozon_size": [
+        1800,
+        2400
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.763,
+          "box": [
+            780,
+            2290,
+            904,
+            2342
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.751,
+          "box": [
+            82,
+            2280,
+            236,
+            2344
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.682,
+          "box": [
+            1589,
+            2109,
+            1783,
+            2191
+          ]
+        },
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.629,
+          "box": [
+            1577,
+            2325,
+            1767,
+            2387
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.611,
+          "box": [
+            76,
+            2258,
+            424,
+            2400
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.609,
+          "box": [
+            794,
+            2302,
+            948,
+            2362
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHP612392/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHF612822",
+      "name": "Лиам Крем Мат",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-7/21025354687.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.645,
+          "box": [
+            901,
+            1257,
+            1025,
+            1309
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.603,
+          "box": [
+            666,
+            1398,
+            864,
+            1443
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHF612822/poster-1200.jpg",
+        "size": [
+          1200,
+          1600
+        ]
+      }
+    },
+    {
+      "art": "VHP612826",
+      "name": "Минерал Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-u/13840943682.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.667,
+          "box": [
+            639,
+            1173,
+            763,
+            1225
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.612,
+          "box": [
+            257,
+            1319,
+            957,
+            1448
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612826/01.e638746b.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612800",
+      "name": "Миррор Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-y/13999149106.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.678,
+          "box": [
+            892,
+            1132,
+            1016,
+            1184
+          ]
+        },
+        {
+          "name": "VHP612887-bottom-gold",
+          "score": 0.652,
+          "box": [
+            162,
+            1277,
+            917,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.632,
+          "box": [
+            924,
+            1129,
+            1086,
+            1199
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612800/01.73814da4.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612039",
+      "name": "Оливия Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-y/12840367498.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.653,
+          "box": [
+            917,
+            1193,
+            1041,
+            1245
+          ]
+        },
+        {
+          "name": "VHP612038-bottom-ru",
+          "score": 0.646,
+          "box": [
+            286,
+            1255,
+            809,
+            1448
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.634,
+          "box": [
+            900,
+            1182,
+            1086,
+            1227
+          ]
+        },
+        {
+          "name": "logo-diamond",
+          "score": 0.604,
+          "box": [
+            456,
+            1273,
+            632,
+            1385
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.584,
+          "box": [
+            777,
+            1174,
+            1057,
+            1238
+          ]
+        }
+      ],
+      "local": {
+        "dist": 1,
+        "file": "img/VHP612039/01.0393458d.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612887",
+      "name": "Оникс Клоуд",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-0/14137117020.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612887-bottom-gold",
+          "score": 0.78,
+          "box": [
+            187,
+            1290,
+            899,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.61,
+          "box": [
+            767,
+            1128,
+            891,
+            1180
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612887/01.93db0981.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612808",
+      "name": "Оро Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-m/14274272866.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.684,
+          "box": [
+            609,
+            1161,
+            733,
+            1213
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.675,
+          "box": [
+            474,
+            1160,
+            609,
+            1216
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612808/01.33707208.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP612037",
+      "name": "Патриция",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-w/14275301180.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.667,
+          "box": [
+            812,
+            1239,
+            936,
+            1291
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.626,
+          "box": [
+            194,
+            1266,
+            1038,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.612,
+          "box": [
+            652,
+            1236,
+            816,
+            1306
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP612037/01.4fcd0adf.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612105",
+      "name": "Ребекка",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-y/14751890710.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.599,
+          "box": [
+            263,
+            1215,
+            387,
+            1267
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612105/01.ab5f6c39.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHR612004",
+      "name": "Скайли",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-9/14282829513.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.684,
+          "box": [
+            450,
+            1240,
+            574,
+            1292
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.645,
+          "box": [
+            726,
+            1234,
+            910,
+            1312
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHR612004/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHP612042",
+      "name": "Стоун Крем",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-j/12841892839.jpg",
+      "ozon_size": [
+        1800,
+        2400
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.738,
+          "box": [
+            1584,
+            2190,
+            1708,
+            2242
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.711,
+          "box": [
+            1372,
+            0,
+            1496,
+            44
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.697,
+          "box": [
+            1512,
+            2022,
+            1800,
+            2090
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.677,
+          "box": [
+            1628,
+            2180,
+            1800,
+            2258
+          ]
+        },
+        {
+          "name": "VHP612038-bottom-ru",
+          "score": 0.619,
+          "box": [
+            463,
+            2079,
+            1353,
+            2400
+          ]
+        },
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.609,
+          "box": [
+            1541,
+            2043,
+            1731,
+            2105
+          ]
+        },
+        {
+          "name": "logo-diamond",
+          "score": 0.608,
+          "box": [
+            730,
+            2090,
+            1086,
+            2316
+          ]
+        }
+      ],
+      "local": {
+        "dist": 5,
+        "file": "img2/VHP612042/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHF612823",
+      "name": "Томас Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-5/14752225301.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.641,
+          "box": [
+            950,
+            1292,
+            1074,
+            1344
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.612,
+          "box": [
+            289,
+            1255,
+            444,
+            1316
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612823/01.48e470da.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHR612002",
+      "name": "Цемент Дарк",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-q/14486996582.jpg",
+      "ozon_size": [
+        900,
+        1200
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.619,
+          "box": [
+            773,
+            1019,
+            900,
+            1076
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.605,
+          "box": [
+            356,
+            984,
+            512,
+            1018
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.585,
+          "box": [
+            714,
+            957,
+            898,
+            998
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHR612002/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHM612805",
+      "name": "Эмперадор",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-b/20638368407.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.641,
+          "box": [
+            0,
+            1326,
+            118,
+            1378
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHM612805/01.cdbfce18.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHJ600015",
+      "name": "Акация Карвинг",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-d/15192142429.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHJ600015-bottom",
+          "score": 0.856,
+          "box": [
+            135,
+            1242,
+            948,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.621,
+          "box": [
+            145,
+            1287,
+            269,
+            1339
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHJ600015/01.80b4b8bc.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHJ600014",
+      "name": "Аргания Карвинг",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-t/15113290169.jpg",
+      "ozon_size": [
+        900,
+        1200
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.618,
+          "box": [
+            547,
+            1013,
+            671,
+            1065
+          ]
+        }
+      ],
+      "local": {
+        "dist": 1,
+        "file": "img2/VHJ600014/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHJ600001",
+      "name": "Арктик Карвинг",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-1/20494864585.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.659,
+          "box": [
+            268,
+            1255,
+            392,
+            1307
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.653,
+          "box": [
+            35,
+            1232,
+            170,
+            1288
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.581,
+          "box": [
+            70,
+            1232,
+            295,
+            1327
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHJ600001/01.a5be7d4a.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHJ600010",
+      "name": "Каррара Голд Карвинг",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-6/20494962438.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.649,
+          "box": [
+            656,
+            1141,
+            780,
+            1193
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.602,
+          "box": [
+            464,
+            1208,
+            628,
+            1278
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHJ600010/01.c8fbb537.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHJ600006",
+      "name": "Меган Карвинг",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-o/13742794788.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.581,
+          "box": [
+            641,
+            1301,
+            796,
+            1361
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHJ600006/01.10019177.jpg",
+        "size": [
+          1080,
+          1440
+        ]
+      }
+    },
+    {
+      "art": "VHJ600005",
+      "name": "Патриция Стоун",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-d/20118579025.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.93,
+          "box": [
+            186,
+            1254,
+            898,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.641,
+          "box": [
+            280,
+            1129,
+            404,
+            1181
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.606,
+          "box": [
+            681,
+            1124,
+            826,
+            1186
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.604,
+          "box": [
+            124,
+            1107,
+            292,
+            1173
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHJ600005/01.a0999c36.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600806",
+      "name": "Аляска",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-e/13120568402.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.661,
+          "box": [
+            294,
+            1128,
+            418,
+            1180
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600806/01.0fd20d37.jpg",
+        "size": [
+          1080,
+          1440
+        ]
+      }
+    },
+    {
+      "art": "VHP600502",
+      "name": "Лили Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-6/21155205534.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.678,
+          "box": [
+            576,
+            1394,
+            700,
+            1446
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600502/01.d8a6d4a0.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600801",
+      "name": "Статуарио",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-h/12585376565.jpg",
+      "ozon_size": [
+        1800,
+        2400
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.747,
+          "box": [
+            692,
+            2108,
+            816,
+            2160
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.722,
+          "box": [
+            960,
+            2106,
+            1106,
+            2168
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.691,
+          "box": [
+            526,
+            2110,
+            702,
+            2184
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.691,
+          "box": [
+            816,
+            0,
+            940,
+            44
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.67,
+          "box": [
+            1035,
+            2183,
+            1259,
+            2279
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.653,
+          "box": [
+            282,
+            2088,
+            462,
+            2160
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.623,
+          "box": [
+            1001,
+            2105,
+            1307,
+            2235
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.598,
+          "box": [
+            489,
+            2103,
+            855,
+            2259
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.595,
+          "box": [
+            966,
+            2134,
+            1352,
+            2298
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHP600801/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHP600157",
+      "name": "Аляска Беж",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-u/12553757886.jpg",
+      "ozon_size": [
+        1920,
+        2560
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.747,
+          "box": [
+            1323,
+            1986,
+            1445,
+            2038
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.706,
+          "box": [
+            1249,
+            114,
+            1384,
+            165
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.619,
+          "box": [
+            1289,
+            1980,
+            1502,
+            2069
+          ]
+        },
+        {
+          "name": "VHJ600005-bottom-almali",
+          "score": 0.602,
+          "box": [
+            878,
+            2045,
+            1078,
+            2109
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHP600157/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHP600132",
+      "name": "Лилия Беж",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-c/21142075224.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP600132-top-logo-ru",
+          "score": 0.93,
+          "box": [
+            135,
+            0,
+            948,
+            157
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.648,
+          "box": [
+            903,
+            1262,
+            1027,
+            1314
+          ]
+        },
+        {
+          "name": "logo-diamond",
+          "score": 0.647,
+          "box": [
+            299,
+            4,
+            427,
+            81
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.63,
+          "box": [
+            308,
+            1111,
+            443,
+            1167
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.589,
+          "box": [
+            351,
+            1238,
+            535,
+            1316
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600132/01.caa73bc7.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600849",
+      "name": "Вермонт Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-t/14968956449.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.927,
+          "box": [
+            0,
+            0,
+            444,
+            70
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.9,
+          "box": [
+            226,
+            1231,
+            859,
+            1448
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.722,
+          "box": [
+            1,
+            0,
+            356,
+            44
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.699,
+          "box": [
+            0,
+            27,
+            403,
+            106
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.684,
+          "box": [
+            0,
+            52,
+            381,
+            125
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.617,
+          "box": [
+            475,
+            1128,
+            599,
+            1180
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.614,
+          "box": [
+            169,
+            1299,
+            304,
+            1355
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600849/01.efa5345f.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600801",
+      "name": "Асфальт Грей Лайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-8/14891425460.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.61,
+          "box": [
+            918,
+            1132,
+            1042,
+            1184
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHF600801/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHF600503",
+      "name": "Бетон Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-o/15021428496.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.86,
+          "box": [
+            226,
+            1230,
+            859,
+            1448
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.685,
+          "box": [
+            410,
+            1125,
+            534,
+            1177
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.582,
+          "box": [
+            440,
+            1118,
+            624,
+            1196
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600503/01.88845077.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600501",
+      "name": "Бетон Лайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-t/14933821601.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.709,
+          "box": [
+            227,
+            1227,
+            860,
+            1448
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.637,
+          "box": [
+            527,
+            1282,
+            725,
+            1327
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600501/01.55b71f1f.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600850",
+      "name": "Георгия",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-t/15023407385.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.608,
+          "box": [
+            193,
+            1327,
+            317,
+            1379
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.6,
+          "box": [
+            166,
+            1297,
+            364,
+            1342
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHF600850/poster-1200.jpg",
+        "size": [
+          1200,
+          1600
+        ]
+      }
+    },
+    {
+      "art": "VHFZ600837",
+      "name": "Графит Блек",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-3/20393204043.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.646,
+          "box": [
+            442,
+            1108,
+            566,
+            1160
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.604,
+          "box": [
+            881,
+            1327,
+            1079,
+            1372
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.598,
+          "box": [
+            710,
+            1103,
+            863,
+            1167
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHFZ600837/01.639faf40.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600274",
+      "name": "Джозефина Полиш",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-5/15431486441.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.663,
+          "box": [
+            246,
+            1111,
+            370,
+            1163
+          ]
+        },
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.581,
+          "box": [
+            176,
+            1395,
+            376,
+            1439
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600274/09.e5440a31.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600228",
+      "name": "Ева Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-g/15025521580.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.658,
+          "box": [
+            604,
+            1269,
+            728,
+            1321
+          ]
+        },
+        {
+          "name": "VHF612802-top-ru",
+          "score": 0.589,
+          "box": [
+            878,
+            1258,
+            1076,
+            1303
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600228/01.4ec11d8c.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600818",
+      "name": "Ивори Стоун",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-4/13232556652.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.646,
+          "box": [
+            0,
+            1098,
+            120,
+            1150
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.59,
+          "box": [
+            772,
+            1143,
+            927,
+            1203
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600818/01.3a846468.jpg",
+        "size": [
+          1080,
+          1440
+        ]
+      }
+    },
+    {
+      "art": "VHF600188",
+      "name": "Каспий Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-u/21084288438.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.627,
+          "box": [
+            609,
+            1144,
+            733,
+            1196
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600188/01.5c35a06b.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600851",
+      "name": "Лиам Крем",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-z/13541902055.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.591,
+          "box": [
+            228,
+            1080,
+            433,
+            1168
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img2/VHF600851/poster-900.jpg",
+        "size": [
+          900,
+          1200
+        ]
+      }
+    },
+    {
+      "art": "VHP600810",
+      "name": "Лиам Крем Полиш",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-m/13544620294.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.662,
+          "box": [
+            884,
+            1186,
+            1008,
+            1238
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.596,
+          "box": [
+            362,
+            1111,
+            577,
+            1201
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.593,
+          "box": [
+            162,
+            1094,
+            397,
+            1194
+          ]
+        }
+      ],
+      "local": {
+        "dist": 1,
+        "file": "img/VHP600810/01.c167b14f.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600288",
+      "name": "Луна Грей Лайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-i/20618974926.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.676,
+          "box": [
+            150,
+            1140,
+            274,
+            1192
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600288/01.1cd3baab.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600813",
+      "name": "Минерал Браун",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-y/21048894790.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.632,
+          "box": [
+            785,
+            1355,
+            909,
+            1407
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.588,
+          "box": [
+            717,
+            1353,
+            862,
+            1415
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600813/01.43176868.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600000",
+      "name": "Миррор Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-m/20297026282.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.626,
+          "box": [
+            736,
+            1108,
+            860,
+            1160
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600000/01.59b6074f.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600822",
+      "name": "Нептун",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-a/13539870946.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.659,
+          "box": [
+            469,
+            1103,
+            593,
+            1155
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.64,
+          "box": [
+            585,
+            1095,
+            719,
+            1152
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600822/01.3053a43a.jpg",
+        "size": [
+          1080,
+          1440
+        ]
+      }
+    },
+    {
+      "art": "VHF600252",
+      "name": "Оникс Грей Мат",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-7/20286839959.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600252-top-en",
+          "score": 0.894,
+          "box": [
+            263,
+            12,
+            820,
+            155
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600252/10.bd7f6324.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600085C",
+      "name": "Оро Вайт",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-z/15101323667.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHF600849-top-left",
+          "score": 0.655,
+          "box": [
+            908,
+            9,
+            1086,
+            43
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600085C/01.0e299683.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHP600822",
+      "name": "Роуз Оникс",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-r/21024869319.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.676,
+          "box": [
+            598,
+            1154,
+            722,
+            1206
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.598,
+          "box": [
+            326,
+            1388,
+            490,
+            1448
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHP600822/01.cb56ee25.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600007",
+      "name": "Соль-Перец",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-e/13546261922.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.593,
+          "box": [
+            238,
+            1106,
+            362,
+            1158
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600007/01.93ded2a6.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600080",
+      "name": "Террацио Грей",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-k/13548443924.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.595,
+          "box": [
+            660,
+            1086,
+            875,
+            1176
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600080/01.2d0938fd.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600249",
+      "name": "Травертин",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-l/20393204205.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.675,
+          "box": [
+            506,
+            1116,
+            630,
+            1168
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.615,
+          "box": [
+            128,
+            1099,
+            296,
+            1165
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600249/01.4f6b6f2c.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF600229",
+      "name": "Флэшстоун",
+      "src": "primary",
+      "url": "https://ir-20.ozone.ru/s3/multimedia-1-q/13461159842.jpg",
+      "ozon_size": [
+        1080,
+        1440
+      ],
+      "hits": [
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.669,
+          "box": [
+            474,
+            1154,
+            598,
+            1206
+          ]
+        },
+        {
+          "name": "VHP612390-bottom-diamond",
+          "score": 0.629,
+          "box": [
+            904,
+            1150,
+            1068,
+            1220
+          ]
+        },
+        {
+          "name": "VHF600849-bottom",
+          "score": 0.619,
+          "box": [
+            719,
+            1359,
+            874,
+            1419
+          ]
+        }
+      ],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF600229/09.e109fa40.jpg",
+        "size": [
+          1080,
+          1440
+        ]
+      }
+    },
+    {
+      "art": "VHF600096",
+      "hits": [
+        {
+          "name": "extra-VHF600096",
+          "score": 0.929,
+          "box": [
+            186,
+            1195,
+            898,
+            1439
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.855,
+          "box": [
+            661,
+            1223,
+            859,
+            1291
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.691,
+          "box": [
+            641,
+            1194,
+            983,
+            1313
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHP600865",
+      "hits": [
+        {
+          "name": "extra-VHP600865",
+          "score": 0.997,
+          "box": [
+            135,
+            1097,
+            942,
+            1379
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.98,
+          "box": [
+            647,
+            1218,
+            861,
+            1291
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.976,
+          "box": [
+            319,
+            1165,
+            789,
+            1329
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.735,
+          "box": [
+            901,
+            1232,
+            1076,
+            1292
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.678,
+          "box": [
+            798,
+            1213,
+            1080,
+            1314
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.669,
+          "box": [
+            0,
+            1210,
+            294,
+            1316
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.627,
+          "box": [
+            589,
+            1178,
+            1080,
+            1353
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHP600003",
+      "hits": [
+        {
+          "name": "extra-VHP600003",
+          "score": 0.833,
+          "box": [
+            186,
+            1254,
+            898,
+            1448
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.716,
+          "box": [
+            338,
+            1255,
+            649,
+            1363
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHF600224",
+      "hits": [
+        {
+          "name": "extra-VHF600224",
+          "score": 0.845,
+          "box": [
+            224,
+            1230,
+            857,
+            1433
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.688,
+          "box": [
+            429,
+            1392,
+            627,
+            1448
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHF600268",
+      "hits": [
+        {
+          "name": "extra-VHP600865",
+          "score": 0.878,
+          "box": [
+            387,
+            1103,
+            585,
+            1171
+          ]
+        },
+        {
+          "name": "extra-VHF600268",
+          "score": 0.744,
+          "box": [
+            263,
+            1278,
+            820,
+            1448
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.722,
+          "box": [
+            0,
+            1113,
+            319,
+            1232
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.702,
+          "box": [
+            590,
+            1343,
+            964,
+            1448
+          ]
+        },
+        {
+          "name": "extra-VHF600268",
+          "score": 0.661,
+          "box": [
+            719,
+            1321,
+            855,
+            1369
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHP600289",
+      "hits": [
+        {
+          "name": "extra-VHP600865",
+          "score": 0.923,
+          "box": [
+            326,
+            1284,
+            524,
+            1352
+          ]
+        },
+        {
+          "name": "extra-VHP600289",
+          "score": 0.891,
+          "box": [
+            186,
+            1254,
+            898,
+            1448
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.861,
+          "box": [
+            82,
+            1276,
+            314,
+            1357
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.757,
+          "box": [
+            263,
+            29,
+            525,
+            112
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.704,
+          "box": [
+            581,
+            1296,
+            757,
+            1356
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.66,
+          "box": [
+            0,
+            1239,
+            380,
+            1381
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHP600826",
+      "hits": [
+        {
+          "name": "extra-VHP600826",
+          "score": 0.95,
+          "box": [
+            262,
+            1242,
+            816,
+            1440
+          ]
+        },
+        {
+          "name": "extra-VHP600826",
+          "score": 0.688,
+          "box": [
+            588,
+            1138,
+            723,
+            1193
+          ]
+        },
+        {
+          "name": "extra-VHF600268",
+          "score": 0.651,
+          "box": [
+            768,
+            153,
+            904,
+            196
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.598,
+          "box": [
+            680,
+            1259,
+            877,
+            1327
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHF600227",
+      "hits": [
+        {
+          "name": "extra-VHF600227",
+          "score": 0.86,
+          "box": [
+            186,
+            1218,
+            892,
+            1440
+          ]
+        },
+        {
+          "name": "extra-VHP600826",
+          "score": 0.591,
+          "box": [
+            570,
+            1108,
+            705,
+            1163
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.585,
+          "box": [
+            726,
+            1279,
+            923,
+            1347
+          ]
+        }
+      ],
+      "incremental": true
+    },
+    {
+      "art": "VHP600853",
+      "hits": [
+        {
+          "name": "extra-VHP600853",
+          "score": 0.927,
+          "box": [
+            262,
+            1271,
+            816,
+            1440
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.803,
+          "box": [
+            740,
+            1373,
+            937,
+            1440
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.777,
+          "box": [
+            124,
+            1332,
+            388,
+            1424
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.745,
+          "box": [
+            545,
+            1291,
+            855,
+            1399
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.676,
+          "box": [
+            118,
+            1263,
+            542,
+            1411
+          ]
+        },
+        {
+          "name": "extra-VHF600268",
+          "score": 0.67,
+          "box": [
+            656,
+            155,
+            804,
+            202
+          ]
+        },
+        {
+          "name": "extra-VHP600865",
+          "score": 0.666,
+          "box": [
+            578,
+            1234,
+            1080,
+            1415
+          ]
+        },
+        {
+          "name": "extra-VHF600268",
+          "score": 0.609,
+          "box": [
+            122,
+            1192,
+            282,
+            1248
+          ]
+        },
+        {
+          "name": "extra-VHF600096",
+          "score": 0.601,
+          "box": [
+            524,
+            1256,
+            825,
+            1357
+          ]
+        }
+      ],
+      "incremental": true
+    }
+  ],
+  "no_ozon": [
+    {
+      "art": "VHP612438",
+      "name": "Анталия Бланко",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP612443",
+      "name": "Армани Браун",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612135",
+      "name": "Вуд Калифорния",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612857",
+      "name": "Вуд Монтано",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612134",
+      "name": "Вуд Флорида",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612133",
+      "name": "Вуд Чикаго Браун",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP612444",
+      "name": "Ирина Крем",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP612439",
+      "name": "Кристал Оникс",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP612440",
+      "name": "Латина",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612800",
+      "name": "Миррор Вайт Мат",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP612442",
+      "name": "Мишель Голд",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612131",
+      "name": "Сириус",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF612132",
+      "name": "Элис",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP600309",
+      "name": "Армани",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP600307",
+      "name": "Латина Вайт",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP600311",
+      "name": "Орландо Оникс",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF600272",
+      "name": "Сириус Дарк",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP600308",
+      "name": "Скай",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHP600310",
+      "name": "Шелли",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF600270",
+      "name": "Элис Грей",
+      "reason": "no primary/images on Ozon"
+    },
+    {
+      "art": "VHF600271",
+      "name": "Элис Крем",
+      "reason": "no primary/images on Ozon"
+    }
+  ],
+  "no_match_brand": [
+    {
+      "art": "VHF612114",
+      "name": "Галина Грей Мат",
+      "src": "images0",
+      "url": "https://almaliceramicc.github.io/almaly-tiles/img/VHF612114/05.dd919237.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612114/05.dd919237.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612122",
+      "name": "Травертин",
+      "src": "images0",
+      "url": "https://almaliceramicc.github.io/almaly-tiles/img/VHF612122/05.bd9f1396.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612122/05.bd9f1396.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    }
+  ],
+  "failed": [],
+  "used_images0": [
+    {
+      "art": "VHF612114",
+      "name": "Галина Грей Мат",
+      "src": "images0",
+      "url": "https://almaliceramicc.github.io/almaly-tiles/img/VHF612114/05.dd919237.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612114/05.dd919237.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    },
+    {
+      "art": "VHF612122",
+      "name": "Травертин",
+      "src": "images0",
+      "url": "https://almaliceramicc.github.io/almaly-tiles/img/VHF612122/05.bd9f1396.jpg",
+      "ozon_size": [
+        1086,
+        1448
+      ],
+      "hits": [],
+      "local": {
+        "dist": 0,
+        "file": "img/VHF612122/05.bd9f1396.jpg",
+        "size": [
+          1086,
+          1448
+        ]
+      }
+    }
+  ]
+}

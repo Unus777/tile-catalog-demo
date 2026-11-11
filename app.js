@@ -88,12 +88,28 @@ const stat = $('#stat'); if (stat) stat.textContent = `${models(T.length)} · ${
 
 /* ---------- карточка ---------- */
 const CARD_SIZES = '(max-width:640px) 48vw, (max-width:1000px) 32vw, 320px';
+function coverSet(t) {
+  if (t.poster) return { set: t.poster, kind: 'poster', label: 'карточка' };
+  if (t.card) return { set: t.card, kind: 'card', label: 'интерьер' };
+  if (t.face) return { set: t.face, kind: 'face', label: 'фактура' };
+  return null;
+}
+function hoverSet(t, mainKind) {
+  if (mainKind === 'poster') {
+    if (t.face) return { set: t.face, kind: 'face' };
+    if (t.card) return { set: t.card, kind: 'card' };
+  }
+  if (mainKind === 'card' && t.face) return { set: t.face, kind: 'face' };
+  if (mainKind === 'face' && t.card) return { set: t.card, kind: 'card' };
+  return null;
+}
 function media(t) {
-  const main = t.face || t.card;
+  const main = coverSet(t);
   if (!main) return t.photos.length ? `<img src="img/${t.art}/${t.photos[0]}_t.jpg" alt="${esc(t.name)}" loading="lazy" data-ph="${t.art}:img:${t.photos[0]}">`
     : `<div class="noph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7l5 5-5 5-5-5z"/></svg><b>${esc(t.name)}</b><span>Фото скоро появится</span></div>`;
-  const alt = t.face && t.card ? t.card : null;
-  return pic(main, CARD_SIZES, `${t.name}${t.face ? ' — фактура' : ' в интерьере'}`, false, t.art + ':' + (t.face ? 'face' : 'card')) + (alt ? `<div class="alt">${pic(alt, CARD_SIZES, '', false, t.art + ':card')}</div><div class="inset" aria-hidden="true">${pic(alt, '120px', '', false, t.art + ':card')}</div>` : '');
+  const alt = hoverSet(t, main.kind);
+  const altLab = main.kind === 'poster' ? (alt && alt.kind === 'face' ? 'фактура' : 'интерьер') : (main.kind === 'face' ? 'в интерьере' : 'фактура');
+  return pic(main.set, CARD_SIZES, `${t.name} — ${main.label}`, false, t.art + ':' + main.kind) + (alt ? `<div class="alt">${pic(alt.set, CARD_SIZES, `${t.name} — ${altLab}`, false, t.art + ':' + alt.kind)}</div><div class="inset" aria-hidden="true">${pic(alt.set, '120px', '', false, t.art + ':' + alt.kind)}</div>` : '');
 }
 const card = t => `<a class="card" href="tile.html?a=${t.art}" data-art="${t.art}">
   <div class="ph">${media(t)}<div class="badges"><span class="badge">${t.format}</span>${t.is_new ? '<span class="badge new">Новинка</span>' : ''}</div></div>
@@ -259,13 +275,15 @@ function pageTile() {
   const p = pack(t.packing), packs = v => p.sqm ? Math.floor(v / p.sqm + 1e-9) : 0;
   const wa = WA ? `${WA}?text=${encodeURIComponent(`Здравствуйте! Интересует керамогранит ${t.name} ${t.format}.`)}` : '';
   const cb = $('#cbWa'); if (cb && wa) cb.href = wa;
-  // галерея: чистая фактура (галерея открывается с самой плитки) → интерьер → все фото производителя
+  // галерея: сначала карточка как на Ozon, затем фактура, интерьер и фото производителя
   const G = [];
-  if (t.face) G.push({ html: pic(t.face, '(max-width:1000px) 100vw, 680px', `${t.name} — фактура`, true, t.art + ':face'), thumb: small(t.face) + '.jpg', full: big(t.face) + '.jpg', label: 'фактура', ph: t.art + ':face' });
-  if (t.card) G.push({ html: pic(t.card, '(max-width:1000px) 100vw, 680px', `${t.name} в интерьере`, !t.face, t.art + ':card'), thumb: small(t.card) + '.jpg', full: big(t.card) + '.jpg', label: 'интерьер', ph: t.art + ':card' });
+  const gSz = '(max-width:1000px) 100vw, 680px';
+  if (t.poster) G.push({ html: pic(t.poster, gSz, `${t.name} — карточка`, true, t.art + ':poster'), thumb: small(t.poster) + '.jpg', full: big(t.poster) + '.jpg', label: 'карточка', ph: t.art + ':poster', poster: true });
+  if (t.face) G.push({ html: pic(t.face, gSz, `${t.name} — фактура`, !t.poster, t.art + ':face'), thumb: small(t.face) + '.jpg', full: big(t.face) + '.jpg', label: 'фактура', ph: t.art + ':face' });
+  if (t.card) G.push({ html: pic(t.card, gSz, `${t.name} в интерьере`, !t.poster && !t.face, t.art + ':card'), thumb: small(t.card) + '.jpg', full: big(t.card) + '.jpg', label: 'интерьер', ph: t.art + ':card' });
   const nClean = G.length;
   t.photos.forEach((ph, i) => G.push({ html: `<img src="img/${t.art}/${ph}.jpg" alt="${esc(t.name)}, фото ${i + 1}" loading="${G.length ? 'lazy' : 'eager'}" decoding="async" data-ph="${t.art}:img:${ph}">`, thumb: `img/${t.art}/${ph}_t.jpg`, full: `img/${t.art}/${ph}.jpg`, label: 'фото производителя', orig: true, ph: t.art + ':img:' + ph }));
-  const gallery = G.length ? `<div class="main-ph"><div class="track" id="track">${G.map((g, i) => `<button type="button" class="slide${g.orig ? ' contain' : ''}" data-i="${i}" aria-label="Открыть фото ${i + 1} на весь экран">${g.html}${i < nClean ? `<span class="tagl">${g.label}</span>` : ''}</button>`).join('')}</div>
+  const gallery = G.length ? `<div class="main-ph"><div class="track" id="track">${G.map((g, i) => `<button type="button" class="slide${g.orig || g.poster ? ' contain' : ''}" data-i="${i}" aria-label="Открыть фото ${i + 1} на весь экран">${g.html}${i < nClean ? `<span class="tagl">${g.label}</span>` : ''}</button>`).join('')}</div>
       ${G.length > 1 ? '<button type="button" class="gal-nav prev" aria-label="Предыдущее">‹</button><button type="button" class="gal-nav next" aria-label="Следующее">›</button>' : ''}</div>
     <div class="thumbs" id="thumbs">${G.map((g, i) => `${i === nClean && nClean ? '<span class="sep">производитель</span>' : ''}<button type="button" data-i="${i}" aria-pressed="${i === 0}" aria-label="Фото ${i + 1}"><img src="${g.thumb}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
     <p class="cap"><span id="cap">Фото 1 из ${G.length}</span><span>${nClean ? 'Чистые кадры + фото производителя' : ''}</span></p>`
@@ -284,7 +302,6 @@ function pageTile() {
           <div class="tot" id="calcTot"></div><p>Отгружаем целыми упаковками, округляем вверх.</p></div>` : ''}
         ${ (CFG.PHONE || wa) ? `<div class="ctas">${CFG.PHONE ? `<a class="btn gold" href="tel:${String(CFG.PHONE).replace(/[^\d+]/g, '')}">Позвонить</a>` : ''}${wa ? `<a class="btn" href="${wa}" target="_blank" rel="noopener">Написать в WhatsApp</a>` : ''}</div>` : ''}
         <dl class="spec"><dt>Формат</dt><dd>${t.format} см</dd><dt>Поверхность</dt><dd>${esc(t.surface)}</dd><dt>В упаковке</dt><dd>${packText(t)}</dd><dt>Паллета</dt><dd>${palletText(t)}</dd><dt>Артикул</dt><dd>${t.art}</dd></dl>
-        <p class="where"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>${CFG.ADDRESS ? `Образец можно посмотреть: ${esc(CFG.ADDRESS)}${CFG.HOURS ? '. ' + esc(CFG.HOURS) : ''}.` : 'Адрес шоу-рума можно указать в config.js.'}</span></p>
         <div class="admin-acts admin-only" hidden><button type="button" class="btn sm" data-admin="price" data-art="${t.art}">Изменить цену</button><a class="btn sm" href="edit.html?a=${t.art}">Изменить фото</a></div>
       </div>
     </div></div>

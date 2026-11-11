@@ -14,7 +14,33 @@
     admin: 'Вход для администраторов — ' + name
   };
 
+  const THEME_KEY = 'catalog-theme';
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+  function setTheme(t) {
+    t = t === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.style.colorScheme = t;
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0d0c0b' : '#F1EADF');
+    document.querySelectorAll('#themeBtn').forEach(btn => {
+      const dark = t === 'dark';
+      btn.setAttribute('aria-label', dark ? 'Включить светлую тему' : 'Включить тёмную тему');
+      btn.setAttribute('title', dark ? 'Светлая тема' : 'Тёмная тема');
+    });
+  }
+  function bindTheme() {
+    const btn = document.getElementById('themeBtn');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+    setTheme(currentTheme());
+  }
+
   function apply() {
+    bindTheme();
     const page = document.body && document.body.dataset.page;
     if (page && titles[page]) document.title = titles[page];
     const md = document.querySelector('meta[name="description"]');

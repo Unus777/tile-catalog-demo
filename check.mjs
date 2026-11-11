@@ -32,7 +32,7 @@ const cls = p => p.evaluate(() => +window.__cls.toFixed(4));
   await shot(p, '04-filters'); log('filtered:', await p.textContent('#count'), 'url:', await p.evaluate(() => location.search));
   await p.click('#fmt .chip[data-v=""]'); await p.click('#srf .chip[data-v="Глянец"]'); await p.click('#ton .chip[data-v="Белый"]'); await p.waitForTimeout(500);
   await to(p, '#roomStage', 100); await p.waitForSelector('#roomGl.ready', { timeout: 90000 }); await p.waitForTimeout(2500); await shot(p, '06-home-room');
-  await to(p, '#showroom', 90); await p.waitForTimeout(1400); await shot(p, '07-showroom');
+  await to(p, '#room', 90); await p.waitForTimeout(400); await shot(p, '07-room-after-catalog');
   log('CLS home total:', await cls(p));
   // QR deep link
   await p.goto(B + 'tile.html?a=VHP600822&shot', { waitUntil: 'networkidle' }); await p.waitForTimeout(1800);
