@@ -28,7 +28,7 @@ def tone_by_name(n):
     return None
 out = []
 for t in src['tiles']:
-    art = t['art']; m = man.get(art, {}); s = t['stock']
+    art = t['art']; m = man.get(art, {})
     mm = re.search(r'([\d,]+)\s*м2', t['packing']); m2 = float(mm.group(1).replace(',', '.')) if mm else None
     nm = tone_by_name(t['name']); lab_ = None
     if 'face' in m: lab_ = lab(m['face']['tile'])
@@ -37,7 +37,7 @@ for t in src['tiles']:
     elif lab_: tn, tsrc = tone(*lab_), 'фото'
     else: tn, tsrc = None, None
     r = dict(art=art, name=t['name'], format=t['format'], surface=t['surface'], packing=t['packing'], pallet=t['pallet'], is_new=t['is_new'],
-             stock=s, url='tile.html?a=' + art, m2pack=m2, tone=tn, toneSrc=tsrc if tn else None, flags=[f for f in m.get('flags', []) if f != 'нет фото в каталоге'],
+             url='tile.html?a=' + art, m2pack=m2, tone=tn, toneSrc=tsrc if tn else None, flags=[f for f in m.get('flags', []) if f != 'нет фото в каталоге'],
              card=sset(m['card']['files']) if 'card' in m else None, face=sset(m['face']['files']) if 'face' in m else None,
              tile=m['face']['tile'] if 'face' in m else None, tileFull=m.get('face', {}).get('full', False), photos=t['photos'])
     if isinstance(t.get('price'), dict): r['price'] = t['price']

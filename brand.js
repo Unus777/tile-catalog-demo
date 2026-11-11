@@ -4,7 +4,7 @@
   const name = C.NAME || 'Каталог плитки';
   const tag = C.TAGLINE || 'Каталог керамогранита';
   const legal = C.LEGAL_NAME || name;
-  const desc = C.DESCRIPTION || (name + ': форматы 60×60 и 60×120, интерьерные фото, остатки на складах.');
+  const desc = C.DESCRIPTION || (name + ': форматы 60×60 и 60×120, интерьерные фото.');
   const digits = s => String(s || '').replace(/[^\d+]/g, '');
   const waHref = s => { const d = String(s || '').replace(/\D/g, ''); return d ? 'https://wa.me/' + d : ''; };
   const titles = {

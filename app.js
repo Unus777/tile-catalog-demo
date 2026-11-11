@@ -15,7 +15,6 @@ const m2 = v => v > 0 ? nf(v) + NB + 'м²' : '—';
 const m2r = v => v > 0 ? nf(v, 0) + NB + 'м²' : '—';
 const parts = list => list.filter(Boolean).map(x => `<span class="nw">${x}</span>`).join('<span class="sep-dot"> · </span>');
 const WA = CFG.WHATSAPP ? 'https://wa.me/' + String(CFG.WHATSAPP).replace(/\D/g, '') : '';
-const TVER_ETA_LOW = 'довоз в Москву — 1' + NB + 'день';
 const byArt = Object.fromEntries(T.map(t => [t.art, t]));
 const big = set => set && set[set.length - 1][1], small = set => set && set[0][1];
 T.forEach(t => { t.icon = t.face ? small(t.face) + '.jpg' : t.card ? small(t.card) + '.jpg' : t.photos.length ? `img/${t.art}/${t.photos[0]}_t.jpg` : ''; });
@@ -24,9 +23,6 @@ const models = n => { const k = n % 10, h = n % 100; return `${n} ${k === 1 && h
 function pack(s) { const n = re => +((String(s || '').replace(/,/g, '.').match(re) || [])[1] || 0); return { pcs: n(/(\d+)\s*шт/i), sqm: n(/([\d.]+)\s*м2/i), kg: n(/([\d.]+)\s*кг/i), packs: n(/(\d+)\s*уп/i) }; }
 const packText = t => { const p = pack(t.packing); return p.sqm ? parts([p.pcs && `${p.pcs}${NB}плит${p.pcs < 5 ? 'ки' : 'ок'}`, `${nf(p.sqm)}${NB}м²`, p.kg && `${nf(p.kg, 1)}${NB}кг`]) : esc(t.packing); };
 const palletText = t => { const p = pack(t.pallet); return p.sqm ? parts([p.packs && `${p.packs}${NB}упаковок`, `${nf(p.sqm)}${NB}м²`, p.kg && `${nf(p.kg, 0)}${NB}кг`]) : esc(t.pallet); };
-const stockLine = t => t.stock.msk > 0 || t.stock.tver > 0
-  ? `<span class="dot"></span><span>${parts([`Москва ${m2r(t.stock.msk)}`, `Тверь ${m2r(t.stock.tver)}`])}</span>`
-  : '<span class="dot off"></span><span>Под заказ</span>';
 const TONES = { 'Белый': '#efece6', 'Бежевый': '#d8c4a2', 'Серый': '#9b968f', 'Тёмный': '#3b3835', 'Цветной': 'conic-gradient(#d9a441,#b8784a,#8f9a6b,#d9a441)' };
 
 function pic(set, sizes, alt, eager, ph) {
@@ -97,7 +93,7 @@ function media(t) {
 const card = t => `<a class="card" href="tile.html?a=${t.art}" data-art="${t.art}">
   <div class="ph">${media(t)}<div class="badges"><span class="badge">${t.format}</span>${t.is_new ? '<span class="badge new">Новинка</span>' : ''}</div></div>
   <div class="body"><div><h3>${esc(t.name)}</h3><div class="meta">${esc(t.surface)}${t.tone ? ' · ' + t.tone.toLowerCase() : ''}<span class="art"> · ${t.art}</span></div></div>
-  <div class="stock">${stockLine(t)}</div><div class="prices">${priceHTML(t)}</div><div class="pnote"><span>цена за м²${t.format === '60×120' ? '' : ''}</span>${price(t).example ? '<span class="ex">пример</span>' : ''}</div></div></a>`;
+  <div class="prices">${priceHTML(t)}</div><div class="pnote"><span>цена за м²${t.format === '60×120' ? '' : ''}</span>${price(t).example ? '<span class="ex">пример</span>' : ''}</div></div></a>`;
 function refreshCardPrices(root = document) { $$('.card', root).forEach(c => { const t = byArt[c.dataset.art]; $('.prices', c).innerHTML = priceHTML(t); }); }
 // «Наличные» / «Безнал с НДС» — подписи на карточке короче, режим виден по подсветке
 
@@ -169,19 +165,19 @@ function pageIndex() {
   const formats = [...new Set(T.map(t => t.format))].sort((a, b) => parseInt(a.split('×')[1]) - parseInt(b.split('×')[1]));
   const surfaces = [...new Set(T.map(t => t.surface))].sort();
   const tones = Object.keys(TONES).filter(k => T.some(t => t.tone === k));
-  const st = { f: formats.includes(qp.get('f')) ? qp.get('f') : '', s: surfaces.includes(qp.get('s')) ? qp.get('s') : '', c: tones.includes(qp.get('c')) ? qp.get('c') : '', q: qp.get('q') || '', stock: qp.get('stock') === '1', nw: qp.get('new') === '1', sort: qp.get('sort') || '' };
+  const st = { f: formats.includes(qp.get('f')) ? qp.get('f') : '', s: surfaces.includes(qp.get('s')) ? qp.get('s') : '', c: tones.includes(qp.get('c')) ? qp.get('c') : '', q: qp.get('q') || '', stock: false, nw: qp.get('new') === '1', sort: qp.get('sort') || '' };
   const chipsHTML = (k, list, all) => (all ? [['', all]] : []).concat(list.map(v => [v, v])).map(([v, l]) => `<button type="button" class="chip" data-k="${k}" data-v="${esc(v)}" aria-pressed="false">${k === 'c' && v ? `<span class="sw" style="--c:${TONES[v]}"></span>` : ''}${esc(l)}</button>`).join('');
   $('#fmt').innerHTML = chipsHTML('f', formats, 'Все форматы'); $('#srf').innerHTML = chipsHTML('s', surfaces); $('#ton').innerHTML = chipsHTML('c', tones);
   $('#sFmt').innerHTML = chipsHTML('f', formats, 'Все форматы'); $('#sSrf').innerHTML = chipsHTML('s', surfaces); $('#sTon').innerHTML = chipsHTML('c', tones);
-  $('#sMore').innerHTML = `<button type="button" class="chip" data-k="stock" data-v="1" aria-pressed="false">В наличии</button><button type="button" class="chip" data-k="nw" data-v="1" aria-pressed="false">Новинки</button>`;
+  $('#sMore').innerHTML = `<button type="button" class="chip" data-k="nw" data-v="1" aria-pressed="false">Новинки</button>`;
   $('#sSort').innerHTML = [...$('#sort').options].map(o => `<button type="button" class="chip" data-k="sort" data-v="${o.value}" aria-pressed="false">${o.textContent}</button>`).join('');
   $('#q').value = st.q; $('#sort').value = st.sort;
   grid.innerHTML = T.map(card).join('') + '<p class="empty" id="empty" hidden>Ничего не найдено — попробуйте другой формат или поверхность.</p>';
   window.CatalogPhotos && CatalogPhotos.hydrate(grid);
-  const cards = $$('.card', grid); const free = t => t.stock.msk + t.stock.tver;
+  const cards = $$('.card', grid); const free = () => 0;
   function syncUI() {
     $$('.chip[data-k]').forEach(b => { const k = b.dataset.k, v = b.dataset.v; b.setAttribute('aria-pressed', k === 'stock' || k === 'nw' ? String(st[k]) : String(st[k] === v)); });
-    $('#fStock').setAttribute('aria-pressed', st.stock); $('#fNew').setAttribute('aria-pressed', st.nw); $('#sort').value = st.sort;
+    $('#fNew').setAttribute('aria-pressed', st.nw); $('#sort').value = st.sort;
     const n = [st.f, st.s, st.c, st.stock, st.nw].filter(Boolean).length, fc = $('#fcount'); fc.textContent = n; fc.classList.toggle('on', n > 0);
   }
   function syncURL() {
@@ -197,7 +193,7 @@ function pageIndex() {
     let order = cards.slice();
     const pr = c => price(byArt[c.dataset.art])[mode];
     if (st.sort === 'price-asc') order.sort((a, b) => pr(a) - pr(b)); else if (st.sort === 'price-desc') order.sort((a, b) => pr(b) - pr(a));
-    else if (st.sort === 'stock') order.sort((a, b) => free(byArt[b.dataset.art]) - free(byArt[a.dataset.art])); else if (st.sort === 'name') order.sort((a, b) => byArt[a.dataset.art].name.localeCompare(byArt[b.dataset.art].name, 'ru'));
+    else if (st.sort === 'name') order.sort((a, b) => byArt[a.dataset.art].name.localeCompare(byArt[b.dataset.art].name, 'ru'));
     let n = 0; order.forEach(c => { const v = ok(byArt[c.dataset.art]); c.classList.toggle('hide', !v); if (v) n++; grid.insertBefore(c, $('#empty')); });
     $('#empty').hidden = n > 0;
     count.textContent = n === T.length ? models(T.length) : `${n} из ${T.length}`;
@@ -214,7 +210,7 @@ function pageIndex() {
     if (k === 'stock' || k === 'nw') st[k] = !st[k]; else if (k === 'sort' || k === 'f') st[k] = v; else st[k] = st[k] === v ? '' : v;   // повторный клик снимает фильтр
     draw();
   });
-  $('#fStock').onclick = () => { st.stock = !st.stock; draw(); }; $('#fNew').onclick = () => { st.nw = !st.nw; draw(); };
+  $('#fNew').onclick = () => { st.nw = !st.nw; draw(); };
   $('#sort').onchange = e => { st.sort = e.target.value; draw(); };
   let qt; $('#q').addEventListener('input', e => { clearTimeout(qt); qt = setTimeout(() => { st.q = e.target.value; draw(); }, 120); });
   const sheet = $('#sheet'); const openSheet = o => { sheet.classList.toggle('open', o); sheet.setAttribute('aria-hidden', String(!o)); };
@@ -255,7 +251,6 @@ function pageTile() {
   if (!t) { box.innerHTML = `<div class="missing"><p class="eyebrow">Каталог</p><h1>Эта модель сейчас не в каталоге.</h1><p>${art ? `Артикул ${esc(art)} не найден.` : ''}</p><p><a class="btn gold" href="index.html#catalog">Весь каталог</a></p></div>`; return; }
   document.title = `${t.name} — керамогранит ${t.format} | ${CFG.NAME || 'Каталог плитки'}`;
   const p = pack(t.packing), packs = v => p.sqm ? Math.floor(v / p.sqm + 1e-9) : 0;
-  const freeMsk = Math.max(0, t.stock.msk - t.stock.msk_res), freeTver = Math.max(0, t.stock.tver - t.stock.tver_res);
   const wa = WA ? `${WA}?text=${encodeURIComponent(`Здравствуйте! Интересует керамогранит ${t.name} ${t.format}.`)}` : '';
   const cb = $('#cbWa'); if (cb && wa) cb.href = wa;
   // галерея: чистая фактура (галерея открывается с самой плитки) → интерьер → все фото производителя
@@ -278,10 +273,6 @@ function pageTile() {
           <p class="sub">${parts([t.art, esc(t.surface), t.tone && `тон: ${t.tone.toLowerCase()}`])}</p></div>
       <div class="side">
         <div class="bigprice" id="bigprice">${priceHTML(t, true)}</div>
-        <div class="wh">
-          <div><small>Склад Москва</small><b class="num">${m2(t.stock.msk)}</b><span>${freeMsk > 0 ? `<span class="nw">${packs(freeMsk)}${NB}уп. свободно</span>${t.stock.msk_res > 0 ? `<span class="nw">резерв ${m2(t.stock.msk_res)}</span>` : ''}` : 'сейчас нет'}</span></div>
-          <div><small>Склад Тверь</small><b class="num">${m2(t.stock.tver)}</b><span>${freeTver > 0 ? `<span class="nw">${TVER_ETA_LOW}</span>` : 'сейчас нет'}${t.stock.tver_res > 0 ? `<span class="nw">резерв ${m2(t.stock.tver_res)}</span>` : ''}</span></div>
-        </div>
         ${p.sqm ? `<div class="calc"><label for="need" class="eyebrow">Сколько нужно, м²</label>
           <div class="row"><input id="need" inputmode="decimal" value="${nf(p.sqm * 10)}" aria-describedby="calcRes"><span class="res" id="calcRes" role="status"></span></div>
           <div class="tot" id="calcTot"></div><p>Отгружаем целыми упаковками, округляем вверх.</p></div>` : ''}
