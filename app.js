@@ -17,7 +17,13 @@ const parts = list => list.filter(Boolean).map(x => `<span class="nw">${x}</span
 const WA = CFG.WHATSAPP ? 'https://wa.me/' + String(CFG.WHATSAPP).replace(/\D/g, '') : '';
 const byArt = Object.fromEntries(T.map(t => [t.art, t]));
 const big = set => set && set[set.length - 1][1], small = set => set && set[0][1];
-T.forEach(t => { t.icon = t.face ? small(t.face) + '.jpg' : t.card ? small(t.card) + '.jpg' : t.photos.length ? `img/${t.art}/${t.photos[0]}_t.jpg` : ''; });
+function galOf(t) { return t.gallery && t.gallery.length ? t.gallery : []; }
+function coverId(t) { return t.cover || (galOf(t)[0] && galOf(t)[0].id) || null; }
+function photoSrc(t, id, thumb) { return `img/${t.art}/${id}${thumb ? '_t' : ''}.jpg`; }
+T.forEach(t => {
+  const id = coverId(t) || (t.photos && t.photos[0]);
+  t.icon = id ? photoSrc(t, id, true) : (t.card ? small(t.card) + '.jpg' : '');
+});
 const models = n => { const k = n % 10, h = n % 100; return `${n} ${k === 1 && h !== 11 ? 'модель' : k >= 2 && k <= 4 && (h < 12 || h > 14) ? 'модели' : 'моделей'}`; };
 /** «1 уп-2шт-1,44м2-28,8 кг» → {pcs, sqm, kg, packs} */
 function pack(s) { const n = re => +((String(s || '').replace(/,/g, '.').match(re) || [])[1] || 0); return { pcs: n(/(\d+)\s*шт/i), sqm: n(/([\d.]+)\s*м2/i), kg: n(/([\d.]+)\s*кг/i), packs: n(/(\d+)\s*уп/i) }; }
@@ -88,28 +94,19 @@ const stat = $('#stat'); if (stat) stat.textContent = `${models(T.length)} · ${
 
 /* ---------- карточка ---------- */
 const CARD_SIZES = '(max-width:640px) 48vw, (max-width:1000px) 32vw, 320px';
-function coverSet(t) {
-  if (t.poster) return { set: t.poster, kind: 'poster', label: 'карточка' };
-  if (t.card) return { set: t.card, kind: 'card', label: 'интерьер' };
-  if (t.face) return { set: t.face, kind: 'face', label: 'фактура' };
-  return null;
-}
-function hoverSet(t, mainKind) {
-  if (mainKind === 'poster') {
-    if (t.face) return { set: t.face, kind: 'face' };
-    if (t.card) return { set: t.card, kind: 'card' };
-  }
-  if (mainKind === 'card' && t.face) return { set: t.face, kind: 'face' };
-  if (mainKind === 'face' && t.card) return { set: t.card, kind: 'card' };
-  return null;
-}
+function clipClass(g) { return g && g.clip ? ' clip-' + g.clip : ''; }
 function media(t) {
-  const main = coverSet(t);
-  if (!main) return t.photos.length ? `<img src="img/${t.art}/${t.photos[0]}_t.jpg" alt="${esc(t.name)}" loading="lazy" data-ph="${t.art}:img:${t.photos[0]}">`
-    : `<div class="noph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7l5 5-5 5-5-5z"/></svg><b>${esc(t.name)}</b><span>Фото скоро появится</span></div>`;
-  const alt = hoverSet(t, main.kind);
-  const altLab = main.kind === 'poster' ? (alt && alt.kind === 'face' ? 'фактура' : 'интерьер') : (main.kind === 'face' ? 'в интерьере' : 'фактура');
-  return pic(main.set, CARD_SIZES, `${t.name} — ${main.label}`, false, t.art + ':' + main.kind) + (alt ? `<div class="alt">${pic(alt.set, CARD_SIZES, `${t.name} — ${altLab}`, false, t.art + ':' + alt.kind)}</div><div class="inset" aria-hidden="true">${pic(alt.set, '120px', '', false, t.art + ':' + alt.kind)}</div>` : '');
+  const noph = `<div class="noph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7l5 5-5 5-5-5z"/></svg><b>${esc(t.name)}</b><span>Фото скоро появится</span></div>`;
+  const mainId = coverId(t);
+  if (!mainId) {
+    if (t.card) return pic(t.card, CARD_SIZES, `${t.name} в интерьере`, false, t.art + ':card');
+    return t.photos && t.photos.length ? `<img src="${photoSrc(t, t.photos[0], true)}" alt="${esc(t.name)}" loading="lazy" data-ph="${t.art}:img:${t.photos[0]}">` : noph;
+  }
+  const gMain = galOf(t).find(g => g.id === mainId);
+  const hoverId = t.hover && t.hover !== mainId ? t.hover : null;
+  const gHover = hoverId ? galOf(t).find(g => g.id === hoverId) : null;
+  return `<img class="cover${clipClass(gMain)}" src="${photoSrc(t, mainId, true)}" alt="${esc(t.name)}" loading="lazy" decoding="async" data-ph="${t.art}:img:${mainId}">` +
+    (hoverId ? `<img class="alt${clipClass(gHover)}" src="${photoSrc(t, hoverId, true)}" alt="" aria-hidden="true" loading="lazy" decoding="async" data-ph="${t.art}:img:${hoverId}">` : '');
 }
 const card = t => `<a class="card" href="tile.html?a=${t.art}" data-art="${t.art}">
   <div class="ph">${media(t)}<div class="badges"><span class="badge">${t.format}</span>${t.is_new ? '<span class="badge new">Новинка</span>' : ''}</div></div>
@@ -129,16 +126,24 @@ function Room(getSel) {
   async function apply() {
     const t = getSel(); if (!t || !t.tile) return;
     const lab = $('#roomLabel'); lab.innerHTML = `<small>${t.art} · ${t.format} · ${esc(t.surface)}</small>${esc(t.name)}`; lab.href = `tile.html?a=${t.art}`;
-    const fs = big(t.face); $('#loupeImg').src = fs + '.jpg'; $('#loupe').style.backgroundImage = `url("${fs}.jpg")`;
+    if (t.tile) { $('#loupeImg').src = t.tile; $('#loupe').style.backgroundImage = `url("${t.tile}")`; }
+    const hb = $('#patSeg [data-p="herringbone"]'); if (hb) hb.hidden = !/×/.test(t.format) || t.format.split('×')[0] === t.format.split('×')[1];
     priceBox();
     const img = await load(t.tile); if (getSel() !== t) return;
-    if (R) { R.setTile(img, { format: t.format, surface: t.surface, full: t.tileFull }); R.layoutPreview($('#layoutCv')); } else fallback(img, t);
+    if (R) { R.setTile(img, { format: t.format, surface: t.surface, full: t.tileFull, name: t.name, art: t.art }); R.layoutPreview($('#layoutCv')); } else fallback(img, t);
   }
   const seg = (id, fn) => $(id).addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $$(id + ' button').forEach(x => x.classList.toggle('on', x === b)); fn(b); });
   seg('#roomModes', b => R && R.setMode(b.dataset.m));
   seg('#patSeg', b => { if (R) { R.setPattern(b.dataset.p); R.layoutPreview($('#layoutCv')); } });
   seg('#groutDots', b => { if (R) { R.setGrout(b.dataset.c); R.layoutPreview($('#layoutCv')); } });
   seg('#groutW', b => { if (R) { R.setGroutMM(+b.dataset.w); R.layoutPreview($('#layoutCv')); } });
+  const scenes = $('#roomScenes');
+  if (scenes) seg('#roomScenes', b => { if (R && R.setScene) { R.setScene(b.dataset.s); R.layoutPreview($('#layoutCv')); } });
+  $('#roomShot')?.addEventListener('click', () => {
+    if (!R || !R.download) { toast('Снимок пока недоступен'); return; }
+    const sel = getSel(); R.download(sel ? `${sel.name}-${sel.art}` : 'room');
+  });
+  $('#roomReset')?.addEventListener('click', () => R && R.resetView && R.resetView());
   const lb = $('#loupeBox'), lp = $('#loupe');
   const mv = e => { const r = lb.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, Z = 3.2;
     lp.style.setProperty('--lx', (x - 75) + 'px'); lp.style.setProperty('--ly', (y - 75) + 'px'); lp.style.backgroundSize = `${r.width * Z}px ${r.height * Z}px`; lp.style.backgroundPosition = `${-(x * Z - 75)}px ${-(y * Z - 75)}px`; };
@@ -148,7 +153,7 @@ function Room(getSel) {
     if (started) return; started = true;
     const s = document.createElement('script'); s.src = 'room.bundle.js'; s.async = true;
     s.onload = () => { try { R = window.CatalogRoom.createRoom($('#roomGl'), { preserve: /[?&]shot/.test(location.search), low: /[?&]low/.test(location.search) }); } catch (err) { R = null; }
-      if (!R) $('#roomLoading').textContent = '3D-просмотр недоступен на этом устройстве — смотрите фактуру и схему раскладки.';
+      if (!R) $('#roomLoading').textContent = '3D-просмотр недоступен на этом устройстве — смотрите плитку и схему раскладки.';
       apply().then(() => { if (R) setTimeout(() => { $('#roomGl').classList.add('ready'); $('#roomLoading').classList.add('hide'); }, 350); }); };
     s.onerror = () => { $('#roomLoading').textContent = 'Не удалось загрузить 3D-просмотр.'; apply(); };
     document.body.appendChild(s);
@@ -275,18 +280,24 @@ function pageTile() {
   const p = pack(t.packing), packs = v => p.sqm ? Math.floor(v / p.sqm + 1e-9) : 0;
   const wa = WA ? `${WA}?text=${encodeURIComponent(`Здравствуйте! Интересует керамогранит ${t.name} ${t.format}.`)}` : '';
   const cb = $('#cbWa'); if (cb && wa) cb.href = wa;
-  // галерея: сначала карточка как на Ozon, затем фактура, интерьер и фото производителя
+  // галерея: интерьеры и чистые фото плитки, как в дилерском каталоге, без постеров и фактуры
   const G = [];
-  const gSz = '(max-width:1000px) 100vw, 680px';
-  if (t.poster) G.push({ html: pic(t.poster, gSz, `${t.name} — карточка`, true, t.art + ':poster'), thumb: small(t.poster) + '.jpg', full: big(t.poster) + '.jpg', label: 'карточка', ph: t.art + ':poster', poster: true });
-  if (t.face) G.push({ html: pic(t.face, gSz, `${t.name} — фактура`, !t.poster, t.art + ':face'), thumb: small(t.face) + '.jpg', full: big(t.face) + '.jpg', label: 'фактура', ph: t.art + ':face' });
-  if (t.card) G.push({ html: pic(t.card, gSz, `${t.name} в интерьере`, !t.poster && !t.face, t.art + ':card'), thumb: small(t.card) + '.jpg', full: big(t.card) + '.jpg', label: 'интерьер', ph: t.art + ':card' });
-  const nClean = G.length;
-  t.photos.forEach((ph, i) => G.push({ html: `<img src="img/${t.art}/${ph}.jpg" alt="${esc(t.name)}, фото ${i + 1}" loading="${G.length ? 'lazy' : 'eager'}" decoding="async" data-ph="${t.art}:img:${ph}">`, thumb: `img/${t.art}/${ph}_t.jpg`, full: `img/${t.art}/${ph}.jpg`, label: 'фото производителя', orig: true, ph: t.art + ':img:' + ph }));
-  const gallery = G.length ? `<div class="main-ph"><div class="track" id="track">${G.map((g, i) => `<button type="button" class="slide${g.orig || g.poster ? ' contain' : ''}" data-i="${i}" aria-label="Открыть фото ${i + 1} на весь экран">${g.html}${i < nClean ? `<span class="tagl">${g.label}</span>` : ''}</button>`).join('')}</div>
+  const list = galOf(t).length ? galOf(t) : [];
+  if (!list.length && t.card) {
+    G.push({ html: pic(t.card, '(max-width:1000px) 100vw, 680px', `${t.name} в интерьере`, true, t.art + ':card'), thumb: small(t.card) + '.jpg', full: big(t.card) + '.jpg', label: 'интерьер', ph: t.art + ':card' });
+  }
+  list.forEach((g, i) => {
+    const cls = (g.kind === 'product' ? ' contain' : '') + clipClass(g);
+    G.push({
+      html: `<img class="${cls.trim()}" src="${photoSrc(t, g.id, false)}" alt="${esc(t.name)}, фото ${i + 1}" loading="${G.length ? 'lazy' : 'eager'}" decoding="async" data-ph="${t.art}:img:${g.id}">`,
+      thumb: photoSrc(t, g.id, true), full: photoSrc(t, g.id, false),
+      label: g.kind === 'product' ? 'плитка' : 'интерьер', orig: g.kind === 'product', ph: t.art + ':img:' + g.id, clip: g.clip, kind: g.kind
+    });
+  });
+  const gallery = G.length ? `<div class="main-ph"><div class="track" id="track">${G.map((g, i) => `<button type="button" class="slide${g.kind === 'product' ? ' contain' : ''}${g.clip ? ' clip-' + g.clip : ''}" data-i="${i}" aria-label="Открыть фото ${i + 1} на весь экран">${g.html}</button>`).join('')}</div>
       ${G.length > 1 ? '<button type="button" class="gal-nav prev" aria-label="Предыдущее">‹</button><button type="button" class="gal-nav next" aria-label="Следующее">›</button>' : ''}</div>
-    <div class="thumbs" id="thumbs">${G.map((g, i) => `${i === nClean && nClean ? '<span class="sep">производитель</span>' : ''}<button type="button" data-i="${i}" aria-pressed="${i === 0}" aria-label="Фото ${i + 1}"><img src="${g.thumb}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
-    <p class="cap"><span id="cap">Фото 1 из ${G.length}</span><span>${nClean ? 'Чистые кадры + фото производителя' : ''}</span></p>`
+    <div class="thumbs" id="thumbs">${G.map((g, i) => `<button type="button" data-i="${i}" aria-pressed="${i === 0}" aria-label="Фото ${i + 1}"><img src="${g.thumb}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
+    <p class="cap"><span id="cap">Фото 1 из ${G.length}</span><span></span></p>`
     : '<div class="main-ph"><div class="noph"><b>' + esc(t.name) + '</b><span>Фотографии этой модели скоро появятся</span></div></div>';
   const similar = T.filter(x => x.art !== t.art && x.photos.length && x.format === t.format).sort((a, b) => (b.surface === t.surface) - (a.surface === t.surface) || (b.tone === t.tone) - (a.tone === t.tone)).slice(0, 4);
   box.innerHTML = `<div class="wrap">
@@ -305,7 +316,7 @@ function pageTile() {
         <div class="admin-acts admin-only" hidden><button type="button" class="btn sm" data-admin="price" data-art="${t.art}">Изменить цену</button><a class="btn sm" href="edit.html?a=${t.art}">Изменить фото</a></div>
       </div>
     </div></div>
-    ${t.tile ? `<section class="texsec" id="room"><div class="wrap"><p class="eyebrow">Фактура и примерка</p><h2>${esc(t.name)} <em>в комнате</em></h2><div id="roomHost"></div></div></section>` : ''}
+    ${t.tile ? `<section class="texsec" id="room"><div class="wrap"><p class="eyebrow">Примерочная</p><h2>${esc(t.name)} <em>в комнате</em></h2><div id="roomHost"></div></div></section>` : ''}
     ${similar.length ? `<section class="similar"><div class="wrap"><h2>Похожие модели</h2><div class="grid">${similar.map(card).join('')}</div></div></section>` : ''}`;
   // калькулятор
   const need = $('#need');

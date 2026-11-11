@@ -147,8 +147,10 @@ h2 em{font-style:italic;color:var(--gold2)}
 .card{position:relative;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--panel);border:1px solid var(--line);text-decoration:none;transition:transform .6s var(--ease),border-color .4s,box-shadow .6s var(--ease)}
 .card.hide{display:none}
 .card .ph{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--photo-bg);display:flex;align-items:center;justify-content:center}
-.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform 1.2s var(--ease),opacity .7s var(--ease)}
-.card .ph .alt img{opacity:0;object-fit:cover}
+.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;transition:transform 1.2s var(--ease),opacity .7s var(--ease)}
+.card .ph img.alt{opacity:0}
+.card .ph img.clip-logo-bottom{height:118%;object-position:center top}
+.card .ph img.clip-logo-frame{width:112%;height:138%;object-position:center 48%;left:-6%;top:-16%}
 .card .badges{position:absolute;left:8px;top:8px;display:flex;gap:5px;z-index:2}
 .badge{font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:rgba(13,12,11,.55);backdrop-filter:blur(8px);color:#f3ede3}
 .badge.new{background:var(--gold);color:var(--ink)}
@@ -270,6 +272,10 @@ body{--cb:64px}
 .slide img{width:100%;height:100%;object-fit:cover}
 .slide.contain img{object-fit:contain;background:var(--photo-paper)}
 .slide .tagl{position:absolute;left:10px;top:10px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:99px;background:rgba(13,12,11,.6);backdrop-filter:blur(8px);color:var(--cream)}
+.slide.clip-logo-bottom img{position:absolute;inset:auto 0 0 0;top:0;width:100%;height:118%;object-fit:cover;object-position:center top}
+.slide.clip-logo-frame img{position:absolute;left:-6%;top:-16%;width:112%;height:138%;object-fit:cover;object-position:center 48%}
+.thumbs button img{object-fit:cover;object-position:center 40%}
+
 .gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(13,12,11,.55);backdrop-filter:blur(8px);color:#fff;font-size:22px;display:none;place-items:center;z-index:2}
 .gal-nav.prev{left:12px}.gal-nav.next{right:12px}
 .cap{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:10px 2px 0}
@@ -392,7 +398,7 @@ body{--cb:64px}
   .card h3{font-size:26px}
   .p b{font-size:16px}
   .card:hover{transform:translateY(-6px);border-color:rgba(201,164,106,.4);box-shadow:var(--card-shadow)}
-  .card:hover .ph .alt img{opacity:1}
+  .card:hover .ph img.alt{opacity:1}
   .card:hover .ph img{transform:scale(1.05)}
   .hero-inner{padding-bottom:56px}
   .hero{min-height:min(100vh,940px)}
@@ -504,3 +510,18 @@ html[data-theme="dark"] .theme-btn .i-sun{display:block}
 html[data-theme="dark"] .theme-btn .i-moon{display:none}
 html[data-theme="light"] .hero-dots button{background:rgba(28,29,31,.22)}
 html[data-theme="light"] .sr{background:linear-gradient(140deg,#f7f1e7,#efe6d8)}
+
+
+.seg.wrap{flex-wrap:wrap}
+.seg.wrap button{flex:1 1 auto}
+.room-tools{position:absolute;right:10px;top:10px;z-index:3;display:flex;gap:6px}
+.room-icon{width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.16);background:var(--glass);backdrop-filter:blur(10px);color:#fff;font-size:16px;cursor:pointer;line-height:1}
+.room-icon:hover{border-color:rgba(228,198,144,.55)}
+.room-hint{position:absolute;right:10px;bottom:10px;z-index:3;margin:0;padding:6px 10px;border-radius:99px;background:rgba(14,12,10,.45);backdrop-filter:blur(10px);color:rgba(255,255,255,.8);font-size:11px;letter-spacing:.02em;pointer-events:none;max-width:60%;text-align:right}
+.room-gl{touch-action:none;cursor:grab}
+.room-gl.is-drag{cursor:grabbing}
+.room-stage{user-select:none}
+@media (max-width:700px){
+  .room-hint{font-size:10px;max-width:70%;bottom:8px;right:8px}
+  .room-tools{right:8px;top:48px}
+}

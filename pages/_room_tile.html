@@ -3,19 +3,25 @@
     <div class="room-gl" id="roomGl"></div>
     <div class="room-loading" id="roomLoading"><span></span>Готовим комнату…</div>
     <div class="room-views seg" id="roomModes" role="radiogroup" aria-label="Что облицовать"><button type="button" data-m="floor" class="on">Пол</button><button type="button" data-m="walls">Стены</button><button type="button" data-m="both">Пол и стены</button></div>
+    <div class="room-tools">
+      <button type="button" class="room-icon" id="roomReset" title="Сбросить вид" aria-label="Сбросить вид">↺</button>
+      <button type="button" class="room-icon" id="roomShot" title="Скачать картинку" aria-label="Скачать картинку">↓</button>
+    </div>
+    <p class="room-hint" id="roomHint">Перетащите, чтобы осмотреть · колесо или жест — масштаб</p>
     <a class="room-label" id="roomLabel"></a>
   </div>
   <div class="room-side">
     <div class="room-ctrl">
-      <div class="ctrl"><span>Раскладка</span><div class="seg" id="patSeg"><button type="button" data-p="straight" class="on">Прямая</button><button type="button" data-p="half">Со смещением ½</button><button type="button" data-p="third">⅓</button></div></div>
-      <div class="ctrl"><span>Цвет шва</span><div class="dots" id="groutDots"><button type="button" data-c="#efebe4" title="Белый" style="--c:#efebe4"></button><button type="button" data-c="#b9b2a7" title="Светло-серый" class="on" style="--c:#b9b2a7"></button><button type="button" data-c="#c9b79c" title="Бежевый" style="--c:#c9b79c"></button><button type="button" data-c="#4a4642" title="Графит" style="--c:#4a4642"></button></div></div>
-      <div class="ctrl"><span>Ширина шва</span><div class="seg" id="groutW"><button type="button" data-w="1">1 мм</button><button type="button" data-w="2" class="on">2 мм</button><button type="button" data-w="3">3 мм</button></div></div>
+      <div class="ctrl"><span>Комната</span><div class="seg" id="roomScenes" role="radiogroup" aria-label="Сцена"><button type="button" data-s="living" class="on">Гостиная</button><button type="button" data-s="bath">Ванная</button><button type="button" data-s="kitchen">Кухня</button></div></div>
+      <div class="ctrl"><span>Раскладка</span><div class="seg wrap" id="patSeg" role="radiogroup" aria-label="Раскладка"><button type="button" data-p="straight" class="on">Прямая</button><button type="button" data-p="half">Со смещением</button><button type="button" data-p="third">⅓</button><button type="button" data-p="herringbone">Ёлочка</button><button type="button" data-p="diagonal">Диагональ</button></div></div>
+      <div class="ctrl"><span>Цвет шва</span><div class="dots" id="groutDots"><button type="button" data-c="#f4efe6" title="Белый" style="--c:#f4efe6"></button><button type="button" data-c="#b9b2a7" title="Светло-серый" class="on" style="--c:#b9b2a7"></button><button type="button" data-c="#c9b79c" title="Бежевый" style="--c:#c9b79c"></button><button type="button" data-c="#8a8176" title="Какао" style="--c:#8a8176"></button><button type="button" data-c="#4a4642" title="Графит" style="--c:#4a4642"></button><button type="button" data-c="#1f1c19" title="Чёрный" style="--c:#1f1c19"></button></div></div>
+      <div class="ctrl"><span>Ширина шва</span><div class="seg" id="groutW"><button type="button" data-w="1">1 мм</button><button type="button" data-w="2" class="on">2 мм</button><button type="button" data-w="3">3 мм</button><button type="button" data-w="4">4 мм</button></div></div>
     </div>
     <div class="closeup">
-      <div class="loupe-box" id="loupeBox"><img id="loupeImg" alt="Фактура крупно" width="520" height="520"><div class="loupe" id="loupe"></div><span class="hint">Фактура · лупа</span></div>
+      <div class="loupe-box" id="loupeBox"><img id="loupeImg" alt="Плитка крупно" width="520" height="520"><div class="loupe" id="loupe"></div><span class="hint">Плитка · лупа</span></div>
       <div class="lay"><canvas id="layoutCv" width="640" height="640" aria-label="Схема раскладки"></canvas><span class="hint">Схема раскладки</span></div>
     </div>
     <div class="room-price" id="roomPrice"></div>
-    
+    {{room_extra}}
   </div>
 </div>

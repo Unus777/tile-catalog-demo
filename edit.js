@@ -22,7 +22,7 @@
   const byArt = Object.fromEntries(T.map(t => [t.art, t]));
   const photosOf = t => {
     const out = [];
-    if (t.face) out.push({ id: 'face', label: 'Фактура', src: t.face[t.face.length - 1][1] + '.jpg', thumb: t.face[0][1] + '.jpg' });
+    if (t.face) out.push({ id: 'face', label: 'Плитка для примерочной', src: t.face[t.face.length - 1][1] + '.jpg', thumb: t.face[0][1] + '.jpg' });
     if (t.card) out.push({ id: 'card', label: 'Интерьер', src: t.card[t.card.length - 1][1] + '.jpg', thumb: t.card[0][1] + '.jpg' });
     (t.photos || []).forEach((ph, i) => out.push({ id: 'img:' + ph, label: 'Фото ' + (i + 1), src: `img/${t.art}/${ph}.jpg`, thumb: `img/${t.art}/${ph}_t.jpg` }));
     return out;

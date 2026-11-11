@@ -12,36 +12,118 @@ function rng(seed) { let s = seed >>> 0 || 1; return () => (s = (s * 1664525 + 1
 function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
 
 /* ---------- раскладка плитки на холсте ---------- */
-function layTiles(o) {
-  // o: {img, tw, th (м), aw, ah (м), ppm, grout(мм), groutColor, pattern, seed, ao(fn ctx)}
-  const cw = Math.round(o.aw * o.ppm), ch = Math.round(o.ah * o.ppm), c = canvas(cw, ch), x = c.getContext('2d');
-  x.fillStyle = o.groutColor; x.fillRect(0, 0, cw, ch);
-  const r = rng(o.seed), tw = o.tw * o.ppm, th = o.th * o.ppm, g = Math.max(2, o.grout / 1000 * o.ppm * 1.4);
-  const iw = o.img.naturalWidth || o.img.width, ih = o.img.naturalHeight || o.img.height;
-  const sq = Math.abs(o.tw - o.th) < 1e-6, full = o.full; // full = фото целой плитки нужного формата
-  const shift = o.pattern === 'half' ? .5 : o.pattern === 'third' ? 1 / 3 : 0;
-  const rows = Math.ceil(ch / th) + 1;
-  for (let j = -1; j < rows; j++) {
-    const off = ((j * shift) % 1) * tw;
-    for (let i = -2; i < cw / tw + 1; i++) {
-      const px = i * tw + off, py = j * th; if (px > cw || px + tw < 0) continue;
-      // окно источника с нужным соотношением сторон
-      const ar = tw / th; let sw, sh;
-      const rot = sq ? Math.floor(r() * 4) : (r() < .5 ? 0 : 2); // поворот k*90°
-      const tar = (rot % 2) ? 1 / ar : ar; // соотношение в системе источника
-      if (iw / ih > tar) { sh = ih; sw = ih * tar; } else { sw = iw; sh = iw / tar; }
-      const k = full ? .8 + r() * .2 : .84 + r() * .16; sw *= k; sh *= k; const fx = r() < .5 ? -1 : 1, fy = r() < .5 ? -1 : 1;
-      const sx = (iw - sw) * r(), sy = (ih - sh) * r();
-      x.save(); x.beginPath(); x.rect(px + g / 2, py + g / 2, tw - g, th - g); x.clip();
-      x.translate(px + tw / 2, py + th / 2); x.rotate(rot * Math.PI / 2); x.scale(fx, fy);
-      const dw = (rot % 2) ? th : tw, dh = (rot % 2) ? tw : th;
-      x.drawImage(o.img, sx, sy, sw, sh, -dw / 2, -dh / 2, dw, dh);
-      x.restore();
-      // лёгкая разнотонность и фаска
-      const v = (r() - .5) * .05; x.fillStyle = v > 0 ? `rgba(255,255,255,${v})` : `rgba(0,0,0,${-v})`; x.fillRect(px + g / 2, py + g / 2, tw - g, th - g);
-      x.strokeStyle = 'rgba(0,0,0,.10)'; x.lineWidth = 1; x.strokeRect(px + g / 2 + .5, py + g / 2 + .5, tw - g - 1, th - g - 1);
-      x.strokeStyle = 'rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(px + g / 2 + 1.5, py + th - g / 2 - 1.5); x.lineTo(px + g / 2 + 1.5, py + g / 2 + 1.5); x.lineTo(px + tw - g / 2 - 1.5, py + g / 2 + 1.5); x.stroke();
+function groutFill(x, cw, ch, color, seed) {
+  x.fillStyle = color; x.fillRect(0, 0, cw, ch);
+  const r = rng(seed + 17), id = x.getImageData(0, 0, cw, ch), d = id.data;
+  // лёгкий шум затирки, без полос на стыках
+  for (let i = 0; i < d.length; i += 4) { const n = (r() - .5) * 9; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+  x.putImageData(id, 0, 0);
+}
+function tilePlacements(pattern, tw, th, g, cw, ch) {
+  const out = [];
+  const sX = tw + g, sY = th + g;
+  if (pattern === 'herringbone' || pattern === 'herringbone0') {
+    // осевая ёлочка (поворот на 45° делается в layTiles одним холстом)
+    const short = Math.min(tw, th), long = Math.max(tw, th);
+    const ratio = long / Math.max(short, 1);
+    if (ratio >= 1.6 && ratio <= 2.4) {
+      const modW = long + short + 2 * g;
+      const modH = long + 2 * g;
+      const cols = Math.ceil(cw / modW) + 4;
+      const rows = Math.ceil(ch / modH) + 4;
+      for (let by = -3; by < rows; by++) {
+        const ox = (by & 1) ? (short + g) : 0;
+        for (let bx = -3; bx < cols; bx++) {
+          const x = bx * modW + ox, y = by * modH;
+          out.push({ x, y, w: long, h: short, deg: 0 });
+          out.push({ x, y: y + short + g, w: long, h: short, deg: 0 });
+          const vy = y + Math.max(0, (2 * short + g - long) / 2);
+          out.push({ x: x + long + g, y: vy, w: short, h: long, deg: 0 });
+        }
+      }
+    } else {
+      const step = long + short + 2 * g;
+      for (let v = -3; v < Math.ceil(ch / (short + g)) + 4; v++) {
+        for (let u = -3; u < Math.ceil(cw / step) + 4; u++) {
+          const x = u * step + ((v & 1) ? step / 2 : 0);
+          const y = v * (short + g);
+          if ((u + v) & 1) out.push({ x, y, w: short, h: long, deg: 0 });
+          else out.push({ x, y, w: long, h: short, deg: 0 });
+        }
+      }
     }
+    return out;
+  }
+  const shift = pattern === 'half' ? .5 : pattern === 'third' ? 1 / 3 : 0;
+  const rows = Math.ceil(ch / sY) + 2;
+  for (let j = -2; j < rows; j++) {
+    const off = ((j * shift) % 1) * sX;
+    for (let i = -3; i < cw / sX + 3; i++) out.push({ x: i * sX + off, y: j * sY, w: tw, h: th, deg: 0 });
+  }
+  return out;
+}
+function sourceWindow(img, dw, dh, full, r) {
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const tar = dw / dh;
+  let sw, sh;
+  if (iw / ih > tar) { sh = ih; sw = ih * tar; } else { sw = iw; sh = iw / tar; }
+  const inset = full ? .994 : .98;
+  sw *= inset; sh *= inset;
+  const sx = (iw - sw) / 2, sy = (ih - sh) / 2;
+  return { sx, sy, sw, sh };
+}
+function tileHits(t, cw, ch) {
+  const rad = (t.deg || 0) * Math.PI / 180;
+  const c = Math.abs(Math.cos(rad)), s = Math.abs(Math.sin(rad));
+  const aw = t.w * c + t.h * s, ah = t.w * s + t.h * c;
+  const cx = t.x + t.w / 2, cy = t.y + t.h / 2;
+  return !(cx - aw / 2 > cw || cy - ah / 2 > ch || cx + aw / 2 < 0 || cy + ah / 2 < 0);
+}
+function drawOneTile(x, img, t, g, full, r) {
+  const tw = t.w, th = t.h, cx = t.x + tw / 2, cy = t.y + th / 2;
+  x.save();
+  x.translate(cx, cy);
+  x.rotate((t.deg || 0) * Math.PI / 180);
+  // клип в локальных осях плитки — после поворота швы остаются ровными
+  x.beginPath(); x.rect(-tw / 2, -th / 2, tw, th); x.clip();
+  const turn = full ? ((r() < .5) ? 180 : 0) : 0;
+  if (turn) x.rotate(Math.PI);
+  const src = sourceWindow(img, tw, th, full, r);
+  x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high';
+  x.drawImage(img, src.sx, src.sy, src.sw, src.sh, -tw / 2, -th / 2, tw, th);
+  const v = (r() - .5) * (full ? .03 : .04);
+  x.fillStyle = v > 0 ? `rgba(255,255,255,${v})` : `rgba(0,0,0,${-v})`;
+  x.fillRect(-tw / 2, -th / 2, tw, th);
+  x.strokeStyle = 'rgba(0,0,0,.08)'; x.lineWidth = 1;
+  x.strokeRect(-tw / 2 + .5, -th / 2 + .5, tw - 1, th - 1);
+  x.strokeStyle = 'rgba(255,255,255,.12)'; x.beginPath();
+  x.moveTo(-tw / 2 + 1.2, th / 2 - 1.2); x.lineTo(-tw / 2 + 1.2, -th / 2 + 1.2); x.lineTo(tw / 2 - 1.2, -th / 2 + 1.2); x.stroke();
+  x.restore();
+}
+function layTiles(o) {
+  // o: {img, tw, th (м), aw, ah (м), ppm, grout(мм), groutColor, pattern, seed, ao, full}
+  const pat = o.pattern || 'straight';
+  const cw = Math.round(o.aw * o.ppm), ch = Math.round(o.ah * o.ppm);
+  // ёлочка и диагональ: сначала ось-выровненная раскладка, затем один поворот холста
+  if ((pat === 'diagonal' || pat === 'herringbone') && !o._inner) {
+    const side = Math.ceil(Math.hypot(cw, ch) + Math.max(o.tw, o.th) * o.ppm);
+    const inner = layTiles({ ...o, pattern: pat === 'herringbone' ? 'herringbone0' : 'straight', aw: side / o.ppm, ah: side / o.ppm, ao: null, _inner: true });
+    const c = canvas(cw, ch), x = c.getContext('2d');
+    groutFill(x, cw, ch, o.groutColor, o.seed);
+    x.translate(cw / 2, ch / 2);
+    x.rotate(Math.PI / 4);
+    x.drawImage(inner, -inner.width / 2, -inner.height / 2);
+    if (o.ao) o.ao(x, cw, ch, o.ppm);
+    return c;
+  }
+  const c = canvas(cw, ch), x = c.getContext('2d');
+  groutFill(x, cw, ch, o.groutColor, o.seed);
+  const r = rng(o.seed);
+  const tw = o.tw * o.ppm, th = o.th * o.ppm, g = Math.max(1.5, o.grout / 1000 * o.ppm);
+  const tiles = tilePlacements(pat === 'herringbone0' ? 'herringbone0' : (pat === 'herringbone' ? 'herringbone0' : pat), tw, th, g, cw, ch);
+  for (const t of tiles) {
+    if (!tileHits(t, cw, ch)) continue;
+    drawOneTile(x, o.img, t, g, !!o.full, r);
   }
   if (o.ao) o.ao(x, cw, ch, o.ppm);
   return c;
@@ -151,7 +233,7 @@ function buildFurniture(scene, list) {
   inst.castShadow = true; scene.add(inst); list.push(inst);
   // картина на дальней стене
   const fr = add(new RoundedBoxGeometry(1.0, 1.3, .04, 2, .006), new THREE.MeshStandardMaterial({ color: 0x2a241f, roughness: .5 }), -.2, 1.55, Z0 + .03);
-  const art = new THREE.Mesh(new THREE.PlaneGeometry(.92, 1.22), new THREE.MeshStandardMaterial({ map: artTex(), roughness: .9 })); art.position.set(-.2, 1.55, Z0 + .052); scene.add(art);
+  const art = new THREE.Mesh(new THREE.PlaneGeometry(.92, 1.22), new THREE.MeshStandardMaterial({ map: artTex(), roughness: .9 })); art.position.set(-.2, 1.55, Z0 + .052); scene.add(art); list.push(art);
   return { blobs: [ // для AO на полу (координаты в метрах от угла X0,Z0)
     { x: sx - .49 - X0, y: sz - L / 2 - Z0, w: .98, h: L, blur: .08, a: .55 },
     { x: sx - 1.35 - X0, y: sz - Z0, r: .36, blur: .07, a: .45 },
@@ -159,11 +241,85 @@ function buildFurniture(scene, list) {
     { x: sx + .05 - X0, y: sz - L / 2 - .4 - Z0, r: .17, blur: .04, a: .35 }] };
 }
 
+
+function addMesh(scene, list, geo, mat, x, y, z, ry = 0) {
+  const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.y = ry; m.castShadow = m.receiveShadow = true; scene.add(m); list.push(m); return m;
+}
+function buildBath(scene, list) {
+  const oak = new THREE.MeshStandardMaterial({ color: 0xcbb79a, roughness: .82 });
+  const stone = new THREE.MeshStandardMaterial({ color: 0xe8e2d8, roughness: .45 });
+  const white = new THREE.MeshStandardMaterial({ color: 0xf4f1ea, roughness: .35 });
+  const chrome = new THREE.MeshStandardMaterial({ color: 0x9aa0a6, roughness: .25, metalness: .85 });
+  const glass = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0, transmission: .85, thickness: .02, transparent: true, opacity: .35, metalness: 0, side: THREE.DoubleSide });
+  const linen = new THREE.MeshStandardMaterial({ color: 0xd9cfc2, roughness: .95 });
+  const add = (geo, mat, x, y, z, ry = 0) => addMesh(scene, list, geo, mat, x, y, z, ry);
+  // тумба у правой стены
+  const vx = X1 - .45, vz = -2.4;
+  add(new RoundedBoxGeometry(1.6, .55, .48, 4, .02), oak, vx, .32, vz);
+  add(new THREE.CylinderGeometry(.22, .2, .08, 40), stone, vx - .2, .64, vz);
+  add(new THREE.SphereGeometry(.2, 32, 16, 0, 7, 0, 1.4), white, vx - .2, .78, vz).scale.set(1, .45, 1);
+  add(new THREE.CylinderGeometry(.012, .012, .18, 12), chrome, vx - .2, .95, vz + .14);
+  add(new THREE.CylinderGeometry(.012, .012, .12, 12), chrome, vx - .2, .88, vz + .2).rotation.x = 1.1;
+  // зеркало
+  const mir = add(new RoundedBoxGeometry(.02, 1.05, .7, 2, .01), new THREE.MeshStandardMaterial({ color: 0xcfd4d8, roughness: .12, metalness: .4 }), vx + .22, 1.45, vz);
+  add(new RoundedBoxGeometry(.03, 1.1, .76, 2, .01), oak, vx + .23, 1.45, vz);
+  // ванна у окна
+  const tx = X0 + 1.35, tz = WIN.z0 + .55;
+  add(new RoundedBoxGeometry(.85, .42, 1.7, 6, .16), white, tx, .32, tz);
+  add(new THREE.CylinderGeometry(.012, .012, .55, 12), chrome, tx + .28, .7, tz - .65);
+  add(new RoundedBoxGeometry(.22, .04, .36, 2, .01), linen, tx + .3, .55, tz + .35);
+  // стеклянная перегородка душа
+  const gx = -0.15, gz = -3.0;
+  const scr = add(new THREE.PlaneGeometry(1.35, 2.05), glass, gx, 1.05, gz); scr.rotation.y = Math.PI / 2; scr.castShadow = false;
+  add(new THREE.CylinderGeometry(.012, .012, 2.05, 10), chrome, gx, 1.05, gz - .67);
+  add(new THREE.CylinderGeometry(.09, .12, .06, 24), chrome, gx - .35, 2.0, gz);
+  // полотенца на тумбе
+  add(new RoundedBoxGeometry(.18, .08, .28, 2, .02), linen, vx + .4, .66, vz);
+  return { blobs: [
+    { x: vx - .8 - X0, y: vz - .24 - Z0, w: 1.6, h: .48, blur: .07, a: .5 },
+    { x: tx - .42 - X0, y: tz - .85 - Z0, w: .85, h: 1.7, blur: .07, a: .45 },
+    { x: gx - X0, y: gz - .1 - Z0, r: .12, blur: .04, a: .3 }
+  ] };
+}
+function buildKitchen(scene, list) {
+  const oak = new THREE.MeshStandardMaterial({ color: 0x8d6b4a, roughness: .78 });
+  const light = new THREE.MeshStandardMaterial({ color: 0xefe7da, roughness: .85 });
+  const top = new THREE.MeshStandardMaterial({ color: 0xd8d2c8, roughness: .4, metalness: .08 });
+  const black = new THREE.MeshStandardMaterial({ color: 0x2a2622, roughness: .4, metalness: .3 });
+  const add = (geo, mat, x, y, z, ry = 0) => addMesh(scene, list, geo, mat, x, y, z, ry);
+  // нижние шкафы вдоль дальней стены
+  add(new RoundedBoxGeometry(W - .3, .82, .55, 2, .01), oak, 0, .41, Z0 + .32);
+  add(new RoundedBoxGeometry(W - .28, .05, .58, 2, .01), top, 0, .84, Z0 + .32);
+  // верхние шкафы
+  add(new RoundedBoxGeometry(W - .5, .55, .32, 2, .01), light, 0, 2.25, Z0 + .2);
+  // остров
+  const ix = .55, iz = -1.7;
+  add(new RoundedBoxGeometry(1.7, .82, .75, 3, .02), oak, ix, .41, iz);
+  add(new RoundedBoxGeometry(1.74, .04, .79, 2, .01), top, ix, .84, iz);
+  // стулья
+  for (const dz of [-.22, .22]) {
+    add(new THREE.CylinderGeometry(.16, .14, .04, 24), black, ix - .15, .52, iz + .55 + dz);
+    add(new THREE.CylinderGeometry(.015, .015, .5, 8), black, ix - .15, .26, iz + .55 + dz);
+  }
+  // подвесы
+  for (const dx of [-.4, .4]) {
+    add(new THREE.CylinderGeometry(.006, .006, .45, 8), black, ix + dx, 2.2, iz);
+    add(new THREE.CylinderGeometry(.12, .16, .16, 24), new THREE.MeshStandardMaterial({ color: 0xf3ead9, roughness: .9, emissive: 0xffe2b0, emissiveIntensity: .2 }), ix + dx, 1.95, iz);
+  }
+  // ваза на острове
+  add(new THREE.CylinderGeometry(.07, .08, .18, 20), new THREE.MeshStandardMaterial({ color: 0x7a8b74, roughness: .5 }), ix + .45, .97, iz);
+  return { blobs: [
+    { x: 0.15 - X0, y: Z0 + .05 - Z0, w: W - .3, h: .55, blur: .08, a: .5 },
+    { x: ix - .85 - X0, y: iz - .38 - Z0, w: 1.7, h: .75, blur: .08, a: .55 },
+    { x: ix - .15 - X0, y: iz + .55 - .16 - Z0, r: .18, blur: .04, a: .3 }
+  ] };
+}
+
 /* ---------- сцена ---------- */
 export function createRoom(host, opts = {}) {
   RectAreaLightUniformsLib.init();
   const lowp = opts.low || matchMedia('(max-width: 700px)').matches;
-  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: !!opts.preserve, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, lowp ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -209,7 +365,7 @@ export function createRoom(host, opts = {}) {
   const bmat = new THREE.MeshStandardMaterial({ color: 0xf3efe8, roughness: .6 });
   const bb = (w, x, z, ry) => { const m = mk(new THREE.BoxGeometry(w, .08, .015), bmat); m.position.set(x, .04, z); m.rotation.y = ry; m.castShadow = true; };
   bb(W, 0, Z0 + .008, 0); bb(D, X1 - .008, Z0 + D / 2, Math.PI / 2); bb(WIN.z0 - Z0, X0 + .008, (Z0 + WIN.z0) / 2, Math.PI / 2); bb(Z1 - WIN.z1, X0 + .008, (WIN.z1 + Z1) / 2, Math.PI / 2);
-  const furn = []; const { blobs } = buildFurniture(scene, furn);
+  let furn = []; let blobs = []; let sceneName = 'living';
 
   // отражение
   const rs = lowp ? 512 : 1024;
@@ -231,20 +387,84 @@ export function createRoom(host, opts = {}) {
   const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
   function resize() { const w = host.clientWidth, h = host.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); renderer.domElement.style.width = '100%'; renderer.domElement.style.height = '100%'; cam.aspect = w / h; cam.updateProjectionMatrix(); dirty = true; kick(); }
   new ResizeObserver(resize).observe(host);
-  host.addEventListener('pointermove', e => { const r = host.getBoundingClientRect(); mouse.x = (e.clientX - r.left) / r.width - .5; mouse.y = (e.clientY - r.top) / r.height - .5; kick(); });
-  host.addEventListener('pointerleave', () => { mouse.x = mouse.y = 0; kick(); });
+  let userYaw = 0, userPitch = 0, userZoom = 1, dragging = false;
+  const pointers = new Map();
+  host.style.touchAction = 'none';
+  host.addEventListener('pointerdown', e => {
+    host.setPointerCapture?.(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 1) { dragging = true; host.classList.add('is-drag'); }
+  });
+  host.addEventListener('pointermove', e => {
+    const r = host.getBoundingClientRect();
+    if (!dragging && pointers.size < 2) {
+      mouse.x = (e.clientX - r.left) / r.width - .5; mouse.y = (e.clientY - r.top) / r.height - .5; kick(); return;
+    }
+    const prev = pointers.get(e.pointerId); if (!prev) return;
+    if (pointers.size === 2) {
+      const pts = [...pointers.values()];
+      const d0 = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const pts2 = [...pointers.values()];
+      const d1 = Math.hypot(pts2[0].x - pts2[1].x, pts2[0].y - pts2[1].y);
+      if (d0 > 4) userZoom = Math.min(2.6, Math.max(0.75, userZoom * (d1 / d0)));
+      dirty = true; kick(); return;
+    }
+    userYaw -= (e.clientX - prev.x) * 0.005;
+    userPitch += (e.clientY - prev.y) * 0.0035;
+    userPitch = Math.max(-0.7, Math.min(0.7, userPitch));
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    dirty = true; kick();
+  });
+  const endPtr = e => { pointers.delete(e.pointerId); if (!pointers.size) { dragging = false; host.classList.remove('is-drag'); } };
+  host.addEventListener('pointerup', endPtr); host.addEventListener('pointercancel', endPtr);
+  host.addEventListener('pointerleave', () => { if (!dragging) { mouse.x = mouse.y = 0; kick(); } });
+  host.addEventListener('wheel', e => {
+    e.preventDefault();
+    userZoom = Math.min(2.6, Math.max(0.75, userZoom * (e.deltaY > 0 ? 0.91 : 1.1)));
+    dirty = true; kick();
+  }, { passive: false });
+  host.addEventListener('dblclick', () => { userYaw = userPitch = 0; userZoom = 1; dirty = true; kick(); });
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) kick(); }).observe(host);
   const sm = { x: 0, y: 0 }; let raf = 0, t0 = performance.now(), frames = 0;
   function kick() { if (!raf && visible) raf = requestAnimationFrame(loop); }
   function loop(now) {
     raf = 0; let anim = false;
     if (tw) { const k = Math.min(1, (now - tw.t0) / tw.dur), e = ease(k); cur.p.lerpVectors(tw.from.p, tw.to.p, e); cur.t.lerpVectors(tw.from.t, tw.to.t, e); cur.fov = tw.from.fov + (tw.to.fov - tw.from.fov) * e; if (k >= 1) tw = null; anim = true; }
-    if (!RM) { const dx = mouse.x - sm.x, dy = mouse.y - sm.y; if (Math.abs(dx) + Math.abs(dy) > .0005) { sm.x += dx * .08; sm.y += dy * .08; anim = true; } }
-    const drift = RM ? 0 : Math.sin((now - t0) / 2400) * .04;
-    cam.position.set(cur.p.x + sm.x * .35 + drift, cur.p.y - sm.y * .18, cur.p.z); cam.lookAt(cur.t.x + sm.x * .2, cur.t.y - sm.y * .1, cur.t.z);
+    if (!RM && !dragging) { const dx = mouse.x - sm.x, dy = mouse.y - sm.y; if (Math.abs(dx) + Math.abs(dy) > .0005) { sm.x += dx * .08; sm.y += dy * .08; anim = true; } }
+    const drift = (RM || dragging) ? 0 : Math.sin((now - t0) / 2400) * .03;
+    const look = cur.t, dir = cur.p.clone().sub(cur.t);
+    const sph = new THREE.Spherical().setFromVector3(dir);
+    sph.theta += userYaw + sm.x * .2;
+    sph.phi = THREE.MathUtils.clamp(sph.phi + userPitch - sm.y * .12, 0.18, Math.PI * 0.48);
+    sph.radius = THREE.MathUtils.clamp(sph.radius / userZoom, 0.85, 7);
+    const pos = look.clone().add(new THREE.Vector3().setFromSpherical(sph));
+    cam.position.set(pos.x + drift, pos.y, pos.z); cam.lookAt(look.x, look.y, look.z);
     if (cam.fov !== cur.fov) { cam.fov = cur.fov; cam.updateProjectionMatrix(); }
     if (anim || dirty || !RM) { renderer.render(scene, cam); dirty = false; frames++; }
     if ((anim || !RM) && visible) kick();
+  }
+  function clearFurn() {
+    furn.forEach(m => {
+      scene.remove(m);
+      m.traverse?.(obj => {
+        obj.geometry && obj.geometry.dispose && obj.geometry.dispose();
+        if (obj.material) [].concat(obj.material).forEach(mat => { mat.map && mat.map.dispose && mat.map.dispose(); mat.dispose && mat.dispose(); });
+      });
+    });
+    furn = [];
+  }
+  function loadScene(name) {
+    const nextName = name || 'living';
+    const nextList = [];
+    try {
+      const built = nextName === 'bath' ? buildBath(scene, nextList) : nextName === 'kitchen' ? buildKitchen(scene, nextList) : buildFurniture(scene, nextList);
+      clearFurn();
+      furn = nextList; blobs = built.blobs; sceneName = nextName; rebuild();
+    } catch (err) {
+      console.error('room scene', err);
+      nextList.forEach(m => scene.remove(m));
+    }
   }
 
   // плитка
@@ -254,34 +474,52 @@ export function createRoom(host, opts = {}) {
   const old = [];
   function rebuild() {
     if (!state.img) return;
-    old.forEach(t => t.dispose()); old.length = 0;
-    const [a, b] = state.format.split('×').map(v => +v / 100); // 60×120 → длинная сторона поперёк комнаты
-    const tile = { tw: Math.max(a, b), th: Math.min(a, b) };
-    const base = { img: state.img, grout: state.groutMM, groutColor: state.grout, pattern: state.pattern, full: state.full };
-    const fl = layTiles({ ...base, ...tile, aw: W, ah: D, ppm, seed: state.seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, ['l', 'r', 't'], blobs) });
-    const ft = texFrom(fl); old.push(ft); floorMat.map = ft;
-    const gl = /Глянец|Полир/i.test(state.surface), sat = /Сатин|Карвинг/i.test(state.surface);
-    floorMat.roughness = gl ? .12 : sat ? .38 : .72; floorMat.clearcoat = gl ? .6 : 0; floorMat.clearcoatRoughness = .08; floorMat.specularIntensity = gl ? 1 : .5;
-    refl.material.uniforms.opacity.value = gl ? .42 : sat ? .14 : 0; refl.material.uniforms.blur.value = gl ? 1.2 : 3.5; refl.visible = gl || sat;
-    floorMat.needsUpdate = true;
-    const tiledWalls = state.mode !== 'floor', wppm = ppm * .6;
-    const wall = (aw, key, edges, seed) => {
-      const c = tiledWalls ? layTiles({ ...base, tw: Math.min(a, b), th: Math.max(a, b), aw, ah: H, ppm: wppm, seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, edges) })
-        : (() => { const c = plaster(Math.round(aw * 160), Math.round(H * 160), seed); aoEdges(c.getContext('2d'), c.width, c.height, 160, edges); return c; })();
-      const t = texFrom(c); old.push(t); wallMats[key].map = t; wallMats[key].roughness = tiledWalls ? (gl ? .2 : sat ? .45 : .8) : .95; wallMats[key].needsUpdate = true;
-    };
-    wall(W, 'back', ['l', 'r', 'b', 't'], 21); wall(D, 'right', ['l', 'b', 't'], 22); wall(D, 'left', ['r', 'b', 't'], 23);
+    try {
+      const next = [];
+      const [a, b] = state.format.split('×').map(v => +v / 100);
+      const tile = { tw: Math.max(a, b), th: Math.min(a, b) };
+      const base = { img: state.img, grout: state.groutMM, groutColor: state.grout, pattern: state.pattern, full: state.full };
+      const fl = layTiles({ ...base, ...tile, aw: W, ah: D, ppm, seed: state.seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, ['l', 'r', 't'], blobs) });
+      const ft = texFrom(fl); next.push(ft);
+      const gl = /Глянец|Полир/i.test(state.surface), sat = /Сатин|Карвинг/i.test(state.surface);
+      const tiledWalls = state.mode !== 'floor', wppm = ppm * .6;
+      const wallCanvases = {};
+      const wall = (aw, key, edges, seed) => {
+        const c = tiledWalls ? layTiles({ ...base, tw: Math.min(a, b), th: Math.max(a, b), aw, ah: H, ppm: wppm, seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, edges) })
+          : (() => { const c = plaster(Math.round(aw * 160), Math.round(H * 160), seed); aoEdges(c.getContext('2d'), c.width, c.height, 160, edges); return c; })();
+        const tex = texFrom(c); next.push(tex); wallCanvases[key] = tex;
+      };
+      wall(W, 'back', ['l', 'r', 'b', 't'], 21); wall(D, 'right', ['l', 'b', 't'], 22); wall(D, 'left', ['r', 'b', 't'], 23);
+      old.forEach(tex => tex.dispose()); old.length = 0; old.push(...next);
+      floorMat.map = ft;
+      floorMat.roughness = gl ? .12 : sat ? .38 : .72; floorMat.clearcoat = gl ? .6 : 0; floorMat.clearcoatRoughness = .08; floorMat.specularIntensity = gl ? 1 : .5;
+      refl.material.uniforms.opacity.value = gl ? .42 : sat ? .14 : 0; refl.material.uniforms.blur.value = gl ? 1.2 : 3.5; refl.visible = gl || sat;
+      floorMat.needsUpdate = true;
+      for (const key of ['back', 'right', 'left']) {
+        wallMats[key].map = wallCanvases[key]; wallMats[key].roughness = tiledWalls ? (gl ? .2 : sat ? .45 : .8) : .95; wallMats[key].needsUpdate = true;
+      }
+    } catch (err) { console.error('room rebuild', err); }
     dirty = true; kick();
   }
+  loadScene('living');
   resize(); go('floor', true); kick();
   return {
     setTile(img, info) { state.img = img; state.format = info.format; state.surface = info.surface; state.full = !!info.full; state.seed = (state.seed * 7 + 3) % 997; rebuild(); },
     setMode(m) { const changed = (m === 'floor') !== (state.mode === 'floor'); state.mode = m; if (changed) rebuild(); go(m); },
     setGrout(c) { state.grout = c; rebuild(); }, setGroutMM(v) { state.groutMM = v; rebuild(); }, setPattern(p) { state.pattern = p; rebuild(); },
+    setScene(name) { if (name && name !== sceneName) loadScene(name); },
+    resetView() { userYaw = 0; userPitch = 0; userZoom = 1; dirty = true; kick(); },
+    download(name) {
+      renderer.render(scene, cam);
+      const a = document.createElement('a');
+      a.href = renderer.domElement.toDataURL('image/png');
+      a.download = (name || 'room').replace(/[^\wа-яё\-]+/gi, '_') + '.png';
+      a.click();
+    },
     view: go, renderer, stats: () => ({ frames, ms: performance.now() - t0 }),
-    layoutPreview(cv, opts2) { // плоская схема раскладки для панели «фактура + раскладка»
+    layoutPreview(cv, opts2) {
       if (!state.img) return; const [a, b] = state.format.split('×').map(v => +v / 100);
-      const c = layTiles({ img: state.img, tw: Math.max(a, b), th: Math.min(a, b), aw: 2.4, ah: 2.4 * cv.height / cv.width, ppm: cv.width / 2.4, grout: Math.max(state.groutMM, 2), groutColor: state.grout, pattern: state.pattern, full: state.full, seed: state.seed });
+      const c = layTiles({ img: state.img, tw: Math.max(a, b), th: Math.min(a, b), aw: 2.4, ah: 2.4 * cv.height / cv.width, ppm: cv.width / 2.4, grout: Math.max(state.groutMM, 1), groutColor: state.grout, pattern: state.pattern, full: state.full, seed: state.seed });
       cv.getContext('2d').drawImage(c, 0, 0, cv.width, cv.height);
     }
   };

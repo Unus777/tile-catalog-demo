@@ -1,4 +1,4 @@
-// v2 checks: console errors on key pages, theme screenshots
+// v3 checks: no face/фактура in UI, themes, room screenshots
 import { chromium } from 'playwright-core';
 import fs from 'fs';
 import http from 'http';
@@ -50,11 +50,15 @@ async function checkPages(theme) {
     const t = await p.getAttribute('html', 'data-theme');
     if (t !== theme) errs.push(`${tag} ${page} data-theme=${t} expected ${theme}`);
     if (await p.locator('#themeBtn').count() === 0) errs.push(`${tag} ${page} missing #themeBtn`);
-    if (page.startsWith('index') || page.startsWith('tile') || page.startsWith('prices') || page.startsWith('edit') || page.startsWith('admin')) {
-      // showroom leftover
-      const body = await p.evaluate(() => document.body.innerText);
-      for (const bad of ['Приехать в шоу-рум', 'довоз из Твери', 'склада: Москва', 'Шоу-рум']) {
-        if (body.includes(bad)) errs.push(`${tag} ${page} leftover: ${bad}`);
+    const body = await p.evaluate(() => document.body.innerText);
+    for (const bad of ['Приехать в шоу-рум', 'довоз из Твери', 'склада: Москва', 'Шоу-рум']) {
+      if (body.includes(bad)) errs.push(`${tag} ${page} leftover: ${bad}`);
+    }
+    if (page.startsWith('index') || page.startsWith('tile')) {
+      if (/Фактура/.test(body) && !page.includes('edit')) errs.push(`${tag} ${page} leftover word Фактура`);
+      if (await p.locator('.tagl, .inset').count()) {
+        const labs = await p.locator('.tagl').allTextContents();
+        if (labs.some(s => /фактур/i.test(s))) errs.push(`${tag} ${page} gallery label фактура`);
       }
     }
     console.log('ok', theme, page, '|', title, '| theme', t);
@@ -64,29 +68,69 @@ async function checkPages(theme) {
 
 for (const theme of ['light', 'dark']) {
   await checkPages(theme);
-  // screenshots index + tile, 1440 and 390
   for (const [w, h, mob, suffix] of [[1440, 900, false, '1440'], [390, 844, true, '390']]) {
     const { c, p } = await open(w, h, mob, theme);
     await p.goto(BASE + 'index.html#catalog', { waitUntil: 'networkidle', timeout: 60000 });
     await p.waitForTimeout(1800);
-    // scroll to grid
     await p.evaluate(() => { const el = document.querySelector('#grid'); if (el) scrollTo(0, el.getBoundingClientRect().top + scrollY - 90); });
     await p.waitForTimeout(1200);
-    await shot(p, `v2-${theme}-index-cards-${suffix}`);
-    // hero
+    await shot(p, `v3-${theme}-index-cards-${suffix}`);
     await p.evaluate(() => scrollTo(0, 0));
-    await p.waitForTimeout(600);
-    await shot(p, `v2-${theme}-index-hero-${suffix}`);
+    await p.waitForTimeout(400);
+    await shot(p, `v3-${theme}-index-hero-${suffix}`);
     await p.goto(BASE + 'tile.html?a=VHP612038', { waitUntil: 'networkidle', timeout: 60000 });
     await p.waitForTimeout(1400);
-    await shot(p, `v2-${theme}-tile-${suffix}`);
+    await shot(p, `v3-${theme}-tile-${suffix}`);
     await c.close();
   }
 }
 
-// also generic v2 card shots (light default) aliases
-fs.copyFileSync(`${SHOT}/v2-light-index-cards-1440.png`, `${SHOT}/v2-index-cards-1440.png`);
-fs.copyFileSync(`${SHOT}/v2-light-index-cards-390.png`, `${SHOT}/v2-index-cards-390.png`);
+fs.copyFileSync(`${SHOT}/v3-light-index-cards-1440.png`, `${SHOT}/v3-index-cards-1440.png`);
+fs.copyFileSync(`${SHOT}/v3-light-index-cards-390.png`, `${SHOT}/v3-index-cards-390.png`);
+
+// Room shots: several SKUs, light desktop + one mobile + one dark
+const roomArts = [
+  ['VHP612038', '60x120-marble'],
+  ['VHF612802', '60x120-concrete'],
+  ['VHP600132', '60x60-marble'],
+  ['VHP600822', '60x60-onyx']
+];
+async function shotRoom(art, slug, w, h, mob, theme, extra) {
+  const { c, p } = await open(w, h, mob, theme);
+  await p.goto(BASE + `index.html?low#room`, { waitUntil: 'networkidle', timeout: 90000 });
+  await p.waitForTimeout(600);
+  // pick swatch
+  await p.evaluate(a => {
+    const b = document.querySelector(`.swb[data-art="${a}"]`);
+    if (b) b.click();
+    const el = document.querySelector('#room');
+    if (el) scrollTo(0, el.getBoundingClientRect().top + scrollY - 40);
+  }, art);
+  try {
+    await p.waitForSelector('#roomGl.ready', { timeout: 25000 });
+  } catch (e) { errs.push(`room ${art} ${theme} not ready`); }
+  await p.waitForTimeout(1800);
+  if (extra) await extra(p);
+  await shot(p, `v3-${theme}-room-${slug}-${mob ? '390' : '1440'}`);
+  await c.close();
+}
+await shotRoom('VHP612038', '60x120-marble', 1440, 900, false, 'light');
+await shotRoom('VHF612802', '60x120-concrete', 1440, 900, false, 'light');
+await shotRoom('VHP600132', '60x60-marble', 1440, 900, false, 'light');
+await shotRoom('VHP600822', '60x60-onyx', 1440, 900, false, 'dark');
+await shotRoom('VHP612038', '60x120-marble', 390, 844, true, 'light');
+await shotRoom('VHP612038', '60x120-bath', 1440, 900, false, 'light', async p => {
+  const b = p.locator('#roomScenes [data-s="bath"]');
+  if (await b.count()) { await b.click(); await p.waitForTimeout(1600); }
+});
+await shotRoom('VHF612802', '60x120-kitchen', 1440, 900, false, 'light', async p => {
+  const b = p.locator('#roomScenes [data-s="kitchen"]');
+  if (await b.count()) { await b.click(); await p.waitForTimeout(1600); }
+});
+await shotRoom('VHP612038', '60x120-herring', 1440, 900, false, 'light', async p => {
+  const b = p.locator('#patSeg [data-p="herringbone"]');
+  if (await b.count()) { await b.click(); await p.waitForTimeout(1200); }
+});
 
 await browser.close();
 server.close();
