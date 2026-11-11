@@ -40,9 +40,14 @@ const roundTo = (v, r) => Math.round(v / r + 1e-9) * r;
 const ruleCalc = cash => roundTo(cash * (1 + store.rule.x / 100), store.rule.round);
 // В data.json цен нет → демонстрационная цена с пометкой «пример»
 function exampleCash(t) { let p = t.format === '60×120' ? 1390 : 1090; if (/карвинг/i.test(t.surface)) p += 100; else if (/Глянец|Сатин/.test(t.surface)) p += 50; return p; }
+function publishedPrice(t) {
+  const p = window.CatalogAdmin && CatalogAdmin.published && CatalogAdmin.published[t.art];
+  if (p && p.cash > 0) return { cash: +p.cash, noncash: p.noncash > 0 ? +p.noncash : ruleCalc(+p.cash), unit: 'м2', example: false };
+}
 function price(t) {
   const it = store.items[t.art];
   if (it && it.cash > 0) return { cash: +it.cash, noncash: it.auto !== false ? ruleCalc(+it.cash) : (+it.noncash || null), unit: 'м2', example: false };
+  const pub = publishedPrice(t); if (pub) return pub;
   if (t.price && t.price.cash > 0) return { cash: +t.price.cash, noncash: t.price.noncash > 0 ? +t.price.noncash : ruleCalc(+t.price.cash), unit: t.price.unit || 'м2', example: false };
   const c = exampleCash(t); return { cash: c, noncash: ruleCalc(c), unit: 'м2', example: true };
 }
@@ -93,8 +98,9 @@ function media(t) {
 const card = t => `<a class="card" href="tile.html?a=${t.art}" data-art="${t.art}">
   <div class="ph">${media(t)}<div class="badges"><span class="badge">${t.format}</span>${t.is_new ? '<span class="badge new">Новинка</span>' : ''}</div></div>
   <div class="body"><div><h3>${esc(t.name)}</h3><div class="meta">${esc(t.surface)}${t.tone ? ' · ' + t.tone.toLowerCase() : ''}<span class="art"> · ${t.art}</span></div></div>
-  <div class="prices">${priceHTML(t)}</div><div class="pnote"><span>цена за м²${t.format === '60×120' ? '' : ''}</span>${price(t).example ? '<span class="ex">пример</span>' : ''}</div></div></a>`;
-function refreshCardPrices(root = document) { $$('.card', root).forEach(c => { const t = byArt[c.dataset.art]; $('.prices', c).innerHTML = priceHTML(t); }); }
+  <div class="prices">${priceHTML(t)}</div><div class="pnote"><span>цена за м²${t.format === '60×120' ? '' : ''}</span>${price(t).example ? '<span class="ex">пример</span>' : ''}</div>
+  <div class="admin-acts admin-only" hidden><button type="button" class="btn sm" data-admin="price" data-art="${t.art}">Изменить цену</button><button type="button" class="btn sm" data-admin="photo" data-art="${t.art}">Изменить фото</button></div></div></a>`;
+function refreshCardPrices(root = document) { $$('.card', root).forEach(c => { const t = byArt[c.dataset.art]; if (!t) return; $('.prices', c).innerHTML = priceHTML(t); const n = $('.pnote', c); if (n) n.innerHTML = '<span>цена за м²</span>' + (price(t).example ? '<span class="ex">пример</span>' : ''); }); }
 // «Наличные» / «Безнал с НДС» — подписи на карточке короче, режим виден по подсветке
 
 /* ---------- ПРИМЕРОЧНАЯ (общая для главной и страницы модели) ---------- */
@@ -279,7 +285,7 @@ function pageTile() {
         ${ (CFG.PHONE || wa) ? `<div class="ctas">${CFG.PHONE ? `<a class="btn gold" href="tel:${String(CFG.PHONE).replace(/[^\d+]/g, '')}">Позвонить</a>` : ''}${wa ? `<a class="btn" href="${wa}" target="_blank" rel="noopener">Написать в WhatsApp</a>` : ''}</div>` : ''}
         <dl class="spec"><dt>Формат</dt><dd>${t.format} см</dd><dt>Поверхность</dt><dd>${esc(t.surface)}</dd><dt>В упаковке</dt><dd>${packText(t)}</dd><dt>Паллета</dt><dd>${palletText(t)}</dd><dt>Артикул</dt><dd>${t.art}</dd></dl>
         <p class="where"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>${CFG.ADDRESS ? `Образец можно посмотреть: ${esc(CFG.ADDRESS)}${CFG.HOURS ? '. ' + esc(CFG.HOURS) : ''}.` : 'Адрес шоу-рума можно указать в config.js.'}</span></p>
-        <div class="qrbox"><div><span class="links"><a href="edit.html?a=${t.art}">Изменить фото</a></span></div></div>
+        <div class="admin-acts admin-only" hidden><button type="button" class="btn sm" data-admin="price" data-art="${t.art}">Изменить цену</button><a class="btn sm" href="edit.html?a=${t.art}">Изменить фото</a></div>
       </div>
     </div></div>
     ${t.tile ? `<section class="texsec" id="room"><div class="wrap"><p class="eyebrow">Фактура и примерка</p><h2>${esc(t.name)} <em>в комнате</em></h2><div id="roomHost"></div></div></section>` : ''}
@@ -310,8 +316,17 @@ function pageTile() {
 }
 
 /* =================== РЕДАКТОР ЦЕН =================== */
+function applyPublishedToStore(overwrite) {
+  const pub = (window.CatalogAdmin && CatalogAdmin.published) || {};
+  Object.entries(pub).forEach(([art, p]) => {
+    if (!overwrite && store.items[art] && store.items[art].cash > 0) return;
+    const auto = Math.abs(ruleCalc(+p.cash) - (+p.noncash || 0)) < 1;
+    store.items[art] = { cash: +p.cash, noncash: +p.noncash || ruleCalc(+p.cash), auto };
+  });
+}
 function pagePrices() {
   const rows = $('#admRows');
+  applyPublishedToStore(false);
   $('#ruleX').value = store.rule.x; $('#ruleRound').value = store.rule.round;
   const row = t => { const it = store.items[t.art] || {}, auto = it.auto !== false, ex = exampleCash(t);
     return `<tr data-art="${t.art}"><td><div class="m">${t.icon ? `<img src="${t.icon}" alt="" loading="lazy">` : '<img alt="">'}<div><a href="tile.html?a=${t.art}" style="text-decoration:none">${esc(t.name)}</a><small>${t.art} · ${esc(t.surface)}</small></div></div></td><td>${t.format}</td>
@@ -331,10 +346,112 @@ function pagePrices() {
   $('#exportBtn').onclick = () => { const out = {}; T.forEach(t => { const it = store.items[t.art]; if (it && it.cash > 0) { const p = price(t); out[t.art] = { price: { cash: p.cash, noncash: p.noncash, unit: 'м2' } }; } });
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ rule: store.rule, tiles: out }, null, 1)], { type: 'application/json' })); a.download = 'catalog-prices.json'; a.click(); toast(`Экспортировано: ${Object.keys(out).length}`); };
   $('#importIn').onchange = async e => { try { const j = JSON.parse(await e.target.files[0].text()); Object.entries(j.tiles || {}).forEach(([a, v]) => { if (byArt[a] && v.price) store.items[a] = { cash: +v.price.cash, noncash: +v.price.noncash, auto: false }; }); if (j.rule) store.rule = j.rule; saveStore(); draw(); toast('Цены загружены'); } catch (err) { toast('Не удалось прочитать файл'); } };
-  $('#resetBtn').onclick = () => { if (!confirm('Удалить все введённые цены в этом браузере?')) return; store = { rule: { x: 12, round: 10 }, items: {} }; saveStore(); $('#ruleX').value = 12; $('#ruleRound').value = 10; draw(); toast('Цены сброшены — показываются примеры'); };
+  $('#resetBtn').onclick = () => { if (!confirm('Удалить черновик цен в этом браузере? Опубликованные на сайте цены останутся.')) return; store = { rule: { x: 12, round: 10 }, items: {} }; applyPublishedToStore(true); saveStore(); $('#ruleX').value = 12; $('#ruleRound').value = 10; draw(); toast('Черновик сброшен, показаны цены с сайта'); };
+  $('#reloadPrices').onclick = () => { applyPublishedToStore(true); saveStore(); draw(); toast('Загружены опубликованные цены'); };
+  $('#pubPrices').onclick = async () => {
+    if (!(window.CatalogAdmin && CatalogAdmin.isAuthed())) return toast('Нужен вход администратора');
+    const batch = {};
+    T.forEach(t => {
+      const it = store.items[t.art];
+      if (it && it.cash > 0) { const p = price(t); batch[t.art] = { cash: p.cash, noncash: p.noncash }; }
+      else if (CatalogAdmin.published[t.art]) batch[t.art] = { cash: 0 };
+    });
+    const n = Object.values(batch).filter(p => p.cash > 0).length;
+    if (!n && !Object.keys(batch).length) return toast('Нечего публиковать — нет введённых цен');
+    const btn = $('#pubPrices'); btn.disabled = true;
+    try {
+      await CatalogAdmin.publishPrices(batch);
+      saveStore();
+      listeners.forEach(f => f());
+    } catch (e) { /* статус уже показан */ }
+    finally { btn.disabled = false; }
+  };
 }
 
-if (PAGE === 'index') pageIndex(); else if (PAGE === 'tile') pageTile(); else if (PAGE === 'prices') pagePrices();
-onScroll();
-// сохранить ?pay= из QR/ссылки на внутренних ссылках не нужно: режим хранится в localStorage
+function showAuthGate() {
+  const main = $('main');
+  if (main) { main.hidden = true; main.setAttribute('aria-hidden', 'true'); }
+  const g = document.createElement('section');
+  g.className = 'admin-gate'; g.id = 'adminGate';
+  g.innerHTML = `<div class="gate-card">
+    <h1>Нужен вход администратора</h1>
+    <p class="lead">Цены и фото на сайт может менять только администратор с токеном GitHub. Без токена сохранить изменения нельзя.</p>
+    <p><a class="btn gold" href="admin.html">Вход для администраторов</a></p>
+    <p class="gate-back"><a href="index.html">← Вернуться в каталог</a></p>
+  </div>`;
+  if (main && main.parentNode) main.parentNode.insertBefore(g, main); else document.body.append(g);
+}
+
+function openPriceModal(art) {
+  const t = byArt[art]; if (!t) return;
+  const modal = $('#priceModal'); if (!modal) return;
+  const p = price(t), it = store.items[art] || {};
+  const auto = it.auto !== false;
+  $('#pmTitle').textContent = 'Цена: ' + t.name;
+  $('#pmSub').textContent = t.art + ' · ' + t.format + ' · ₽/м²';
+  $('#pmCash').value = p.example ? '' : p.cash;
+  $('#pmAuto').checked = auto;
+  $('#pmNon').value = p.example ? '' : (p.noncash || '');
+  $('#pmNon').disabled = auto;
+  modal.dataset.art = art;
+  modal.hidden = false;
+}
+function closePriceModal() { const m = $('#priceModal'); if (m) { m.hidden = true; delete m.dataset.art; } }
+function wirePriceModal() {
+  const modal = $('#priceModal'); if (!modal || modal._wired) return;
+  modal._wired = true;
+  const syncNon = () => {
+    if ($('#pmAuto').checked) {
+      const cash = Math.max(0, +$('#pmCash').value || 0);
+      $('#pmNon').disabled = true;
+      $('#pmNon').value = cash ? ruleCalc(cash) : '';
+    } else $('#pmNon').disabled = false;
+  };
+  $('#pmCash').addEventListener('input', syncNon);
+  $('#pmAuto').addEventListener('change', syncNon);
+  $('#pmCancel').onclick = closePriceModal;
+  modal.addEventListener('click', e => { if (e.target === modal) closePriceModal(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closePriceModal(); });
+  $('#pmSave').onclick = async () => {
+    const art = modal.dataset.art, t = byArt[art]; if (!t) return;
+    if (!(window.CatalogAdmin && CatalogAdmin.isAuthed())) return toast('Нужен вход администратора');
+    const cash = Math.max(0, +$('#pmCash').value || 0);
+    if (!cash) return toast('Введите цену за наличные');
+    const auto = $('#pmAuto').checked;
+    const noncash = auto ? ruleCalc(cash) : Math.max(0, +$('#pmNon').value || 0);
+    store.items[art] = { cash, noncash, auto };
+    saveStore();
+    const btn = $('#pmSave'); btn.disabled = true;
+    try {
+      await CatalogAdmin.publishPrices({ [art]: { cash, noncash } });
+      listeners.forEach(f => f());
+      refreshCardPrices();
+      const bp = $('#bigprice'); if (bp) bp.innerHTML = priceHTML(t, true);
+      closePriceModal();
+    } catch (e) { /* статус уже показан */ }
+    finally { btn.disabled = false; }
+  };
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-admin]'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const art = b.dataset.art || b.closest('[data-art]')?.dataset.art;
+  if (b.dataset.admin === 'photo' && art) location.href = 'edit.html?a=' + encodeURIComponent(art);
+  if (b.dataset.admin === 'price' && art) openPriceModal(art);
+}, true);
+
+async function start() {
+  if (window.CatalogAdmin && CatalogAdmin.ready) { try { await CatalogAdmin.ready; } catch (e) {} }
+  const needAuth = PAGE === 'prices' || PAGE === 'edit';
+  if (needAuth && !(window.CatalogAdmin && CatalogAdmin.isAuthed())) { showAuthGate(); onScroll(); return; }
+  wirePriceModal();
+  if (PAGE === 'index') pageIndex();
+  else if (PAGE === 'tile') pageTile();
+  else if (PAGE === 'prices') pagePrices();
+  onScroll();
+  if (window.CatalogAdmin) CatalogAdmin.applyAdminUI(CatalogAdmin.isAuthed());
+}
+start();
+// режим нал/безнал хранится в localStorage
 })();

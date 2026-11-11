@@ -11,9 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611110132">
-<script src="config.js?v=2611110132"></script>
-<script src="brand.js?v=2611110132"></script>
+<link rel="stylesheet" href="style.css?v=2611111355">
+<script src="config.js?v=2611111355"></script>
+<script src="brand.js?v=2611111355"></script>
+<script src="admin.js?v=2611111355"></script>
 </head>
 <body data-page="prices">
 <div class="progress" id="progress"></div>
@@ -40,32 +41,54 @@
   </div>
 </header>
 <main class="adm"><div class="wrap">
-  <div class="adm-hd"><p class="eyebrow">Только для владельца · прототип</p><h2>Цены: <em>наличные</em> и безнал</h2>
-  <p>Цены сохраняются только в этом браузере (localStorage) — это прототип, на сайт и в таблицу ничего не отправляется. Модели без введённой цены показываются с пометкой «пример». Экспорт выдаёт JSON в формате <code>price: {cash, noncash, unit: "м2"}</code> для data.json.</p></div>
+  <div class="adm-hd"><p class="eyebrow">Только для администраторов</p><h2>Цены: <em>наличные</em> и безнал</h2>
+  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Модели без введённой цены показываются с пометкой «пример». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
   <div class="adm-bar">
     <label>Безнал = нал + <input type="number" id="ruleX" value="12" min="0" max="100" step="0.5" inputmode="decimal"> %</label>
     <label>Округление <select id="ruleRound"><option value="1">до 1 ₽</option><option value="10" selected>до 10 ₽</option><option value="50">до 50 ₽</option></select></label>
     <button type="button" class="btn gold sm" id="ruleApply">Пересчитать «авто»</button>
+    <button type="button" class="btn gold sm" id="pubPrices">Сохранить на сайт</button>
+    <button type="button" class="btn sm" id="reloadPrices">Загрузить с сайта</button>
     <button type="button" class="btn sm" id="exportBtn">Экспорт JSON</button>
     <label class="btn sm" style="cursor:pointer">Импорт<input type="file" id="importIn" accept="application/json" hidden></label>
-    <button type="button" class="btn sm" id="resetBtn">Сбросить всё</button>
+    <button type="button" class="btn sm" id="resetBtn">Сбросить черновик</button>
     <input type="search" id="admQ" placeholder="Поиск модели" aria-label="Поиск модели">
   </div>
+  <div class="pub-status" id="pubStatus" hidden></div>
   <div class="tblw"><table class="tbl"><thead><tr><th>Модель</th><th>Формат</th><th>Наличные, ₽/м²</th><th>Авто</th><th>Безнал с НДС, ₽/м²</th></tr></thead><tbody id="admRows"></tbody></table></div>
 </div></main>
 <footer class="foot">
   <span data-brand="legal">Каталог плитки</span>
   <span data-cfg="footer-line" hidden></span>
   <a data-cfg="email" hidden></a>
-  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a href="prices.html">Цены (редактор)</a><a href="edit.html">Редактор фото</a></span>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
 </footer>
 <div class="callbar" hidden>
   <a class="btn gold" data-cfg="phone">Позвонить</a>
   <a class="btn" id="cbWa" data-cfg="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
 </div>
+<div class="modal-back" id="priceModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <h3 id="pmTitle">Изменить цену</h3>
+    <p class="pm-art" id="pmSub"></p>
+    <label class="field">Наличные, ₽/м²
+      <input type="number" id="pmCash" min="0" step="10" inputmode="numeric">
+    </label>
+    <label class="remember"><input type="checkbox" id="pmAuto" checked> Безнал по правилу</label>
+    <label class="field">Безнал с НДС, ₽/м²
+      <input type="number" id="pmNon" min="0" step="10" inputmode="numeric" disabled>
+    </label>
+    <div class="pub-status" hidden></div>
+    <div class="modal-acts">
+      <button type="button" class="btn" id="pmCancel">Отмена</button>
+      <button type="button" class="btn gold" id="pmSave">Сохранить на сайт</button>
+    </div>
+    <p class="ed-note">Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611110132"></script>
-<script src="data.js?v=2611110132"></script>
-<script src="app.js?v=2611110132"></script>
+<script src="photos.js?v=2611111355"></script>
+<script src="data.js?v=2611111355"></script>
+<script src="app.js?v=2611111355"></script>
 </body>
 </html>

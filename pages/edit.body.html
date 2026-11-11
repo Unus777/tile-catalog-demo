@@ -1,8 +1,8 @@
 <main class="ed"><div class="wrap">
   <div class="ed-hd">
-    <p class="eyebrow">Только в этом браузере</p>
+    <p class="eyebrow">Только для администраторов</p>
     <h2>Редактор <em>фото</em></h2>
-    <p>Кисть размытия, заливка и пипетка. Сохранение не меняет исходные файлы: правка пишется в память браузера (IndexedDB) и скачивается отдельно. Чтобы поставить фото на хостинг, скачайте файл и замените оригинал вручную.</p>
+    <p>Кисть размытия, заливка и пипетка. «Сохранить в браузере» пишет правку только на это устройство. «Сохранить на сайт» публикует JPEG в репозиторий — через 1–2 минуты фото увидят все посетители. Оригиналы в каталоге не затираются: публикуется отдельный файл. Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
   </div>
   <div class="ed-layout">
     <aside class="ed-side">
@@ -33,11 +33,13 @@
           </div>
           <div class="ed-tools-row">
             <button type="button" class="btn gold sm" id="edSave" disabled>Сохранить в браузере</button>
+            <button type="button" class="btn gold sm" id="edPublish" disabled>Сохранить на сайт</button>
             <button type="button" class="btn sm" id="edJpg" disabled>Скачать JPEG</button>
             <button type="button" class="btn sm" id="edPng" disabled>Скачать PNG</button>
             <button type="button" class="btn sm" id="edReset" disabled>Вернуть оригинал</button>
             <label class="btn sm" style="cursor:pointer">Открыть файл<input type="file" id="edFile" accept="image/jpeg,image/png,image/webp" hidden></label>
           </div>
+          <div class="pub-status" id="edPubStatus" hidden></div>
           <p class="ed-note" id="edNote"></p>
         </div>
       </div>

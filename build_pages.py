@@ -14,6 +14,7 @@ P = {
     'tile': (f'Плитка — {name}', ' solid'),
     'prices': (f'Цены — редактор — {name}', ' solid'),
     'edit': (f'Редактор фото — {name}', ' solid'),
+    'admin': (f'Вход для администраторов — {name}', ' solid'),
 }
 for page, (title, navcls) in P.items():
     body = (root/'pages'/f'{page}.body.html').read_text()

@@ -1,14 +1,17 @@
 <main class="adm"><div class="wrap">
-  <div class="adm-hd"><p class="eyebrow">Только для владельца · прототип</p><h2>Цены: <em>наличные</em> и безнал</h2>
-  <p>Цены сохраняются только в этом браузере (localStorage) — это прототип, на сайт и в таблицу ничего не отправляется. Модели без введённой цены показываются с пометкой «пример». Экспорт выдаёт JSON в формате <code>price: {cash, noncash, unit: "м2"}</code> для data.json.</p></div>
+  <div class="adm-hd"><p class="eyebrow">Только для администраторов</p><h2>Цены: <em>наличные</em> и безнал</h2>
+  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Модели без введённой цены показываются с пометкой «пример». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
   <div class="adm-bar">
     <label>Безнал = нал + <input type="number" id="ruleX" value="12" min="0" max="100" step="0.5" inputmode="decimal"> %</label>
     <label>Округление <select id="ruleRound"><option value="1">до 1 ₽</option><option value="10" selected>до 10 ₽</option><option value="50">до 50 ₽</option></select></label>
     <button type="button" class="btn gold sm" id="ruleApply">Пересчитать «авто»</button>
+    <button type="button" class="btn gold sm" id="pubPrices">Сохранить на сайт</button>
+    <button type="button" class="btn sm" id="reloadPrices">Загрузить с сайта</button>
     <button type="button" class="btn sm" id="exportBtn">Экспорт JSON</button>
     <label class="btn sm" style="cursor:pointer">Импорт<input type="file" id="importIn" accept="application/json" hidden></label>
-    <button type="button" class="btn sm" id="resetBtn">Сбросить всё</button>
+    <button type="button" class="btn sm" id="resetBtn">Сбросить черновик</button>
     <input type="search" id="admQ" placeholder="Поиск модели" aria-label="Поиск модели">
   </div>
+  <div class="pub-status" id="pubStatus" hidden></div>
   <div class="tblw"><table class="tbl"><thead><tr><th>Модель</th><th>Формат</th><th>Наличные, ₽/м²</th><th>Авто</th><th>Безнал с НДС, ₽/м²</th></tr></thead><tbody id="admRows"></tbody></table></div>
 </div></main>

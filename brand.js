@@ -10,7 +10,8 @@
   const titles = {
     index: name + ' — ' + tag,
     prices: 'Цены — редактор — ' + name,
-    edit: 'Редактор фото — ' + name
+    edit: 'Редактор фото — ' + name,
+    admin: 'Вход для администраторов — ' + name
   };
 
   function apply() {

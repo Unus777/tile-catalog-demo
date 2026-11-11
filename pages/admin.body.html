@@ -1,0 +1,49 @@
+<main class="adm admin-page">
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <h1>Вход для администраторов</h1>
+      <p class="lead">Здесь меняются цены и фото каталога. Правки сохраняются в репозиторий сайта и через 1–2 минуты появляются у всех посетителей.</p>
+      <div class="note warn">Защита входа — токен GitHub. Без токена сохранить изменения на сайт нельзя. Токен остаётся только в этом браузере и в файлы сайта не попадает.</div>
+      <div class="note error" id="gate-error" hidden>
+        <span id="gate-error-text"></span>
+      </div>
+      <form id="login-form" autocomplete="off">
+        <div class="field">
+          <label for="token">Токен GitHub</label>
+          <span class="pw-wrap">
+            <input id="token" type="password" placeholder="github_pat_…" autocomplete="off" required>
+            <button class="pw-eye" id="pw-eye" type="button" aria-label="Показать токен" aria-pressed="false">показать</button>
+          </span>
+        </div>
+        <button class="btn gold wide" id="loginBtn" type="submit">Войти</button>
+      </form>
+      <details class="token-help">
+        <summary>Как создать токен (по шагам)</summary>
+        <ol>
+          <li>Откройте страницу <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">создания fine-grained токена</a> (нужно быть залогиненным на GitHub).</li>
+          <li>Имя любое, срок действия — на ваше усмотрение.</li>
+          <li>Resource owner — аккаунт, которому принадлежит репозиторий <code>Unus777/tile-catalog-demo</code>.</li>
+          <li>Repository access: <b>Only select repositories</b> → выберите только <code>tile-catalog-demo</code>.</li>
+          <li>Repository permissions → <b>Contents: Read and write</b>. Остальные права не нужны.</li>
+          <li>Нажмите Generate token, скопируйте его и вставьте в поле выше. Никому не пересылайте токен и не вставляйте его в чаты.</li>
+        </ol>
+      </details>
+      <p class="gate-back"><a href="index.html">← Вернуться в каталог</a></p>
+    </div>
+  </section>
+
+  <section class="admin-panel wrap" id="adminPanel" hidden>
+    <div class="adm-hd">
+      <p class="eyebrow">Вы вошли</p>
+      <h2>Панель <em>администратора</em></h2>
+      <p>Можно сразу править цены и фото — они появятся на сайте у всех после публикации. Защита — токен GitHub: без него сохранить на сайт нельзя. Токен хранится только в этом браузере.</p>
+    </div>
+    <div class="admin-links">
+      <a class="btn gold" href="prices.html">Изменить цены</a>
+      <a class="btn gold" href="edit.html">Изменить фото</a>
+      <a class="btn" href="index.html#catalog">Открыть каталог</a>
+      <button type="button" class="btn" id="logoutBtn">Выйти</button>
+    </div>
+    <p class="ed-note">На карточках и странице модели в админ-режиме есть кнопки «Изменить цену» и «Изменить фото».</p>
+  </section>
+</main>

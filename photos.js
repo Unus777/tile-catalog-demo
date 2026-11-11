@@ -41,13 +41,19 @@
     url: objectURL,
     cached: k => urls.get(k),
     async hydrate(rootEl = document) {
+      if (window.CatalogAdmin && CatalogAdmin.ready) { try { await CatalogAdmin.ready; } catch (e) {} }
       const els = [...rootEl.querySelectorAll('[data-ph]')];
       if (!els.length) return;
       await Promise.all(els.map(async el => {
         try {
           const rec = await window.CatalogPhotos.getByKey(el.dataset.ph);
-          if (!rec || !rec.blob) return;
-          const u = objectURL(el.dataset.ph, rec.blob);
+          let u = '';
+          if (rec && rec.blob) u = objectURL(el.dataset.ph, rec.blob);
+          else {
+            const path = window.CatalogAdmin && CatalogAdmin.overrides && CatalogAdmin.overrides[el.dataset.ph];
+            if (path) u = path + (path.includes('?') ? '&' : '?') + 'v=' + CatalogAdmin.overridesStamp;
+          }
+          if (!u) return;
           const img = el.tagName === 'IMG' ? el : el.querySelector('img');
           if (el.tagName === 'PICTURE') el.querySelectorAll('source').forEach(s => s.remove());
           if (img) { img.removeAttribute('srcset'); img.src = u; }

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0c0b">
+<title>Вход для администраторов — Каталог плитки</title>
+<meta name="description" content="Каталог керамогранита: форматы 60×60 и 60×120, интерьерные фото каждой модели.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'><path d='M13 1 25 13 13 25 1 13z' fill='%230d0c0b' stroke='%23c9a46a' stroke-width='1.6'/><path d='M13 7 19 13 13 19 7 13z' fill='%23e4c690'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2611111355">
+<script src="config.js?v=2611111355"></script>
+<script src="brand.js?v=2611111355"></script>
+<script src="admin.js?v=2611111355"></script>
+</head>
+<body data-page="admin">
+<div class="progress" id="progress"></div>
+<div class="proto-flag" title="Цены с пометкой «пример» — демонстрационные, пока их не заменят в редакторе."><i></i>Цены с пометкой «пример»</div>
+<header class="nav solid" id="nav">
+  <a class="logo" href="index.html" aria-label="Каталог плитки, на главную"><span class="logo-mark" aria-hidden="true"></span><span class="w">Каталог плитки<small>Каталог керамогранита</small></span></a>
+  <nav class="nav-links" aria-label="Разделы">
+    <a href="index.html#catalog">Каталог</a>
+    <a href="index.html?f=60×60#catalog">60×60</a>
+    <a href="index.html?f=60×120#catalog">60×120</a>
+    <a href="index.html#room">Примерочная</a>
+    <a href="index.html#showroom">Шоу-рум</a>
+    <a data-cfg="dealers" hidden>Дилерам</a>
+  </nav>
+  <div class="nav-right">
+    <div class="paytoggle" role="radiogroup" aria-label="Какие цены показывать">
+      <span class="paytoggle-pill" aria-hidden="true"></span>
+      <button type="button" role="radio" data-mode="cash" aria-checked="true">Наличные</button>
+      <button type="button" role="radio" data-mode="noncash" aria-checked="false">Безнал<small> с НДС</small></button>
+    </div>
+    <a class="tel" data-cfg="phone" hidden></a>
+    <a class="btn sm wa" data-cfg="whatsapp" hidden target="_blank" rel="noopener">WhatsApp</a>
+    <a class="icon-btn call" data-cfg="phone-icon" hidden aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
+  </div>
+</header>
+<main class="adm admin-page">
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <h1>Вход для администраторов</h1>
+      <p class="lead">Здесь меняются цены и фото каталога. Правки сохраняются в репозиторий сайта и через 1–2 минуты появляются у всех посетителей.</p>
+      <div class="note warn">Защита входа — токен GitHub. Без токена сохранить изменения на сайт нельзя. Токен остаётся только в этом браузере и в файлы сайта не попадает.</div>
+      <div class="note error" id="gate-error" hidden>
+        <span id="gate-error-text"></span>
+      </div>
+      <form id="login-form" autocomplete="off">
+        <div class="field">
+          <label for="token">Токен GitHub</label>
+          <span class="pw-wrap">
+            <input id="token" type="password" placeholder="github_pat_…" autocomplete="off" required>
+            <button class="pw-eye" id="pw-eye" type="button" aria-label="Показать токен" aria-pressed="false">показать</button>
+          </span>
+        </div>
+        <button class="btn gold wide" id="loginBtn" type="submit">Войти</button>
+      </form>
+      <details class="token-help">
+        <summary>Как создать токен (по шагам)</summary>
+        <ol>
+          <li>Откройте страницу <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">создания fine-grained токена</a> (нужно быть залогиненным на GitHub).</li>
+          <li>Имя любое, срок действия — на ваше усмотрение.</li>
+          <li>Resource owner — аккаунт, которому принадлежит репозиторий <code>Unus777/tile-catalog-demo</code>.</li>
+          <li>Repository access: <b>Only select repositories</b> → выберите только <code>tile-catalog-demo</code>.</li>
+          <li>Repository permissions → <b>Contents: Read and write</b>. Остальные права не нужны.</li>
+          <li>Нажмите Generate token, скопируйте его и вставьте в поле выше. Никому не пересылайте токен и не вставляйте его в чаты.</li>
+        </ol>
+      </details>
+      <p class="gate-back"><a href="index.html">← Вернуться в каталог</a></p>
+    </div>
+  </section>
+
+  <section class="admin-panel wrap" id="adminPanel" hidden>
+    <div class="adm-hd">
+      <p class="eyebrow">Вы вошли</p>
+      <h2>Панель <em>администратора</em></h2>
+      <p>Можно сразу править цены и фото — они появятся на сайте у всех после публикации. Защита — токен GitHub: без него сохранить на сайт нельзя. Токен хранится только в этом браузере.</p>
+    </div>
+    <div class="admin-links">
+      <a class="btn gold" href="prices.html">Изменить цены</a>
+      <a class="btn gold" href="edit.html">Изменить фото</a>
+      <a class="btn" href="index.html#catalog">Открыть каталог</a>
+      <button type="button" class="btn" id="logoutBtn">Выйти</button>
+    </div>
+    <p class="ed-note">На карточках и странице модели в админ-режиме есть кнопки «Изменить цену» и «Изменить фото».</p>
+  </section>
+</main>
+<footer class="foot">
+  <span data-brand="legal">Каталог плитки</span>
+  <span data-cfg="footer-line" hidden></span>
+  <a data-cfg="email" hidden></a>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
+</footer>
+<div class="callbar" hidden>
+  <a class="btn gold" data-cfg="phone">Позвонить</a>
+  <a class="btn" id="cbWa" data-cfg="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+</div>
+<div class="modal-back" id="priceModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <h3 id="pmTitle">Изменить цену</h3>
+    <p class="pm-art" id="pmSub"></p>
+    <label class="field">Наличные, ₽/м²
+      <input type="number" id="pmCash" min="0" step="10" inputmode="numeric">
+    </label>
+    <label class="remember"><input type="checkbox" id="pmAuto" checked> Безнал по правилу</label>
+    <label class="field">Безнал с НДС, ₽/м²
+      <input type="number" id="pmNon" min="0" step="10" inputmode="numeric" disabled>
+    </label>
+    <div class="pub-status" hidden></div>
+    <div class="modal-acts">
+      <button type="button" class="btn" id="pmCancel">Отмена</button>
+      <button type="button" class="btn gold" id="pmSave">Сохранить на сайт</button>
+    </div>
+    <p class="ed-note">Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="photos.js?v=2611111355"></script>
+<script src="data.js?v=2611111355"></script>
+<script src="app.js?v=2611111355"></script>
+</body>
+</html>

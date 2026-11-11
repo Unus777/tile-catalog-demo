@@ -1,6 +1,7 @@
 /* Редактор фото: кисть размытия, заливка, пипетка, отмена и сохранение в браузере. */
 (() => {
   'use strict';
+  if (window.CatalogAdmin && !CatalogAdmin.isAuthed()) return;
   const CFG = window.CATALOG_CONFIG || {};
   const T = (window.CAT || { tiles: [] }).tiles;
   const $ = (s, r = document) => r.querySelector(s);
@@ -29,10 +30,11 @@
 
   function setBtns() {
     const on = loaded;
-    ['edSave', 'edJpg', 'edPng', 'edReset', 'edUndo', 'edRedo'].forEach(id => {
+    ['edSave', 'edJpg', 'edPng', 'edReset', 'edUndo', 'edRedo', 'edPublish'].forEach(id => {
       const b = $('#' + id); if (!b) return;
       if (id === 'edUndo') b.disabled = !undos.length;
       else if (id === 'edRedo') b.disabled = !redos.length;
+      else if (id === 'edPublish') b.disabled = !on || !art || !photoId;
       else b.disabled = !on;
     });
   }
@@ -112,11 +114,16 @@
     $$('#edThumbs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === ph.id));
     let rec = null;
     try { rec = await window.CatalogPhotos.get(art, photoId); } catch (e) {}
+    const ov = window.CatalogAdmin && CatalogAdmin.overrides && CatalogAdmin.overrides[window.CatalogPhotos.key(art, photoId)];
     if (rec && rec.blob) {
       const u = window.CatalogPhotos.url(window.CatalogPhotos.key(art, photoId), rec.blob);
       await loadImage(u, ph.label + ' (сохранённая правка)', true);
       dirty = false;
       note(art + ' · ' + ph.label + ' · правка из браузера, оригинал не изменён');
+    } else if (ov) {
+      await loadImage(ov + '?v=' + CatalogAdmin.overridesStamp, ph.label + ' (опубликованная правка)');
+      dirty = false;
+      note(art + ' · ' + ph.label + ' · опубликованная правка');
     } else {
       await loadImage(ph.src, ph.label);
     }
@@ -188,6 +195,12 @@
   const fileBase = () => (art || 'photo') + '-' + (photoId || 'edit').replace(/[^\w.-]+/g, '_');
   $('#edJpg').onclick = async () => { const b = await exportBlob('image/jpeg', 0.92); download(b, fileBase() + '.jpg'); toast('JPEG скачан'); };
   $('#edPng').onclick = async () => { const b = await exportBlob('image/png'); download(b, fileBase() + '.png'); toast('PNG скачан'); };
+  const blobToBase64 = blob => new Promise((ok, no) => {
+    const r = new FileReader();
+    r.onload = () => ok(String(r.result).split(',')[1] || '');
+    r.onerror = no;
+    r.readAsDataURL(blob);
+  });
   $('#edSave').onclick = async () => {
     if (!art || !photoId) { toast('Сначала выберите фото модели — тогда правка привяжется к нему'); return; }
     const b = await exportBlob('image/jpeg', 0.92);
@@ -195,6 +208,21 @@
     dirty = false;
     toast('Сохранено в этом браузере. Оригинал на диске не изменён.');
     note(art + ' · ' + photoId + ' · правка в браузере, оригинал не изменён');
+  };
+  $('#edPublish').onclick = async () => {
+    if (!art || !photoId) { toast('Сначала выберите фото модели'); return; }
+    if (!(window.CatalogAdmin && CatalogAdmin.isAuthed())) return toast('Нужен вход администратора');
+    const btn = $('#edPublish'); btn.disabled = true;
+    try {
+      const b = await exportBlob('image/jpeg', 0.92);
+      await window.CatalogPhotos.put(art, photoId, b, 'image/jpeg', fileBase() + '.jpg');
+      dirty = false;
+      const base64 = await blobToBase64(b);
+      await CatalogAdmin.publishPhotos([{ key: window.CatalogPhotos.key(art, photoId), base64 }]);
+      note(art + ' · ' + photoId + ' · опубликовано, оригинал в каталоге не затёрт');
+    } catch (e) {
+      toast('Не сохранилось: ' + e.message);
+    } finally { setBtns(); }
   };
   $('#edReset').onclick = async () => {
     if (!srcURL) return;
@@ -231,11 +259,15 @@
 
   const qp = new URLSearchParams(location.search);
   drawList('');
-  const start = byArt[qp.get('a')] || T[0];
-  if (start) {
-    art = start.art; drawList(''); drawThumbs(start);
-    const list = photosOf(start);
-    if (list[0]) openPhoto(start, list[0]).catch(err => toast(err.message));
-  }
-  syncTool(); setBtns();
+  const boot = async () => {
+    if (window.CatalogAdmin && CatalogAdmin.ready) { try { await CatalogAdmin.ready; } catch (e) {} }
+    const start = byArt[qp.get('a')] || T[0];
+    if (start) {
+      art = start.art; drawList(''); drawThumbs(start);
+      const list = photosOf(start);
+      if (list[0]) await openPhoto(start, list[0]).catch(err => toast(err.message));
+    }
+    syncTool(); setBtns();
+  };
+  boot();
 })();

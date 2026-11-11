@@ -11,9 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611110132">
-<script src="config.js?v=2611110132"></script>
-<script src="brand.js?v=2611110132"></script>
+<link rel="stylesheet" href="style.css?v=2611111355">
+<script src="config.js?v=2611111355"></script>
+<script src="brand.js?v=2611111355"></script>
+<script src="admin.js?v=2611111355"></script>
 </head>
 <body data-page="edit">
 <div class="progress" id="progress"></div>
@@ -41,9 +42,9 @@
 </header>
 <main class="ed"><div class="wrap">
   <div class="ed-hd">
-    <p class="eyebrow">Только в этом браузере</p>
+    <p class="eyebrow">Только для администраторов</p>
     <h2>Редактор <em>фото</em></h2>
-    <p>Кисть размытия, заливка и пипетка. Сохранение не меняет исходные файлы: правка пишется в память браузера (IndexedDB) и скачивается отдельно. Чтобы поставить фото на хостинг, скачайте файл и замените оригинал вручную.</p>
+    <p>Кисть размытия, заливка и пипетка. «Сохранить в браузере» пишет правку только на это устройство. «Сохранить на сайт» публикует JPEG в репозиторий — через 1–2 минуты фото увидят все посетители. Оригиналы в каталоге не затираются: публикуется отдельный файл. Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
   </div>
   <div class="ed-layout">
     <aside class="ed-side">
@@ -74,11 +75,13 @@
           </div>
           <div class="ed-tools-row">
             <button type="button" class="btn gold sm" id="edSave" disabled>Сохранить в браузере</button>
+            <button type="button" class="btn gold sm" id="edPublish" disabled>Сохранить на сайт</button>
             <button type="button" class="btn sm" id="edJpg" disabled>Скачать JPEG</button>
             <button type="button" class="btn sm" id="edPng" disabled>Скачать PNG</button>
             <button type="button" class="btn sm" id="edReset" disabled>Вернуть оригинал</button>
             <label class="btn sm" style="cursor:pointer">Открыть файл<input type="file" id="edFile" accept="image/jpeg,image/png,image/webp" hidden></label>
           </div>
+          <div class="pub-status" id="edPubStatus" hidden></div>
           <p class="ed-note" id="edNote"></p>
         </div>
       </div>
@@ -89,16 +92,35 @@
   <span data-brand="legal">Каталог плитки</span>
   <span data-cfg="footer-line" hidden></span>
   <a data-cfg="email" hidden></a>
-  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a href="prices.html">Цены (редактор)</a><a href="edit.html">Редактор фото</a></span>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
 </footer>
 <div class="callbar" hidden>
   <a class="btn gold" data-cfg="phone">Позвонить</a>
   <a class="btn" id="cbWa" data-cfg="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
 </div>
+<div class="modal-back" id="priceModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <h3 id="pmTitle">Изменить цену</h3>
+    <p class="pm-art" id="pmSub"></p>
+    <label class="field">Наличные, ₽/м²
+      <input type="number" id="pmCash" min="0" step="10" inputmode="numeric">
+    </label>
+    <label class="remember"><input type="checkbox" id="pmAuto" checked> Безнал по правилу</label>
+    <label class="field">Безнал с НДС, ₽/м²
+      <input type="number" id="pmNon" min="0" step="10" inputmode="numeric" disabled>
+    </label>
+    <div class="pub-status" hidden></div>
+    <div class="modal-acts">
+      <button type="button" class="btn" id="pmCancel">Отмена</button>
+      <button type="button" class="btn gold" id="pmSave">Сохранить на сайт</button>
+    </div>
+    <p class="ed-note">Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611110132"></script>
-<script src="data.js?v=2611110132"></script>
-<script src="app.js?v=2611110132"></script>
-<script src="edit.js?v=2611110132"></script>
+<script src="photos.js?v=2611111355"></script>
+<script src="data.js?v=2611111355"></script>
+<script src="app.js?v=2611111355"></script>
+<script src="edit.js?v=2611111355"></script>
 </body>
 </html>

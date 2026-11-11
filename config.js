@@ -17,5 +17,11 @@ window.CATALOG_CONFIG = {
   DEALERS_URL: '',
   STORAGE_KEY: 'catalog_prices',
   MODE_KEY: 'catalog_mode',
-  PHOTO_DB: 'catalog_photo_edits'
+  PHOTO_DB: 'catalog_photo_edits',
+  REPO: 'Unus777/tile-catalog-demo',
+  BRANCH: 'main',
+  TOKEN_KEY: 'catalog_admin_token',
+  PRICES_FILE: 'prices.json',
+  OVERRIDES_FILE: 'photo-overrides.json',
+  OVERRIDES_DIR: 'overrides'
 };
