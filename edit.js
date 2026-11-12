@@ -21,6 +21,11 @@
 
   const byArt = Object.fromEntries(T.map(t => [t.art, t]));
   const photosOf = t => {
+    const M = window.CatalogMedia;
+    if (M) {
+      const L = M.list(t);
+      return L.visible.concat(L.hidden).map((x, i) => ({ id: x.ph, label: (L.visible.includes(x) ? (i + 1) + ' · ' : 'скрыто · ') + x.label, src: x.src, thumb: x.thumb, draft: !!x.draft }));
+    }
     const out = [];
     if (t.face) out.push({ id: 'face', label: 'Плитка для примерочной', src: t.face[t.face.length - 1][1] + '.jpg', thumb: t.face[0][1] + '.jpg' });
     if (t.card) out.push({ id: 'card', label: 'Интерьер', src: t.card[t.card.length - 1][1] + '.jpg', thumb: t.card[0][1] + '.jpg' });
@@ -212,6 +217,8 @@
   $('#edPublish').onclick = async () => {
     if (!art || !photoId) { toast('Сначала выберите фото модели'); return; }
     if (!(window.CatalogAdmin && CatalogAdmin.isAuthed())) return toast('Нужен вход администратора');
+    const cur = byArt[art] && photosOf(byArt[art]).find(p => p.id === photoId);
+    if (cur && cur.draft) return toast('Это фото ещё не опубликовано — сначала нажмите «Опубликовать на сайт» во вкладке «Медиа»');
     const btn = $('#edPublish'); btn.disabled = true;
     try {
       const b = await exportBlob('image/jpeg', 0.92);
@@ -257,10 +264,21 @@
   $('#edQ').addEventListener('input', e => drawList(e.target.value));
   addEventListener('resize', fitStage);
 
+  window.CatalogEditor = {
+    async open(a, id) {
+      const t = byArt[a]; if (!t) return;
+      art = t.art; drawList($('#edQ').value); drawThumbs(t);
+      const ph = photosOf(t).find(p => p.id === id) || photosOf(t)[0];
+      if (ph) { await openPhoto(t, ph); fitStage(); }
+    },
+    refresh() { const t = byArt[art]; if (t) drawThumbs(t); },
+    fit: () => loaded && fitStage()
+  };
   const qp = new URLSearchParams(location.search);
   drawList('');
   const boot = async () => {
     if (window.CatalogAdmin && CatalogAdmin.ready) { try { await CatalogAdmin.ready; } catch (e) {} }
+    if (window.CatalogMedia) { try { await CatalogMedia.ready; } catch (e) {} T.forEach(t => { t.icon = CatalogMedia.icon(t); }); drawList($('#edQ').value); }
     const start = byArt[qp.get('a')] || T[0];
     if (start) {
       art = start.art; drawList(''); drawThumbs(start);

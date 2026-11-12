@@ -20,10 +20,17 @@ const big = set => set && set[set.length - 1][1], small = set => set && set[0][1
 function galOf(t) { return t.gallery && t.gallery.length ? t.gallery : []; }
 function coverId(t) { return t.cover || (galOf(t)[0] && galOf(t)[0].id) || null; }
 function photoSrc(t, id, thumb) { return `img/${t.art}/${id}${thumb ? '_t' : ''}.jpg`; }
-T.forEach(t => {
-  const id = coverId(t) || (t.photos && t.photos[0]);
-  t.icon = id ? photoSrc(t, id, true) : (t.card ? small(t.card) + '.jpg' : '');
-});
+const M = window.CatalogMedia || null;
+function setIcons() {
+  T.forEach(t => {
+    if (M) { t.icon = M.icon(t); return; }
+    const id = coverId(t) || (t.photos && t.photos[0]);
+    t.icon = id ? photoSrc(t, id, true) : (t.card ? small(t.card) + '.jpg' : '');
+  });
+}
+setIcons();
+const roomTex = t => M ? M.texOf(t) : (t.tile ? { src: t.tile, full: !!t.tileFull } : null);
+const hasRoom = t => !!roomTex(t);
 const models = n => { const k = n % 10, h = n % 100; return `${n} ${k === 1 && h !== 11 ? 'модель' : k >= 2 && k <= 4 && (h < 12 || h > 14) ? 'модели' : 'моделей'}`; };
 /** «1 уп-2шт-1,44м2-28,8 кг» → {pcs, sqm, kg, packs} */
 function pack(s) { const n = re => +((String(s || '').replace(/,/g, '.').match(re) || [])[1] || 0); return { pcs: n(/(\d+)\s*шт/i), sqm: n(/([\d.]+)\s*м2/i), kg: n(/([\d.]+)\s*кг/i), packs: n(/(\d+)\s*уп/i) }; }
@@ -95,7 +102,16 @@ const stat = $('#stat'); if (stat) stat.textContent = `${models(T.length)} · ${
 /* ---------- карточка ---------- */
 const CARD_SIZES = '(max-width:640px) 48vw, (max-width:1000px) 32vw, 320px';
 function clipClass(g) { return g && g.clip ? ' clip-' + g.clip : ''; }
+function mediaItem(t, it, cls, alt, eager) {
+  if (it.id === 'card' && it.set) return pic(it.set, CARD_SIZES, alt, eager, t.art + ':card');
+  return `<img class="${cls}${it.clip ? ' clip-' + it.clip : ''}" src="${esc(it.thumb)}" alt="${esc(alt)}" loading="${eager ? 'eager' : 'lazy'}" decoding="async" data-ph="${t.art}:${esc(it.ph)}">`;
+}
 function media(t) {
+  if (M) {
+    const c = M.cover(t), h = M.hover(t);
+    if (!c) return `<div class="noph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7l5 5-5 5-5-5z"/></svg><b>${esc(t.name)}</b><span>Фото скоро появится</span></div>`;
+    return mediaItem(t, c, 'cover' + (c.kind === 'product' ? ' contain' : ''), t.name) + (h && h.id !== 'card' ? mediaItem(t, h, 'alt' + (h.kind === 'product' ? ' contain' : ''), '').replace('<img ', '<img aria-hidden="true" ') : '');
+  }
   const noph = `<div class="noph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7l5 5-5 5-5-5z"/></svg><b>${esc(t.name)}</b><span>Фото скоро появится</span></div>`;
   const mainId = coverId(t);
   if (!mainId) {
@@ -123,17 +139,70 @@ function Room(getSel) {
   function fallback(img, t) { const cv = $('#layoutCv'), x = cv.getContext('2d'); x.fillStyle = '#b9b2a7'; x.fillRect(0, 0, cv.width, cv.height); const [a, b] = t.format.split('×').map(Number), tw = cv.width / 4, th = tw * Math.min(a, b) / Math.max(a, b);
     for (let j = 0; j * th < cv.height; j++) for (let i = -1; i * tw < cv.width; i++) x.drawImage(img, i * tw + (j % 2 ? tw / 2 : 0) + 1, j * th + 1, tw - 2, th - 2); }
   function priceBox() { const t = getSel(); const el = $('#roomPrice'); if (el && t) el.innerHTML = `<div class="prices">${priceHTML(t, true)}</div>`; }
+  /* пол: «same» — та же плитка, «admin» — пол, подобранный администратором, «art:АРТИКУЛ» — другая плитка из каталога */
+  let floorPick = '', lastArt = '', mode = 'floor';
+  const fsel = $('#floorSel');
+  function floorInfo(t) {
+    if (floorPick === 'admin') return M ? M.floorOf(t) : null;
+    if (floorPick.startsWith('art:')) { const o = byArt[floorPick.slice(4)], tx = o && roomTex(o); return tx ? { src: tx.src, full: tx.full, format: o.format, surface: o.surface, label: o.name } : null; }
+    return null;
+  }
+  function fillFloorSel(t) {
+    if (!fsel) return;
+    const adm = M && M.floorOf(t);
+    const others = T.filter(x => x.art !== t.art && hasRoom(x)).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+    fsel.innerHTML = `<option value="same">Та же плитка — ${esc(t.name)}</option>` +
+      (adm ? `<option value="admin">Подобранный пол — ${esc(adm.label)}${adm.format ? ' · ' + adm.format : ''}</option>` : '') +
+      `<optgroup label="Другая плитка из каталога">${others.map(o => `<option value="art:${o.art}">${esc(o.name)} · ${o.format} · ${esc(o.surface)}</option>`).join('')}</optgroup>`;
+    fsel.value = floorPick;
+    if (fsel.value !== floorPick) { floorPick = 'same'; fsel.value = 'same'; }
+  }
+  function markMode(m) { mode = m; $$('#roomModes button').forEach(x => x.classList.toggle('on', x.dataset.m === m)); }
+  function markScene(s) { $$('#roomScenes button').forEach(x => x.classList.toggle('on', x.dataset.s === s)); }
+  async function applyFloor(t) {
+    const f = floorInfo(t);
+    const note = $('#floorNote');
+    if (note) note.textContent = f ? `Стены — ${t.name}, пол — ${f.label}${f.format ? ' (' + f.format + ')' : ''}` : '';
+    if (!R || !R.setFloor) return;
+    if (!f) { R.setFloor(null); return; }
+    const img = await load(f.src).catch(() => null); if (getSel() !== t) return;
+    R.setFloor(img, { format: f.format, surface: f.surface, full: f.full });
+  }
   async function apply() {
-    const t = getSel(); if (!t || !t.tile) return;
+    const t = getSel(); const tex = t && roomTex(t); if (!t || !tex) return;
     const lab = $('#roomLabel'); lab.innerHTML = `<small>${t.art} · ${t.format} · ${esc(t.surface)}</small>${esc(t.name)}`; lab.href = `tile.html?a=${t.art}`;
-    if (t.tile) { $('#loupeImg').src = t.tile; $('#loupe').style.backgroundImage = `url("${t.tile}")`; }
+    $('#loupeImg').src = tex.src; $('#loupe').style.backgroundImage = `url("${tex.src}")`;
+    const lbx = $('#loupeBox'); if (lbx) { const [fa, fb] = t.format.split('×').map(Number); lbx.style.setProperty('--tile-ar', fa && fb ? `${Math.min(fa, fb)} / ${Math.max(fa, fb)}` : '1 / 1'); lbx.classList.toggle('rect', !!(fa && fb && fa !== fb)); }
     const hb = $('#patSeg [data-p="herringbone"]'); if (hb) hb.hidden = !/×/.test(t.format) || t.format.split('×')[0] === t.format.split('×')[1];
     priceBox();
-    const img = await load(t.tile); if (getSel() !== t) return;
-    if (R) { R.setTile(img, { format: t.format, surface: t.surface, full: t.tileFull, name: t.name, art: t.art }); R.layoutPreview($('#layoutCv')); } else fallback(img, t);
+    if (t.art !== lastArt) {
+      lastArt = t.art;
+      const rm = M ? M.room(t) : { floor: null, scene: '' };
+      floorPick = rm.floor ? 'admin' : 'same';
+      if (rm.floor && mode === 'floor') { markMode('walls'); if (R) R.setMode('walls'); }
+      if (rm.scene) { markScene(rm.scene); if (R && R.setScene) R.setScene(rm.scene); }
+    }
+    fillFloorSel(t);
+    const img = await load(tex.src); if (getSel() !== t) return;
+    if (R) {
+      R.setTile(img, { format: t.format, surface: t.surface, full: tex.full, name: t.name, art: t.art });
+      await applyFloor(t);
+      R.layoutPreview($('#layoutCv'));
+    } else { fallback(img, t); applyFloor(t); }
   }
+  /* перечитать выбранную модель заново (после правок в админке) */
+  function refresh() { lastArt = ''; return apply(); }
   const seg = (id, fn) => $(id).addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $$(id + ' button').forEach(x => x.classList.toggle('on', x === b)); fn(b); });
-  seg('#roomModes', b => R && R.setMode(b.dataset.m));
+  seg('#roomModes', b => {
+    mode = b.dataset.m;
+    if (mode !== 'walls' && floorPick !== 'same') { floorPick = 'same'; if (fsel) fsel.value = 'same'; const t = getSel(); if (t) applyFloor(t); }
+    if (R) R.setMode(mode);
+  });
+  fsel?.addEventListener('change', () => {
+    floorPick = fsel.value; const t = getSel(); if (!t) return;
+    if (floorPick !== 'same' && mode === 'floor') { markMode('walls'); if (R) R.setMode('walls'); }
+    applyFloor(t);
+  });
   seg('#patSeg', b => { if (R) { R.setPattern(b.dataset.p); R.layoutPreview($('#layoutCv')); } });
   seg('#groutDots', b => { if (R) { R.setGrout(b.dataset.c); R.layoutPreview($('#layoutCv')); } });
   seg('#groutW', b => { if (R) { R.setGroutMM(+b.dataset.w); R.layoutPreview($('#layoutCv')); } });
@@ -145,15 +214,19 @@ function Room(getSel) {
   });
   $('#roomReset')?.addEventListener('click', () => R && R.resetView && R.resetView());
   const lb = $('#loupeBox'), lp = $('#loupe');
-  const mv = e => { const r = lb.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, Z = 3.2;
-    lp.style.setProperty('--lx', (x - 75) + 'px'); lp.style.setProperty('--ly', (y - 75) + 'px'); lp.style.backgroundSize = `${r.width * Z}px ${r.height * Z}px`; lp.style.backgroundPosition = `${-(x * Z - 75)}px ${-(y * Z - 75)}px`; };
+  // плитка в лупе показана целиком (contain), увеличение считаем от реального прямоугольника картинки
+  const mv = e => { const r = lb.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, Z = 3.2, im = $('#loupeImg');
+    const iw = im.naturalWidth || 1, ih = im.naturalHeight || 1, k = Math.min(r.width / iw, r.height / ih), dw = iw * k, dh = ih * k, ox = (r.width - dw) / 2, oy = (r.height - dh) / 2;
+    lp.style.setProperty('--lx', (x - 75) + 'px'); lp.style.setProperty('--ly', (y - 75) + 'px'); lp.style.backgroundSize = `${dw * Z}px ${dh * Z}px`; lp.style.backgroundPosition = `${-((x - ox) * Z - 75)}px ${-((y - oy) * Z - 75)}px`; };
   lb.addEventListener('pointermove', e => { lb.classList.add('on'); mv(e); }); lb.addEventListener('pointerdown', e => { lb.classList.add('on'); mv(e); });
   lb.addEventListener('pointerleave', () => lb.classList.remove('on')); lb.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(() => lb.classList.remove('on'), 900); });
   function start() {
     if (started) return; started = true;
-    const s = document.createElement('script'); s.src = 'room.bundle.js'; s.async = true;
+    const s = document.createElement('script'); s.src = 'room.bundle.js?v=' + (CFG.BUILD || ''); s.async = true;
     s.onload = () => { try { R = window.CatalogRoom.createRoom($('#roomGl'), { preserve: /[?&]shot/.test(location.search), low: /[?&]low/.test(location.search) }); } catch (err) { R = null; }
       if (!R) $('#roomLoading').textContent = '3D-просмотр недоступен на этом устройстве — смотрите плитку и схему раскладки.';
+      if (R && mode !== 'floor') R.setMode(mode);
+      const sc = $('#roomScenes button.on'); if (R && R.setScene && sc && sc.dataset.s !== 'living') R.setScene(sc.dataset.s);
       apply().then(() => { if (R) setTimeout(() => { $('#roomGl').classList.add('ready'); $('#roomLoading').classList.add('hide'); }, 350); }); };
     s.onerror = () => { $('#roomLoading').textContent = 'Не удалось загрузить 3D-просмотр.'; apply(); };
     document.body.appendChild(s);
@@ -161,8 +234,9 @@ function Room(getSel) {
   new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { start(); o.disconnect(); } }, { rootMargin: '700px 0px' }).observe($('#roomStage'));
   listeners.push(priceBox);
   apply();
-  return { apply };
+  return { apply, refresh, get engine() { return R; } };
 }
+window.CatalogUI = { Room, byArt, setIcons, roomTex, hasRoom };
 
 /* =================== ГЛАВНАЯ =================== */
 function pageIndex() {
@@ -250,8 +324,8 @@ function pageIndex() {
   if (FINE && !RM) grid.addEventListener('pointermove', e => { const c = e.target.closest('.card'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--rx', ((e.clientY - r.top) / r.height - .5) * -4 + 'deg'); });
 
   // ПРИМЕРОЧНАЯ
-  const roomT = T.filter(t => t.tile);
-  let sel = byArt.VHP600822 && byArt.VHP600822.tile ? byArt.VHP600822 : roomT[0];
+  const roomT = T.filter(hasRoom);
+  let sel = byArt.VHP600822 && hasRoom(byArt.VHP600822) ? byArt.VHP600822 : roomT[0];
   $('#swatches').innerHTML = roomT.map(t => `<button type="button" class="swb" data-art="${t.art}" title="${esc(t.name)} · ${t.format} · ${esc(t.surface)}"><img src="${t.icon}" alt="" loading="lazy" decoding="async" width="76" height="76"><span>${esc(t.name)}</span></button>`).join('');
   const room = Room(() => sel);
   const mark = () => { $$('.swb').forEach(s => s.classList.toggle('on', s.dataset.art === sel.art)); $('#roomOpen').href = `tile.html?a=${sel.art}`; };
@@ -282,8 +356,13 @@ function pageTile() {
   const cb = $('#cbWa'); if (cb && wa) cb.href = wa;
   // галерея: интерьеры и чистые фото плитки, как в дилерском каталоге, без постеров и фактуры
   const G = [];
-  const list = galOf(t).length ? galOf(t) : [];
-  if (!list.length && t.card) {
+  const list = M ? [] : (galOf(t).length ? galOf(t) : []);
+  if (M) M.list(t).visible.forEach((it, i) => {
+    const html = it.id === 'card' && it.set ? pic(it.set, '(max-width:1000px) 100vw, 680px', `${t.name} в интерьере`, !G.length, t.art + ':card')
+      : `<img class="${(it.kind === 'product' ? 'contain' : '') + (it.clip ? ' clip-' + it.clip : '')}" src="${esc(it.src)}" alt="${esc(t.name)}, фото ${i + 1}" loading="${G.length ? 'lazy' : 'eager'}" decoding="async" data-ph="${t.art}:${esc(it.ph)}">`;
+    G.push({ html, thumb: it.thumb, full: it.src, label: it.kind === 'product' ? 'плитка' : 'интерьер', ph: t.art + ':' + it.ph, clip: it.clip, kind: it.kind, id: it.id });
+  });
+  if (!M && !list.length && t.card) {
     G.push({ html: pic(t.card, '(max-width:1000px) 100vw, 680px', `${t.name} в интерьере`, true, t.art + ':card'), thumb: small(t.card) + '.jpg', full: big(t.card) + '.jpg', label: 'интерьер', ph: t.art + ':card' });
   }
   list.forEach((g, i) => {
@@ -316,7 +395,7 @@ function pageTile() {
         <div class="admin-acts admin-only" hidden><button type="button" class="btn sm" data-admin="price" data-art="${t.art}">Изменить цену</button><a class="btn sm" href="edit.html?a=${t.art}">Изменить фото</a></div>
       </div>
     </div></div>
-    ${t.tile ? `<section class="texsec" id="room"><div class="wrap"><p class="eyebrow">Примерочная</p><h2>${esc(t.name)} <em>в комнате</em></h2><div id="roomHost"></div></div></section>` : ''}
+    ${hasRoom(t) ? `<section class="texsec" id="room"><div class="wrap"><p class="eyebrow">Примерочная</p><h2>${esc(t.name)} <em>в комнате</em></h2><div id="roomHost"></div></div></section>` : ''}
     ${similar.length ? `<section class="similar"><div class="wrap"><h2>Похожие модели</h2><div class="grid">${similar.map(card).join('')}</div></div></section>` : ''}`;
   // калькулятор
   const need = $('#need');
@@ -338,7 +417,7 @@ function pageTile() {
     track.addEventListener('click', e => { const s = e.target.closest('.slide'); if (s) lightbox(G, +s.dataset.i); });
     track.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(curI + 1); if (e.key === 'ArrowLeft') go(curI - 1); });
   }
-  if (t.tile) { $('#roomHost').innerHTML = $('#roomTpl').innerHTML; Room(() => t); }
+  if (hasRoom(t)) { $('#roomHost').innerHTML = $('#roomTpl').innerHTML; Room(() => t); }
   window.CatalogPhotos && CatalogPhotos.hydrate(box);
   $$('.texsec,.similar').forEach(el => { el.classList.add('reveal'); observe(el); });
 }
@@ -471,6 +550,7 @@ document.addEventListener('click', e => {
 
 async function start() {
   if (window.CatalogAdmin && CatalogAdmin.ready) { try { await CatalogAdmin.ready; } catch (e) {} }
+  if (M && M.ready) { try { await M.ready; } catch (e) {} setIcons(); }
   const needAuth = PAGE === 'prices' || PAGE === 'edit';
   if (needAuth && !(window.CatalogAdmin && CatalogAdmin.isAuthed())) { showAuthGate(); onScroll(); return; }
   wirePriceModal();

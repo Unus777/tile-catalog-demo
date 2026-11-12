@@ -88,9 +88,20 @@ function drawOneTile(x, img, t, g, full, r) {
   x.beginPath(); x.rect(-tw / 2, -th / 2, tw, th); x.clip();
   const turn = full ? ((r() < .5) ? 180 : 0) : 0;
   if (turn) x.rotate(Math.PI);
-  const src = sourceWindow(img, tw, th, full, r);
+  // фото плитки может быть снято «стоя», а плитка лежит «лёжа» (и наоборот) — поворачиваем на 90°,
+  // чтобы на плитку попадал весь кадр без обрезки, в правильных пропорциях формата
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const flip = (tw > th * 1.15 && ih > iw * 1.15) || (th > tw * 1.15 && iw > ih * 1.15);
   x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high';
-  x.drawImage(img, src.sx, src.sy, src.sw, src.sh, -tw / 2, -th / 2, tw, th);
+  if (flip) {
+    x.save(); x.rotate(Math.PI / 2);
+    const src = sourceWindow(img, th, tw, full, r);
+    x.drawImage(img, src.sx, src.sy, src.sw, src.sh, -th / 2, -tw / 2, th, tw);
+    x.restore();
+  } else {
+    const src = sourceWindow(img, tw, th, full, r);
+    x.drawImage(img, src.sx, src.sy, src.sw, src.sh, -tw / 2, -th / 2, tw, th);
+  }
   const v = (r() - .5) * (full ? .03 : .04);
   x.fillStyle = v > 0 ? `rgba(255,255,255,${v})` : `rgba(0,0,0,${-v})`;
   x.fillRect(-tw / 2, -th / 2, tw, th);
@@ -468,7 +479,7 @@ export function createRoom(host, opts = {}) {
   }
 
   // плитка
-  const state = { img: null, format: '60×60', surface: 'Матовая', mode: 'floor', grout: '#b9b2a7', groutMM: 2, pattern: 'straight', full: false, seed: 1 };
+  const state = { img: null, format: '60×60', surface: 'Матовая', mode: 'floor', grout: '#b9b2a7', groutMM: 2, pattern: 'straight', full: false, seed: 1, floor: null };
   const ppm = lowp ? 380 : 760;
   function texFrom(c) { const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxA; t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; return t; }
   const old = [];
@@ -479,9 +490,15 @@ export function createRoom(host, opts = {}) {
       const [a, b] = state.format.split('×').map(v => +v / 100);
       const tile = { tw: Math.max(a, b), th: Math.min(a, b) };
       const base = { img: state.img, grout: state.groutMM, groutColor: state.grout, pattern: state.pattern, full: state.full };
-      const fl = layTiles({ ...base, ...tile, aw: W, ah: D, ppm, seed: state.seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, ['l', 'r', 't'], blobs) });
+      // пол: своя плитка/шаблон пола, если выбран, иначе та же плитка
+      const F = state.floor && state.floor.img ? state.floor : null;
+      const fdim = F ? F.format.split('×').map(v => +v / 100) : [a, b];
+      const fbase = F ? { img: F.img, grout: state.groutMM, groutColor: state.grout, pattern: F.pattern || state.pattern, full: F.full } : base;
+      const fl = layTiles({ ...fbase, tw: Math.max(fdim[0], fdim[1]), th: Math.min(fdim[0], fdim[1]), aw: W, ah: D, ppm, seed: state.seed, ao: (x, cw, ch, p) => aoEdges(x, cw, ch, p, ['l', 'r', 't'], blobs) });
       const ft = texFrom(fl); next.push(ft);
-      const gl = /Глянец|Полир/i.test(state.surface), sat = /Сатин|Карвинг/i.test(state.surface);
+      const fsurf = F ? (F.surface || '') : state.surface;
+      const gl = /Глянец|Полир/i.test(fsurf), sat = /Сатин|Карвинг/i.test(fsurf);
+      const wgl = /Глянец|Полир/i.test(state.surface), wsat = /Сатин|Карвинг/i.test(state.surface);
       const tiledWalls = state.mode !== 'floor', wppm = ppm * .6;
       const wallCanvases = {};
       const wall = (aw, key, edges, seed) => {
@@ -496,7 +513,7 @@ export function createRoom(host, opts = {}) {
       refl.material.uniforms.opacity.value = gl ? .42 : sat ? .14 : 0; refl.material.uniforms.blur.value = gl ? 1.2 : 3.5; refl.visible = gl || sat;
       floorMat.needsUpdate = true;
       for (const key of ['back', 'right', 'left']) {
-        wallMats[key].map = wallCanvases[key]; wallMats[key].roughness = tiledWalls ? (gl ? .2 : sat ? .45 : .8) : .95; wallMats[key].needsUpdate = true;
+        wallMats[key].map = wallCanvases[key]; wallMats[key].roughness = tiledWalls ? (wgl ? .2 : wsat ? .45 : .8) : .95; wallMats[key].needsUpdate = true;
       }
     } catch (err) { console.error('room rebuild', err); }
     dirty = true; kick();
@@ -505,6 +522,8 @@ export function createRoom(host, opts = {}) {
   resize(); go('floor', true); kick();
   return {
     setTile(img, info) { state.img = img; state.format = info.format; state.surface = info.surface; state.full = !!info.full; state.seed = (state.seed * 7 + 3) % 997; rebuild(); },
+    setFloor(img, info) { state.floor = img ? { img, format: (info && info.format) || state.format, surface: (info && info.surface) || 'Матовая', full: !(info && info.full === false) } : null; rebuild(); },
+    getState() { return { mode: state.mode, pattern: state.pattern, format: state.format, floor: state.floor ? { format: state.floor.format, surface: state.floor.surface } : null, scene: sceneName }; },
     setMode(m) { const changed = (m === 'floor') !== (state.mode === 'floor'); state.mode = m; if (changed) rebuild(); go(m); },
     setGrout(c) { state.grout = c; rebuild(); }, setGroutMM(v) { state.groutMM = v; rebuild(); }, setPattern(p) { state.pattern = p; rebuild(); },
     setScene(name) { if (name && name !== sceneName) loadScene(name); },

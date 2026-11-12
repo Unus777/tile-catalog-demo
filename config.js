@@ -23,5 +23,8 @@ window.CATALOG_CONFIG = {
   TOKEN_KEY: 'catalog_admin_token',
   PRICES_FILE: 'prices.json',
   OVERRIDES_FILE: 'photo-overrides.json',
-  OVERRIDES_DIR: 'overrides'
+  OVERRIDES_DIR: 'overrides',
+  MEDIA_FILE: 'media.json',
+  MEDIA_DIR: 'overrides/media',
+  BUILD: '2611121600'
 };

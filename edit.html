@@ -8,16 +8,16 @@
 <script>
 (function(){var k='catalog-theme',t='light';try{var s=localStorage.getItem(k);if(s==='dark'||s==='light')t=s}catch(e){}document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0d0c0b':'#F1EADF');})();
 </script>
-<title>Редактор фото — Каталог плитки</title>
+<title>Медиа и фото — Каталог плитки</title>
 <meta name="description" content="Каталог керамогранита: форматы 60×60 и 60×120, интерьерные фото каждой модели.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'><path d='M13 1 25 13 13 25 1 13z' fill='%230d0c0b' stroke='%23c9a46a' stroke-width='1.6'/><path d='M13 7 19 13 13 19 7 13z' fill='%23e4c690'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611111807">
-<script src="config.js?v=2611111807"></script>
-<script src="brand.js?v=2611111807"></script>
-<script src="admin.js?v=2611111807"></script>
+<link rel="stylesheet" href="style.css?v=2611121600">
+<script src="config.js?v=2611121600"></script>
+<script src="brand.js?v=2611121600"></script>
+<script src="admin.js?v=2611121600"></script>
 </head>
 <body data-page="edit">
 <div class="progress" id="progress"></div>
@@ -49,8 +49,8 @@
 <main class="ed"><div class="wrap">
   <div class="ed-hd">
     <p class="eyebrow">Только для администраторов</p>
-    <h2>Редактор <em>фото</em></h2>
-    <p>Кисть размытия, заливка и пипетка. «Сохранить в браузере» пишет правку только на это устройство. «Сохранить на сайт» публикует JPEG в репозиторий — через 1–2 минуты фото увидят все посетители. Оригиналы в каталоге не затираются: публикуется отдельный файл. Защита — токен GitHub: без него сохранить на сайт нельзя.</p>
+    <h2>Медиа и <em>фото</em></h2>
+    <p>Меняйте фото модели, порядок, обложку, текстуру и пол примерочной. Всё сначала видно только вам — в предпросмотре. Кнопка «Опубликовать на сайт» сохраняет изменения в репозиторий, и через 1–2 минуты их увидят все посетители. Оригиналы фото не удаляются и не затираются: удалённое фото просто скрывается, его можно вернуть.</p>
   </div>
   <div class="ed-layout">
     <aside class="ed-side">
@@ -58,6 +58,120 @@
       <div class="ed-list" id="edList" role="listbox" aria-label="Модели"></div>
     </aside>
     <section class="ed-main">
+      <div class="md-top">
+        <div class="md-title" id="mdTitle"><b>Выберите модель</b></div>
+        <div class="seg md-tabs" id="edTabs" role="tablist" aria-label="Раздел">
+          <button type="button" role="tab" data-tab="media" class="on" aria-selected="true">Медиа</button>
+          <button type="button" role="tab" data-tab="brush" aria-selected="false">Кисть</button>
+        </div>
+      </div>
+      <div class="md-bar" id="mdBar" data-state="clean">
+        <span class="md-bar-txt" id="mdBarTxt">Изменений нет</span>
+        <span class="md-bar-acts">
+          <button type="button" class="btn sm" id="mdUndoArt" disabled><span class="l-lg">Отменить правки модели</span><span class="l-sm">Отменить</span></button>
+          <button type="button" class="btn sm" id="mdResetArt"><span class="l-lg">Вернуть исходные фото</span><span class="l-sm">Исходные</span></button>
+          <button type="button" class="btn gold sm" id="mdPublish" disabled><span class="l-lg">Опубликовать на сайт</span><span class="l-sm">Опубликовать</span></button>
+        </span>
+        <div class="pub-status" id="mdPubStatus" hidden></div>
+      </div>
+
+      <div id="tabMedia" role="tabpanel">
+        <section class="md-card">
+          <div class="md-card-hd">
+            <div><h3>Галерея на сайте</h3><p>Первое фото — обложка карточки и первое фото на странице модели. Перетащите за <span class="md-grip-ic" aria-hidden="true">⠿</span> или используйте стрелки.</p></div>
+            <label class="btn gold sm md-add">+ Добавить фото<input type="file" id="mdAddFile" accept="image/jpeg,image/png,image/webp" multiple hidden></label>
+          </div>
+          <ol class="md-grid" id="mdGrid" aria-label="Фото в галерее"></ol>
+          <p class="md-drop-hint">Можно перетащить файлы с компьютера прямо сюда.</p>
+        </section>
+
+        <section class="md-card">
+          <div class="md-card-hd"><div><h3>Скрытые и неиспользуемые</h3><p>Эти фото посетители не видят. Нажмите «Вернуть», чтобы показать снова.</p></div></div>
+          <ol class="md-grid md-grid-hidden" id="mdHidden" aria-label="Скрытые фото"></ol>
+        </section>
+
+        <section class="md-card md-room">
+          <div class="md-card-hd"><div><h3>Примерочная</h3><p>Какой картинкой плитка кладётся в комнате и какой пол там лежит. Изменения сразу видны в предпросмотре ниже.</p></div></div>
+          <div class="md-room-grid">
+            <div class="md-box">
+              <h4>Текстура плитки</h4>
+              <div class="md-tex"><div class="md-tex-frame" id="mdTexFrame"><img id="mdTexImg" alt="Текстура плитки для примерочной"></div></div>
+              <p class="md-tex-info" id="mdTexInfo"></p>
+              <div class="md-btns">
+                <button type="button" class="btn sm" id="mdTexPick">Выбрать из фото</button>
+                <label class="btn sm">Загрузить фото плитки<input type="file" id="mdTexFile" accept="image/jpeg,image/png,image/webp" hidden></label>
+                <button type="button" class="btn sm" id="mdTexCrop">Кадрировать</button>
+                <button type="button" class="btn sm" id="mdTexReset">Исходная</button>
+              </div>
+            </div>
+            <div class="md-box">
+              <h4>Пол</h4>
+              <div class="seg md-floor-type" id="mdFloorType" role="radiogroup" aria-label="Пол в примерочной">
+                <button type="button" data-v="same" class="on">Та же плитка</button>
+                <button type="button" data-v="art">Из каталога</button>
+                <button type="button" data-v="file">Свой шаблон</button>
+              </div>
+              <div class="md-floor-pane" data-pane="same"><p class="md-hint">Пол выложен этой же плиткой. Посетитель может сам выбрать другой пол в примерочной.</p></div>
+              <div class="md-floor-pane" data-pane="art" hidden>
+                <label class="md-field">Плитка для пола<select id="mdFloorArt"></select></label>
+                <p class="md-hint">Стены покажутся этой моделью, пол — выбранной плиткой.</p>
+              </div>
+              <div class="md-floor-pane" data-pane="file" hidden>
+                <div class="md-floor-prev"><img id="mdFloorImg" alt=""><span id="mdFloorEmpty">Шаблон пола не загружен</span></div>
+                <div class="md-btns">
+                  <label class="btn sm">Загрузить шаблон пола<input type="file" id="mdFloorFile" accept="image/jpeg,image/png,image/webp" hidden></label>
+                  <button type="button" class="btn sm" id="mdFloorPick">Выбрать из фото</button>
+                </div>
+                <div class="md-row2">
+                  <label class="md-field">Формат<select id="mdFloorFmt"></select></label>
+                  <label class="md-field">Поверхность<select id="mdFloorSurf"><option>Матовая</option><option>Глянец</option><option>Сатин</option><option>Полированная</option></select></label>
+                </div>
+              </div>
+              <h4 class="md-h4b">Комната по умолчанию</h4>
+              <div class="seg" id="mdScene" role="radiogroup" aria-label="Комната по умолчанию">
+                <button type="button" data-s="" class="on">Как обычно</button>
+                <button type="button" data-s="living">Гостиная</button>
+                <button type="button" data-s="bath">Ванная</button>
+                <button type="button" data-s="kitchen">Кухня</button>
+              </div>
+            </div>
+          </div>
+          <div class="md-preview" id="mdPreview">
+            <p class="eyebrow">Предпросмотр — так увидят посетители</p>
+            <div id="mdRoomHost"><div class="room-wrap">
+  <div class="room-stage" id="roomStage">
+    <div class="room-gl" id="roomGl"></div>
+    <div class="room-loading" id="roomLoading"><span></span>Готовим комнату…</div>
+    <div class="room-views seg" id="roomModes" role="radiogroup" aria-label="Что облицовать"><button type="button" data-m="floor" class="on">Пол</button><button type="button" data-m="walls">Стены</button><button type="button" data-m="both">Пол и стены</button></div>
+    <div class="room-tools">
+      <button type="button" class="room-icon" id="roomReset" title="Сбросить вид" aria-label="Сбросить вид">↺</button>
+      <button type="button" class="room-icon" id="roomShot" title="Скачать картинку" aria-label="Скачать картинку">↓</button>
+    </div>
+    <p class="room-hint" id="roomHint">Перетащите, чтобы осмотреть · колесо или жест — масштаб</p>
+    <a class="room-label" id="roomLabel"></a>
+  </div>
+  <div class="room-side">
+    <div class="room-ctrl">
+      <div class="ctrl"><span>Комната</span><div class="seg" id="roomScenes" role="radiogroup" aria-label="Сцена"><button type="button" data-s="living" class="on">Гостиная</button><button type="button" data-s="bath">Ванная</button><button type="button" data-s="kitchen">Кухня</button></div></div>
+      <div class="ctrl ctrl-floor"><span>Пол</span><label class="fsel"><select id="floorSel" aria-label="Плитка на полу"></select></label></div>
+      <p class="floor-note" id="floorNote" aria-live="polite"></p>
+      <div class="ctrl"><span>Раскладка</span><div class="seg wrap" id="patSeg" role="radiogroup" aria-label="Раскладка"><button type="button" data-p="straight" class="on">Прямая</button><button type="button" data-p="half">Со смещением</button><button type="button" data-p="third">⅓</button><button type="button" data-p="herringbone">Ёлочка</button><button type="button" data-p="diagonal">Диагональ</button></div></div>
+      <div class="ctrl"><span>Цвет шва</span><div class="dots" id="groutDots"><button type="button" data-c="#f4efe6" title="Белый" style="--c:#f4efe6"></button><button type="button" data-c="#b9b2a7" title="Светло-серый" class="on" style="--c:#b9b2a7"></button><button type="button" data-c="#c9b79c" title="Бежевый" style="--c:#c9b79c"></button><button type="button" data-c="#8a8176" title="Какао" style="--c:#8a8176"></button><button type="button" data-c="#4a4642" title="Графит" style="--c:#4a4642"></button><button type="button" data-c="#1f1c19" title="Чёрный" style="--c:#1f1c19"></button></div></div>
+      <div class="ctrl"><span>Ширина шва</span><div class="seg" id="groutW"><button type="button" data-w="1">1 мм</button><button type="button" data-w="2" class="on">2 мм</button><button type="button" data-w="3">3 мм</button><button type="button" data-w="4">4 мм</button></div></div>
+    </div>
+    <div class="closeup">
+      <div class="loupe-box" id="loupeBox"><img id="loupeImg" alt="Плитка крупно" width="520" height="520"><div class="loupe" id="loupe"></div><span class="hint">Плитка · лупа</span></div>
+      <div class="lay"><canvas id="layoutCv" width="640" height="640" aria-label="Схема раскладки"></canvas><span class="hint">Схема раскладки</span></div>
+    </div>
+    <div class="room-price" id="roomPrice"></div>
+    
+  </div>
+</div></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="tabBrush" role="tabpanel" hidden>
       <div class="ed-thumbs" id="edThumbs" aria-label="Фото модели"></div>
       <div class="ed-stage-wrap">
         <div class="ed-stage" id="edStage">
@@ -91,14 +205,36 @@
           <p class="ed-note" id="edNote"></p>
         </div>
       </div>
+      </div>
     </section>
   </div>
 </div></main>
+<div class="modal-back md-modal" id="mdPicker" hidden>
+  <div class="modal md-modal-box" role="dialog" aria-modal="true" aria-labelledby="mdPickerTitle">
+    <h3 id="mdPickerTitle">Выберите фото</h3>
+    <p class="ed-note" id="mdPickerSub"></p>
+    <div class="md-pick-grid" id="mdPickerGrid"></div>
+    <div class="modal-acts"><button type="button" class="btn" id="mdPickerClose">Отмена</button></div>
+  </div>
+</div>
+<div class="modal-back md-modal" id="mdCrop" hidden>
+  <div class="modal md-modal-box md-crop-box" role="dialog" aria-modal="true" aria-labelledby="mdCropTitle">
+    <h3 id="mdCropTitle">Кадрирование плитки</h3>
+    <p class="ed-note" id="mdCropSub">Рамка повторяет пропорции формата. Подвиньте её и потяните за угол, чтобы в рамку попала вся плитка — от края до края.</p>
+    <div class="md-crop-row">
+      <label class="md-field md-crop-fmt" id="mdCropFmtWrap">Формат<select id="mdCropFmt"></select></label>
+      <div class="seg" id="mdCropOri" role="radiogroup" aria-label="Ориентация"><button type="button" data-o="auto" class="on">Авто</button><button type="button" data-o="p">Вертикально</button><button type="button" data-o="l">Горизонтально</button></div>
+      <button type="button" class="btn sm" id="mdCropAll">Вписать всё фото</button>
+    </div>
+    <div class="md-crop-stage" id="mdCropStage"><img id="mdCropImg" alt=""><div class="md-crop-rect" id="mdCropRect"><i class="h nw"></i><i class="h ne"></i><i class="h sw"></i><i class="h se"></i></div></div>
+    <div class="modal-acts"><button type="button" class="btn" id="mdCropCancel">Отмена</button><button type="button" class="btn gold" id="mdCropOk">Применить</button></div>
+  </div>
+</div>
 <footer class="foot">
   <span data-brand="legal">Каталог плитки</span>
   <span data-cfg="footer-line" hidden></span>
   <a data-cfg="email" hidden></a>
-  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Медиа и фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
 </footer>
 <div class="callbar" hidden>
   <a class="btn gold" data-cfg="phone">Позвонить</a>
@@ -124,9 +260,11 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611111807"></script>
-<script src="data.js?v=2611111807"></script>
-<script src="app.js?v=2611111807"></script>
-<script src="edit.js?v=2611111807"></script>
+<script src="photos.js?v=2611121600"></script>
+<script src="data.js?v=2611121600"></script>
+<script src="media.js?v=2611121600"></script>
+<script src="app.js?v=2611121600"></script>
+<script src="edit.js?v=2611121600"></script>
+<script src="media-admin.js?v=2611121600"></script>
 </body>
 </html>

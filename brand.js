@@ -10,7 +10,7 @@
   const titles = {
     index: name + ' — ' + tag,
     prices: 'Цены — редактор — ' + name,
-    edit: 'Редактор фото — ' + name,
+    edit: 'Медиа и фото — ' + name,
     admin: 'Вход для администраторов — ' + name
   };
 

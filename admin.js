@@ -215,6 +215,29 @@
     overridesStamp = Date.now();
   }
 
+  /* Медиа: порядок, скрытые фото, роли (обложка, текстура примерочной, пол) и новые файлы — одним коммитом.
+     items: { АРТИКУЛ: запись манифеста | null (сбросить к исходным фото) }, files: [{ path, base64 }].
+     Оригиналы в img/ и img2/ не трогаются: новые фото кладутся в overrides/media/, удаление — пометка hidden. */
+  const MEDIA_FILE = CFG.MEDIA_FILE || 'media.json';
+  const MEDIA_DIR = CFG.MEDIA_DIR || (OVERRIDES_DIR + '/media');
+  const safePath = p => typeof p === 'string' && p.startsWith(MEDIA_DIR + '/') && !p.includes('..') && /\.(jpe?g)$/i.test(p);
+  async function publishMedia(items, files) {
+    const arts = Object.keys(items || {});
+    if (!arts.length) throw new Error('Нет изменений для публикации');
+    (files || []).forEach(f => { if (!safePath(f.path)) throw new Error('Недопустимый путь файла: ' + f.path); });
+    const message = 'Медиа: ' + arts.slice(0, 6).join(', ') + (arts.length > 6 ? ' и ещё ' + (arts.length - 6) : '');
+    await commit(message, (files || []).map(f => ({ path: f.path, content: f.base64, encoding: 'base64' })), [{
+      path: MEDIA_FILE,
+      apply: s => {
+        let j = {};
+        try { j = JSON.parse(s || '{}') || {}; } catch (e) { j = {}; }
+        const out = { version: 1, updated: new Date().toISOString(), items: (j.items && typeof j.items === 'object' && !Array.isArray(j.items)) ? j.items : {} };
+        arts.forEach(a => { if (items[a]) out.items[a] = items[a]; else delete out.items[a]; });
+        return JSON.stringify(out, null, 1) + '\n';
+      }
+    }]);
+  }
+
   /* ---------- страница входа ---------- */
   function gateError(text) {
     const box = $('#gate-error');
@@ -299,6 +322,8 @@
     commit,
     publishPrices,
     publishPhotos,
+    publishMedia,
+    mediaDir: MEDIA_DIR,
     fileNameFor,
     applyAdminUI,
     setStatus,

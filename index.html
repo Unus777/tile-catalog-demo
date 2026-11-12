@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611111807">
-<script src="config.js?v=2611111807"></script>
-<script src="brand.js?v=2611111807"></script>
-<script src="admin.js?v=2611111807"></script>
+<link rel="stylesheet" href="style.css?v=2611121600">
+<script src="config.js?v=2611121600"></script>
+<script src="brand.js?v=2611121600"></script>
+<script src="admin.js?v=2611121600"></script>
 </head>
 <body data-page="index">
 <div class="progress" id="progress"></div>
@@ -103,6 +103,8 @@
   <div class="room-side">
     <div class="room-ctrl">
       <div class="ctrl"><span>Комната</span><div class="seg" id="roomScenes" role="radiogroup" aria-label="Сцена"><button type="button" data-s="living" class="on">Гостиная</button><button type="button" data-s="bath">Ванная</button><button type="button" data-s="kitchen">Кухня</button></div></div>
+      <div class="ctrl ctrl-floor"><span>Пол</span><label class="fsel"><select id="floorSel" aria-label="Плитка на полу"></select></label></div>
+      <p class="floor-note" id="floorNote" aria-live="polite"></p>
       <div class="ctrl"><span>Раскладка</span><div class="seg wrap" id="patSeg" role="radiogroup" aria-label="Раскладка"><button type="button" data-p="straight" class="on">Прямая</button><button type="button" data-p="half">Со смещением</button><button type="button" data-p="third">⅓</button><button type="button" data-p="herringbone">Ёлочка</button><button type="button" data-p="diagonal">Диагональ</button></div></div>
       <div class="ctrl"><span>Цвет шва</span><div class="dots" id="groutDots"><button type="button" data-c="#f4efe6" title="Белый" style="--c:#f4efe6"></button><button type="button" data-c="#b9b2a7" title="Светло-серый" class="on" style="--c:#b9b2a7"></button><button type="button" data-c="#c9b79c" title="Бежевый" style="--c:#c9b79c"></button><button type="button" data-c="#8a8176" title="Какао" style="--c:#8a8176"></button><button type="button" data-c="#4a4642" title="Графит" style="--c:#4a4642"></button><button type="button" data-c="#1f1c19" title="Чёрный" style="--c:#1f1c19"></button></div></div>
       <div class="ctrl"><span>Ширина шва</span><div class="seg" id="groutW"><button type="button" data-w="1">1 мм</button><button type="button" data-w="2" class="on">2 мм</button><button type="button" data-w="3">3 мм</button><button type="button" data-w="4">4 мм</button></div></div>
@@ -135,7 +137,7 @@
   <span data-brand="legal">Каталог плитки</span>
   <span data-cfg="footer-line" hidden></span>
   <a data-cfg="email" hidden></a>
-  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Медиа и фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
 </footer>
 <div class="callbar" hidden>
   <a class="btn gold" data-cfg="phone">Позвонить</a>
@@ -161,8 +163,9 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611111807"></script>
-<script src="data.js?v=2611111807"></script>
-<script src="app.js?v=2611111807"></script>
+<script src="photos.js?v=2611121600"></script>
+<script src="data.js?v=2611121600"></script>
+<script src="media.js?v=2611121600"></script>
+<script src="app.js?v=2611121600"></script>
 </body>
 </html>
