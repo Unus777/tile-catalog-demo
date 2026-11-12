@@ -107,7 +107,7 @@ for (const [W, H, mob, theme] of [[1440, 900, false, 'light'], [390, 844, true, 
   const second = ids[1];
   await p.locator(`#mdGrid .md-item[data-id="${up}"]`).scrollIntoViewIfNeeded();
   await p.evaluate(() => window.scrollBy(0, -80)); await p.waitForTimeout(200);
-  const g = await p.locator(`#mdGrid .md-item[data-id="${second}"] .md-grip`).boundingBox();
+  const g = await p.locator(`#mdGrid .md-item[data-id="${second}"] .md-ph`).boundingBox();
   const first = await p.locator(`#mdGrid .md-item[data-id="${up}"] .md-ph`).boundingBox();
   if (!mob) {
     await p.mouse.move(g.x + g.width / 2, g.y + g.height / 2); await p.mouse.down();

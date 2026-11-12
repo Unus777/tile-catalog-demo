@@ -341,13 +341,35 @@
     closeMenus();
   });
 
-  // перетаскивание: мышь и палец (Pointer Events), порядок фиксируется при отпускании
+  // перетаскивание за любое место карточки (кроме кнопок). Порядок фиксируется при отпускании.
+  // На телефоне вертикальный жест остаётся прокруткой: сортировка начинается после небольшого сдвига.
   (function wireDrag() {
-    const grid = $('#mdGrid'); let li = null, pid = null, moved = false;
+    const grid = $('#mdGrid');
+    let li = null, pid = null, moved = false, armed = false, sx = 0, sy = 0;
+    const stop = () => {
+      removeEventListener('pointermove', move);
+      removeEventListener('pointerup', end);
+      removeEventListener('pointercancel', end);
+      if (li) li.classList.remove('dragging');
+      grid.classList.remove('sorting');
+      li = null; pid = null; armed = false;
+    };
     const move = e => {
       if (!li || e.pointerId !== pid) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (!armed) {
+        if (Math.hypot(dx, dy) < 8) return;
+        if (e.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx) * 1.15) { stop(); return; }
+        armed = true;
+        li.classList.add('dragging');
+        grid.classList.add('sorting');
+      }
       e.preventDefault();
-      const over = $$('.md-item', grid).find(x => { if (x === li) return false; const q = x.getBoundingClientRect(); return e.clientX >= q.left && e.clientX <= q.right && e.clientY >= q.top && e.clientY <= q.bottom; });
+      const over = $$('.md-item', grid).find(x => {
+        if (x === li) return false;
+        const q = x.getBoundingClientRect();
+        return e.clientX >= q.left && e.clientX <= q.right && e.clientY >= q.top && e.clientY <= q.bottom;
+      });
       if (!over) return;
       const r = over.getBoundingClientRect();
       const sameRow = e.clientY < r.bottom && e.clientY > r.top;
@@ -358,17 +380,22 @@
     };
     const end = e => {
       if (!li || (e && e.pointerId !== pid)) return;
-      removeEventListener('pointermove', move); removeEventListener('pointerup', end); removeEventListener('pointercancel', end);
-      li.classList.remove('dragging'); grid.classList.remove('sorting');
-      const ids = $$('.md-item', grid).map(x => x.dataset.id); li = null;
-      if (moved) change(en => { en.order = ids; }, 'Порядок фото изменён');
+      const did = moved && armed;
+      const ids = $$('.md-item', grid).map(x => x.dataset.id);
+      stop();
+      if (did) change(en => { en.order = ids; }, 'Порядок фото изменён');
     };
     grid.addEventListener('pointerdown', e => {
-      const g = e.target.closest('.md-grip'); if (!g) return;
-      e.preventDefault(); li = g.closest('.md-item'); pid = e.pointerId; moved = false;
-      li.classList.add('dragging'); grid.classList.add('sorting');
-      addEventListener('pointermove', move, { passive: false }); addEventListener('pointerup', end); addEventListener('pointercancel', end);
+      if (e.button) return;
+      if (e.target.closest('.md-ic, .md-menu, .md-add-tile, input, label')) return;
+      const item = e.target.closest('.md-item');
+      if (!item || item.classList.contains('is-hidden') || !grid.contains(item)) return;
+      li = item; pid = e.pointerId; moved = false; armed = false; sx = e.clientX; sy = e.clientY;
+      addEventListener('pointermove', move, { passive: false });
+      addEventListener('pointerup', end);
+      addEventListener('pointercancel', end);
     });
+    grid.addEventListener('dragstart', e => { if (e.target.closest('.md-item')) e.preventDefault(); });
     // файлы с компьютера прямо в галерею
     const card = grid.closest('.md-card');
     card.addEventListener('dragover', e => { if ([...(e.dataTransfer && e.dataTransfer.types || [])].includes('Files')) { e.preventDefault(); card.classList.add('drop-on'); } });
