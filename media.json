@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-13T18:49:55.985Z",
+ "updated": "2026-11-13T18:56:43.234Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -131,9 +131,21 @@
      "kind": "interior",
      "role": "gallery",
      "name": "f8b77fec-5c37-47ec-a049-fc9cb7f9fa56.png"
+    },
+    "u:fc1b4umm8w": {
+     "src": "overrides/media/VHP612038/fc1b4umm8w.jpg",
+     "thumb": "overrides/media/VHP612038/fc1b4umm8w_t.jpg",
+     "w": 856,
+     "h": 1712,
+     "kind": "product",
+     "role": "room",
+     "name": "Загруженное фото"
     }
    },
-   "room": null,
+   "room": {
+    "id": "u:fc1b4umm8w",
+    "full": true
+   },
    "floor": null,
    "scene": ""
   }
