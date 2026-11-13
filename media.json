@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-13T18:56:43.234Z",
+ "updated": "2026-11-13T19:09:14.589Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -146,6 +146,115 @@
     "id": "u:fc1b4umm8w",
     "full": true
    },
+   "floor": null,
+   "scene": ""
+  },
+  "VHF612802": {
+   "order": [
+    "u:fcom7x8dtf",
+    "u:fcom5yf0iz",
+    "u:fcom79liqw",
+    "u:fcom2bxfzl",
+    "u:fcom358di1",
+    "u:fcom3y1257",
+    "u:fcom4n040y",
+    "u:fcom6n1ziw",
+    "u:fcom5bfo22"
+   ],
+   "hidden": [
+    "g:06.62206c88",
+    "g:03.c5ae008c",
+    "g:07.82f75e53",
+    "g:04.42006040",
+    "g:05.529d3f90",
+    "g:09.ccc5f327",
+    "g:02.266d9a8d",
+    "g:08.d20d9ad3"
+   ],
+   "files": {
+    "u:fcom2bxfzl": {
+     "src": "overrides/media/VHF612802/fcom2bxfzl.jpg",
+     "thumb": "overrides/media/VHF612802/fcom2bxfzl_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "2d974225-bdb1-4183-bee6-2599bf22fa44.png"
+    },
+    "u:fcom358di1": {
+     "src": "overrides/media/VHF612802/fcom358di1.jpg",
+     "thumb": "overrides/media/VHF612802/fcom358di1_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "6e9cbbd2-0136-4e41-a36c-a74fa4bca91d.png"
+    },
+    "u:fcom3y1257": {
+     "src": "overrides/media/VHF612802/fcom3y1257.jpg",
+     "thumb": "overrides/media/VHF612802/fcom3y1257_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "55ba5328-249d-4309-9e8a-2e1d268e4b87.png"
+    },
+    "u:fcom4n040y": {
+     "src": "overrides/media/VHF612802/fcom4n040y.jpg",
+     "thumb": "overrides/media/VHF612802/fcom4n040y_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "822c6dad-7426-4e73-a665-213d941d66bb.png"
+    },
+    "u:fcom5bfo22": {
+     "src": "overrides/media/VHF612802/fcom5bfo22.jpg",
+     "thumb": "overrides/media/VHF612802/fcom5bfo22_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "906d9121-7550-4312-a456-2fe3144d348e.png"
+    },
+    "u:fcom5yf0iz": {
+     "src": "overrides/media/VHF612802/fcom5yf0iz.jpg",
+     "thumb": "overrides/media/VHF612802/fcom5yf0iz_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "b5f14d43-4cde-47ef-b53b-a1fcde3d11d2.png"
+    },
+    "u:fcom6n1ziw": {
+     "src": "overrides/media/VHF612802/fcom6n1ziw.jpg",
+     "thumb": "overrides/media/VHF612802/fcom6n1ziw_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "c05debee-89f4-4ca8-855e-38b932c64f73.png"
+    },
+    "u:fcom79liqw": {
+     "src": "overrides/media/VHF612802/fcom79liqw.jpg",
+     "thumb": "overrides/media/VHF612802/fcom79liqw_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "d79d973e-69b9-4571-86e7-7dcc1b07885d.png"
+    },
+    "u:fcom7x8dtf": {
+     "src": "overrides/media/VHF612802/fcom7x8dtf.jpg",
+     "thumb": "overrides/media/VHF612802/fcom7x8dtf_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "e979735f-4882-4dcb-aefd-e2294819865d.png"
+    }
+   },
+   "room": null,
    "floor": null,
    "scene": ""
   }
