@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-13T21:09:58.269Z",
+ "updated": "2026-11-13T21:13:49.225Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -775,7 +775,8 @@
     "u:fgzi4ofgtu",
     "u:fgzi6br1xn",
     "u:fgzi6sb1cv",
-    "u:fgzi5u31i3"
+    "u:fgzi5u31i3",
+    "tile"
    ],
    "hidden": [
     "g:06.4dba3d32",
@@ -836,9 +837,21 @@
      "kind": "interior",
      "role": "gallery",
      "name": "ee6048aa-e0c9-4040-9489-a5b702cb85f8.jpeg"
+    },
+    "u:fh4lzijug0": {
+     "src": "overrides/media/VHP600853/fh4lzijug0.jpg",
+     "thumb": "overrides/media/VHP600853/fh4lzijug0_t.jpg",
+     "w": 641,
+     "h": 641,
+     "kind": "product",
+     "role": "room",
+     "name": "texture"
     }
    },
-   "room": null,
+   "room": {
+    "id": "u:fh4lzijug0",
+    "full": true
+   },
    "floor": null,
    "scene": ""
   }
