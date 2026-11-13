@@ -18,6 +18,7 @@
   let art = '';
   const dirty = new Set(), resets = new Set(), pending = {}, floorUI = {};
   let room = null, busy = false;
+  let selMode = false; const sel = new Set();
 
   const clone = o => JSON.parse(JSON.stringify(o));
   const cur = () => byArt[art];
@@ -102,8 +103,8 @@
     const acts = hidden
       ? [['restore', 'Вернуть в галерею'], ['room', 'Для примерочной'], ['floor', 'Как шаблон пола'], ['brush', 'Править кистью'], ['open', 'Открыть оригинал']].concat(x.draft ? [['drop', 'Удалить навсегда', 'danger']] : [])
       : [['cover', 'Сделать обложкой'], ['replace', 'Заменить фото…'], ['room', 'Для примерочной'], ['floor', 'Как шаблон пола'], ['brush', 'Править кистью'], ['open', 'Открыть оригинал'], ['hide', 'Удалить с сайта', 'danger']];
-    return `<li class="md-item${hidden ? ' is-hidden' : ''}${x.kind === 'product' ? ' product' : ''}" data-id="${esc(x.id)}">
-      <div class="md-ph"><img src="${esc(x.thumb)}" alt="${esc(x.label)}" loading="lazy" decoding="async">
+    return `<li class="md-item${hidden ? ' is-hidden' : ''}${x.kind === 'product' ? ' product' : ''}${!hidden && sel.has(x.id) ? ' is-sel' : ''}" data-id="${esc(x.id)}">
+      <div class="md-ph"><img src="${esc(x.thumb)}" alt="${esc(x.label)}" loading="lazy" decoding="async">${hidden ? '' : `<button type="button" class="md-check" data-act="pick" role="checkbox" aria-checked="${sel.has(x.id)}" aria-label="Выбрать фото" title="Выбрать"></button>`}
         ${hidden ? '' : `<span class="md-num">${i === 0 ? 'Обложка' : i + 1}</span>`}<span class="md-badges">${roles(t, x)}</span></div>
       <div class="md-it-bar">
         ${hidden ? '' : '<button type="button" class="md-grip" aria-label="Перетащить" title="Перетащить">⠿</button>'}
@@ -119,11 +120,45 @@
     $('#mdTitle').innerHTML = `<b>${esc(t.name)}</b><small>${esc(t.art)} · ${esc(t.format)} · ${esc(t.surface)}</small>`;
     $('#mdGrid').innerHTML = L.visible.map((x, i) => itemHTML(t, x, i, L.visible.length, false)).join('') +
       `<li class="md-add-tile"><label><span>+</span><b>Добавить фото</b><small>JPEG, PNG, WebP</small><input type="file" class="md-add-in" accept="image/jpeg,image/png,image/webp" multiple hidden></label></li>`;
+    [...sel].forEach(id => { if (!L.visible.some(x => x.id === id)) sel.delete(id); });
+    $('#mdGrid').classList.toggle('selecting', selMode);
+    renderSel(L.visible.length);
     $('#mdHidden').innerHTML = L.hidden.length ? L.hidden.map((x, i) => itemHTML(t, x, i, 0, true)).join('') : '<li class="md-empty">Скрытых фото нет</li>';
     renderRoom(t);
     renderBar();
     markList();
     if (window.CatalogEditor) CatalogEditor.refresh();
+  }
+  function renderSel(total) {
+    const box = $('#mdSel'), n = sel.size; if (!box) return;
+    if (total == null) { const t = cur(); total = t ? M.list(t).visible.length : 0; }
+    $('#mdSelToggle').textContent = selMode ? 'Готово' : 'Выбрать';
+    $('#mdSelToggle').setAttribute('aria-pressed', String(selMode));
+    box.hidden = !selMode;
+    $('#mdSelTxt').textContent = n ? `Выбрано: ${n} ${plural(n, 'фото', 'фото', 'фото')}` : 'Нажмите на фото, чтобы выбрать';
+    $('#mdSelAll').textContent = n && n === total ? 'Снять выбор' : 'Выбрать все';
+    $('#mdSelAll').disabled = !total;
+    $('#mdSelDel').disabled = !n || busy;
+    $('#mdSelDel').textContent = n ? `Удалить с сайта (${n})` : 'Удалить с сайта';
+  }
+  function setSel(on) { selMode = !!on; if (!selMode) sel.clear(); render(); }
+  function togglePick(id, li) {
+    if (sel.has(id)) sel.delete(id); else sel.add(id);
+    if (!selMode) selMode = true;
+    if (li) { li.classList.toggle('is-sel', sel.has(id)); const c = li.querySelector('.md-check'); c && c.setAttribute('aria-checked', String(sel.has(id))); }
+    $('#mdGrid').classList.toggle('selecting', selMode);
+    renderSel();
+  }
+  function hideMany(ids) {
+    if (!ids.length) return;
+    const set = new Set(ids);
+    change(e => {
+      e.order = e.order.filter(v => !set.has(v));
+      ids.forEach(id => {
+        if (id.startsWith('u:') && e.files[id] && e.files[id].draft && !(e.room && e.room.id === id) && !(e.floor && e.floor.id === id)) { delete e.files[id]; delete (pending[art] || {})[id]; }
+        else e.hidden.push(id);
+      });
+    }, `Убрано с сайта: ${ids.length} ${plural(ids.length, 'фото', 'фото', 'фото')}. Вернуть можно в разделе «Скрытые»`);
   }
   function renderBar() {
     const n = dirty.size, bar = $('#mdBar');
@@ -304,6 +339,7 @@
   async function act(a, id) {
     const t = cur(); const x = M.find(t, id);
     closeMenus();
+    if (a === 'pick') return;
     if (a === 'up' || a === 'down') return change(e => { const i = e.order.indexOf(id), j = i + (a === 'up' ? -1 : 1); if (i < 0 || j < 0 || j >= e.order.length) return; [e.order[i], e.order[j]] = [e.order[j], e.order[i]]; });
     if (a === 'cover') return change(e => { e.order = [id].concat(e.order.filter(v => v !== id)); }, 'Обложка карточки обновлена');
     if (a === 'replace') { replaceId = id; replaceIn.click(); return; }
@@ -321,7 +357,13 @@
   }
   function closeMenus(except) { $$('.md-menu').forEach(m => { if (m !== except) { m.hidden = true; const b = m.parentNode.querySelector('[data-act="menu"]'); if (b) b.setAttribute('aria-expanded', 'false'); } }); }
   function onGridClick(e) {
-    const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+    const b = e.target.closest('[data-act]');
+    const li0 = e.target.closest('#mdGrid .md-item');
+    if (li0 && (selMode && (!b || b.dataset.act === 'pick') || (b && b.dataset.act === 'pick') || (!b && (e.metaKey || e.ctrlKey || e.shiftKey)))) {
+      if (performance.now() - lastDragEnd < 250) return;
+      e.preventDefault(); togglePick(li0.dataset.id, li0); return;
+    }
+    if (!b || b.disabled) return;
     const li = b.closest('.md-item'); if (!li) return;
     if (b.dataset.act === 'menu') {
       const m = li.querySelector('.md-menu'), open = m.hidden;
@@ -331,13 +373,28 @@
     }
     act(b.dataset.act, li.dataset.id);
   }
+  let lastDragEnd = 0;
   $('#mdGrid').addEventListener('click', onGridClick);
+  $('#mdSelToggle').addEventListener('click', () => setSel(!selMode));
+  $('#mdSelCancel').addEventListener('click', () => setSel(false));
+  $('#mdSelAll').addEventListener('click', () => {
+    const t = cur(); if (!t) return; const v = M.list(t).visible.map(x => x.id);
+    if (sel.size === v.length) sel.clear(); else v.forEach(id => sel.add(id));
+    render();
+  });
+  $('#mdSelDel').addEventListener('click', () => {
+    const ids = [...sel]; if (!ids.length) return;
+    const t = cur(); const left = M.list(t).visible.length - ids.length;
+    if (!confirm(`Убрать с сайта ${ids.length} ${plural(ids.length, 'фото', 'фото', 'фото')}?` + (left ? '' : ' В галерее не останется ни одного фото.') + ' Их можно будет вернуть из «Скрытых».')) return;
+    sel.clear(); selMode = false; hideMany(ids);
+  });
   $('#mdHidden').addEventListener('click', onGridClick);
   document.addEventListener('click', e => { if (!e.target.closest('.md-menu,[data-act="menu"]')) closeMenus(); });
   addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!$('#mdCrop').hidden) return closeCrop(null);
     if (!$('#mdPicker').hidden) { $('#mdPicker').hidden = true; return; }
+    if (selMode) { setSel(false); return; }
     closeMenus();
   });
 
@@ -383,11 +440,11 @@
       const did = moved && armed;
       const ids = $$('.md-item', grid).map(x => x.dataset.id);
       stop();
-      if (did) change(en => { en.order = ids; }, 'Порядок фото изменён');
+      if (did) { lastDragEnd = performance.now(); change(en => { en.order = ids; }, 'Порядок фото изменён'); }
     };
     grid.addEventListener('pointerdown', e => {
       if (e.button) return;
-      if (e.target.closest('.md-ic, .md-menu, .md-add-tile, input, label')) return;
+      if (e.target.closest('.md-ic, .md-check, .md-menu, .md-add-tile, input, label')) return;
       const item = e.target.closest('.md-item');
       if (!item || item.classList.contains('is-hidden') || !grid.contains(item)) return;
       li = item; pid = e.pointerId; moved = false; armed = false; sx = e.clientX; sy = e.clientY;
@@ -489,7 +546,7 @@
     if (name === 'brush' && window.CatalogEditor) requestAnimationFrame(() => CatalogEditor.fit());
   }
   $('#edTabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) showTab(b.dataset.tab); });
-  $('#edList').addEventListener('click', e => { const b = e.target.closest('[data-art]'); if (!b || !byArt[b.dataset.art]) return; art = b.dataset.art; render(); preview(); });
+  $('#edList').addEventListener('click', e => { const b = e.target.closest('[data-art]'); if (!b || !byArt[b.dataset.art]) return; if (art !== b.dataset.art) { sel.clear(); selMode = false; } art = b.dataset.art; render(); preview(); });
   $('#edQ').addEventListener('input', () => setTimeout(markList, 0));
 
   const qp = new URLSearchParams(location.search);
@@ -498,5 +555,5 @@
     art = start.art; render(); preview();
     if (qp.get('tab') === 'brush') showTab('brush');
   });
-  window.CatalogMediaAdmin = { get art() { return art; }, dirty, act, showTab, select(a) { if (byArt[a]) { art = a; render(); preview(); } } };
+  window.CatalogMediaAdmin = { get art() { return art; }, dirty, act, showTab, select(a) { if (byArt[a]) { if (art !== a) { sel.clear(); selMode = false; } art = a; render(); preview(); } } };
 })();

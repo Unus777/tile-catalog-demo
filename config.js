@@ -26,5 +26,5 @@ window.CATALOG_CONFIG = {
   OVERRIDES_DIR: 'overrides',
   MEDIA_FILE: 'media.json',
   MEDIA_DIR: 'overrides/media',
-  BUILD: '2611132130'
+  BUILD: '2611132150'
 };

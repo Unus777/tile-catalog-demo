@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611132130">
-<script src="config.js?v=2611132130"></script>
-<script src="brand.js?v=2611132130"></script>
-<script src="admin.js?v=2611132130"></script>
+<link rel="stylesheet" href="style.css?v=2611132150">
+<script src="config.js?v=2611132150"></script>
+<script src="brand.js?v=2611132150"></script>
+<script src="admin.js?v=2611132150"></script>
 </head>
 <body data-page="edit">
 <div class="progress" id="progress"></div>
@@ -78,8 +78,12 @@
       <div id="tabMedia" role="tabpanel">
         <section class="md-card">
           <div class="md-card-hd">
-            <div><h3>Галерея на сайте</h3><p>Первое фото — обложка карточки и первое фото на странице модели. Перетащите само фото, чтобы поменять порядок, или используйте стрелки.</p></div>
-            <label class="btn gold sm md-add">+ Добавить фото<input type="file" id="mdAddFile" accept="image/jpeg,image/png,image/webp" multiple hidden></label>
+            <div><h3>Галерея на сайте</h3><p>Первое фото — обложка карточки и первое фото на странице модели. Перетащите само фото, чтобы поменять порядок. Чтобы удалить сразу несколько, нажмите «Выбрать» или отметьте фото кружком в углу.</p></div>
+            <div class="md-hd-acts"><button type="button" class="btn sm" id="mdSelToggle" aria-pressed="false">Выбрать</button><label class="btn gold sm md-add">+ Добавить фото<input type="file" id="mdAddFile" accept="image/jpeg,image/png,image/webp" multiple hidden></label></div>
+          </div>
+          <div class="md-sel" id="mdSel" hidden>
+            <span class="md-sel-txt" id="mdSelTxt">Нажмите на фото, чтобы выбрать</span>
+            <span class="md-sel-acts"><button type="button" class="btn sm" id="mdSelAll">Выбрать все</button><button type="button" class="btn sm danger" id="mdSelDel" disabled>Удалить с сайта</button><button type="button" class="btn sm ghost" id="mdSelCancel">Отмена</button></span>
           </div>
           <ol class="md-grid" id="mdGrid" aria-label="Фото в галерее"></ol>
           <p class="md-drop-hint">Можно перетащить файлы с компьютера прямо сюда.</p>
@@ -260,11 +264,11 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611132130"></script>
-<script src="data.js?v=2611132130"></script>
-<script src="media.js?v=2611132130"></script>
-<script src="app.js?v=2611132130"></script>
-<script src="edit.js?v=2611132130"></script>
-<script src="media-admin.js?v=2611132130"></script>
+<script src="photos.js?v=2611132150"></script>
+<script src="data.js?v=2611132150"></script>
+<script src="media.js?v=2611132150"></script>
+<script src="app.js?v=2611132150"></script>
+<script src="edit.js?v=2611132150"></script>
+<script src="media-admin.js?v=2611132150"></script>
 </body>
 </html>
