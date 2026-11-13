@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-13T19:27:32.204Z",
+ "updated": "2026-11-13T21:09:58.269Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -762,6 +762,80 @@
      "kind": "interior",
      "role": "gallery",
      "name": "e9c1a32e-654c-4ef8-9021-ea33cfd0f3f9.png"
+    }
+   },
+   "room": null,
+   "floor": null,
+   "scene": ""
+  },
+  "VHP600853": {
+   "order": [
+    "u:fgzi43tbsy",
+    "u:fgzi573gqj",
+    "u:fgzi4ofgtu",
+    "u:fgzi6br1xn",
+    "u:fgzi6sb1cv",
+    "u:fgzi5u31i3"
+   ],
+   "hidden": [
+    "g:06.4dba3d32",
+    "g:05.6ec5192a",
+    "g:02.709411a8"
+   ],
+   "files": {
+    "u:fgzi43tbsy": {
+     "src": "overrides/media/VHP600853/fgzi43tbsy.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi43tbsy_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "1fad62da-dda9-4796-91d6-3a63996aa17f.jpeg"
+    },
+    "u:fgzi4ofgtu": {
+     "src": "overrides/media/VHP600853/fgzi4ofgtu.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi4ofgtu_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "5f9aeaef-260e-463e-a85d-4637827634b7.jpeg"
+    },
+    "u:fgzi573gqj": {
+     "src": "overrides/media/VHP600853/fgzi573gqj.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi573gqj_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "9c263052-ac4c-4cf7-9308-25dd8d9f38bb.jpeg"
+    },
+    "u:fgzi5u31i3": {
+     "src": "overrides/media/VHP600853/fgzi5u31i3.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi5u31i3_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "03009244-6daf-484d-b9eb-4cf13174b5fe.jpeg"
+    },
+    "u:fgzi6br1xn": {
+     "src": "overrides/media/VHP600853/fgzi6br1xn.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi6br1xn_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "ac674c76-8d0b-4214-87ef-8b4731af4c3e.jpeg"
+    },
+    "u:fgzi6sb1cv": {
+     "src": "overrides/media/VHP600853/fgzi6sb1cv.jpg",
+     "thumb": "overrides/media/VHP600853/fgzi6sb1cv_t.jpg",
+     "w": 1080,
+     "h": 1440,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "ee6048aa-e0c9-4040-9489-a5b702cb85f8.jpeg"
     }
    },
    "room": null,
