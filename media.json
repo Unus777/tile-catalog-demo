@@ -1,1 +1,141 @@
-{ "version": 1, "items": {} }
+{
+ "version": 1,
+ "updated": "2026-11-13T18:49:55.985Z",
+ "items": {
+  "VHP612038": {
+   "order": [
+    "u:fbz1te3ni2",
+    "u:fbz1snpf0n",
+    "u:fbz1pgdtdc",
+    "u:fbz1qbi5tk",
+    "u:fbz1r2w2mf",
+    "u:fbz1rwrzdo",
+    "u:fbz1z21ht7",
+    "u:fbz1zudqaa",
+    "u:fbz1ya887u",
+    "u:fbz1ws8mnk",
+    "u:fbz1v6ec3h"
+   ],
+   "hidden": [
+    "g:10.f4c45fd1",
+    "g:09.51fb6e96",
+    "g:11.c20a5d76",
+    "g:12.9d8ae814",
+    "g:14.976d1c22",
+    "g:13.b3e1c425",
+    "g:07.af91abc3",
+    "g:08.d005a4b3",
+    "g:01.ee69717d",
+    "g:02.5ec982ec",
+    "g:03.d56af41e",
+    "g:04.4279afb4",
+    "g:05.74cf6057",
+    "g:06.8725e868"
+   ],
+   "files": {
+    "u:fbz1pgdtdc": {
+     "src": "overrides/media/VHP612038/fbz1pgdtdc.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1pgdtdc_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "2efd13f3-6a85-4f81-8725-5f7c7b898c3e.png"
+    },
+    "u:fbz1qbi5tk": {
+     "src": "overrides/media/VHP612038/fbz1qbi5tk.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1qbi5tk_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "3a406538-d46a-4237-8c7d-dd1274fec90c.png"
+    },
+    "u:fbz1r2w2mf": {
+     "src": "overrides/media/VHP612038/fbz1r2w2mf.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1r2w2mf_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "4d2d7224-85ca-41ea-b888-9357e9d352fe.png"
+    },
+    "u:fbz1rwrzdo": {
+     "src": "overrides/media/VHP612038/fbz1rwrzdo.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1rwrzdo_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "8fd1f318-9ee8-473c-a23d-06cf8d3b83ed.png"
+    },
+    "u:fbz1snpf0n": {
+     "src": "overrides/media/VHP612038/fbz1snpf0n.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1snpf0n_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "68f0d245-8f30-44bd-b1d4-dd360f9e4c1c.png"
+    },
+    "u:fbz1te3ni2": {
+     "src": "overrides/media/VHP612038/fbz1te3ni2.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1te3ni2_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "227b42c1-68c8-4022-bfbf-b54857d0fd8b.png"
+    },
+    "u:fbz1v6ec3h": {
+     "src": "overrides/media/VHP612038/fbz1v6ec3h.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1v6ec3h_t.jpg",
+     "w": 2000,
+     "h": 2000,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "Вставка 11.11.2026 в 05:32:56.png"
+    },
+    "u:fbz1ws8mnk": {
+     "src": "overrides/media/VHP612038/fbz1ws8mnk.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1ws8mnk_t.jpg",
+     "w": 2000,
+     "h": 2000,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "Вставка 11.11.2026 в 05:33:00.png"
+    },
+    "u:fbz1ya887u": {
+     "src": "overrides/media/VHP612038/fbz1ya887u.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1ya887u_t.jpg",
+     "w": 2000,
+     "h": 2000,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "Вставка 11.11.2026 в 05:33:04.png"
+    },
+    "u:fbz1z21ht7": {
+     "src": "overrides/media/VHP612038/fbz1z21ht7.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1z21ht7_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "b9e6ab70-d701-4f8a-afe4-f4d6f941aa7f.png"
+    },
+    "u:fbz1zudqaa": {
+     "src": "overrides/media/VHP612038/fbz1zudqaa.jpg",
+     "thumb": "overrides/media/VHP612038/fbz1zudqaa_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "f8b77fec-5c37-47ec-a049-fc9cb7f9fa56.png"
+    }
+   },
+   "room": null,
+   "floor": null,
+   "scene": ""
+  }
+ }
+}
