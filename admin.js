@@ -56,25 +56,43 @@
   const isAuthed = () => !!token;
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+  /* GitHub отвечает 403 не только на нехватку прав, но и на «вторичный» лимит частоты
+     (много крупных фото подряд). Такие ответы ждём и повторяем, а настоящий отказ в правах
+     показываем с текстом самого GitHub. */
+  const isRateLimit = (r, d) => r.status === 429 ||
+    (r.status === 403 && (r.headers.get('retry-after') || r.headers.get('x-ratelimit-remaining') === '0' ||
+      /rate limit|abuse/i.test((d && d.message) || '')));
   async function gh(path, opts = {}) {
-    const sep = path.includes('?') ? '&' : '?';
-    const r = await fetch('https://api.github.com/repos/' + REPO + path + sep + 't=' + Date.now(), {
-      ...opts,
-      cache: 'no-store',
-      headers: {
-        Authorization: 'Bearer ' + token,
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-        ...(opts.headers || {})
+    for (let attempt = 0; ; attempt++) {
+      const sep = path.includes('?') ? '&' : '?';
+      const r = await fetch('https://api.github.com/repos/' + REPO + path + sep + 't=' + Date.now(), {
+        ...opts,
+        cache: 'no-store',
+        headers: {
+          Authorization: 'Bearer ' + token,
+          Accept: 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          ...(opts.headers || {})
+        }
+      });
+      const d = r.status === 204 ? {} : await r.json().catch(() => ({}));
+      if (r.ok) return d;
+      if (isRateLimit(r, d) && attempt < 6) {
+        const ra = +r.headers.get('retry-after');
+        const reset = +r.headers.get('x-ratelimit-reset');
+        let wait = ra > 0 ? ra * 1000 : (reset ? reset * 1000 - Date.now() : 0);
+        wait = Math.min(Math.max(wait, 5000 * (attempt + 1)), 65000);
+        setStatus('saving', 'GitHub просит паузу, продолжу через ' + Math.ceil(wait / 1000) + ' с…');
+        await sleep(wait);
+        continue;
       }
-    });
-    const d = r.status === 204 ? {} : await r.json().catch(() => ({}));
-    if (!r.ok) {
-      const e = new Error(HINTS[r.status] || d.message || ('код ' + r.status));
+      let msg = HINTS[r.status] || d.message || ('код ' + r.status);
+      if (r.status === 403 && isRateLimit(r, d)) msg = 'GitHub временно ограничил частоту запросов, попробуйте ещё раз через пару минут';
+      else if (r.status === 403 && d.message) msg += ' — ответ GitHub: ' + d.message;
+      const e = new Error(msg);
       e.status = r.status;
       throw e;
     }
-    return d;
   }
 
   function applyAdminUI(on) {
@@ -152,7 +170,9 @@
           const b = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: text, encoding: 'utf-8' }) });
           tree.push({ path: e.path, mode: '100644', type: 'blob', sha: b.sha });
         }
-        for (const f of files) {
+        for (const [i, f] of files.entries()) {
+          if (files.length > 1) setStatus('saving', 'Загружаю фото ' + (i + 1) + ' из ' + files.length + '…');
+          if (i) await sleep(400);
           const b = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: f.content, encoding: f.encoding || 'utf-8' }) });
           tree.push({ path: f.path, mode: '100644', type: 'blob', sha: b.sha });
         }
