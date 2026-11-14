@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-14T20:57:44.135Z",
+ "updated": "2026-11-14T20:59:32.779Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -1095,6 +1095,20 @@
      "name": "fb4b7459-4cd7-4746-a4a4-06021f978dca.png"
     }
    },
+   "room": null,
+   "floor": null,
+   "scene": ""
+  },
+  "VHP612390": {
+   "order": [
+    "g:01.d3d6f123",
+    "g:02.5362e0d5",
+    "g:03.2ebf30f2",
+    "g:05.01e69025",
+    "g:06.acea26f3"
+   ],
+   "hidden": [],
+   "files": {},
    "room": null,
    "floor": null,
    "scene": ""
