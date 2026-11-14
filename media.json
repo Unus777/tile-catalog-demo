@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-13T21:13:49.225Z",
+ "updated": "2026-11-14T20:54:26.448Z",
  "items": {
   "VHP612038": {
    "order": [
@@ -852,6 +852,115 @@
     "id": "u:fh4lzijug0",
     "full": true
    },
+   "floor": null,
+   "scene": ""
+  },
+  "VHF612114": {
+   "order": [
+    "u:gvukmpsp1v",
+    "u:gvukjy4f4v",
+    "u:gvuknmt2e1",
+    "u:gvuki7yeq5",
+    "u:gvukj03v99",
+    "u:gvukkuyed6",
+    "u:gvukoki17j",
+    "u:gvukph2whp",
+    "u:gvuklstb2t"
+   ],
+   "hidden": [
+    "g:01.9ef28828",
+    "g:03.46b0b9fd",
+    "g:05.dd919237",
+    "g:07.a873bb8b",
+    "g:04.0854cbd9",
+    "g:06.4fa8c701",
+    "g:08.5d245c57",
+    "g:09.fc7afc51"
+   ],
+   "files": {
+    "u:gvuki7yeq5": {
+     "src": "overrides/media/VHF612114/gvuki7yeq5.jpg",
+     "thumb": "overrides/media/VHF612114/gvuki7yeq5_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "02fea3ce-2a13-4a22-a762-d81879177b41.png"
+    },
+    "u:gvukj03v99": {
+     "src": "overrides/media/VHF612114/gvukj03v99.jpg",
+     "thumb": "overrides/media/VHF612114/gvukj03v99_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "5ceb3afb-52ca-46dc-be71-94eb2c10fdde.png"
+    },
+    "u:gvukjy4f4v": {
+     "src": "overrides/media/VHF612114/gvukjy4f4v.jpg",
+     "thumb": "overrides/media/VHF612114/gvukjy4f4v_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "56f4bc09-beea-43a9-90af-60e5519fe675.png"
+    },
+    "u:gvukkuyed6": {
+     "src": "overrides/media/VHF612114/gvukkuyed6.jpg",
+     "thumb": "overrides/media/VHF612114/gvukkuyed6_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "8164c388-a387-48c7-81d7-bb3c452e62c6.png"
+    },
+    "u:gvuklstb2t": {
+     "src": "overrides/media/VHF612114/gvuklstb2t.jpg",
+     "thumb": "overrides/media/VHF612114/gvuklstb2t_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "8772d520-19a2-491c-9ec4-d72fd96f3f82.png"
+    },
+    "u:gvukmpsp1v": {
+     "src": "overrides/media/VHF612114/gvukmpsp1v.jpg",
+     "thumb": "overrides/media/VHF612114/gvukmpsp1v_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "09448e72-9c40-4e39-af0c-7a5c4c0525e0.png"
+    },
+    "u:gvuknmt2e1": {
+     "src": "overrides/media/VHF612114/gvuknmt2e1.jpg",
+     "thumb": "overrides/media/VHF612114/gvuknmt2e1_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "362436f5-fc0e-4dfd-bde4-ab16bff3c396.png"
+    },
+    "u:gvukoki17j": {
+     "src": "overrides/media/VHF612114/gvukoki17j.jpg",
+     "thumb": "overrides/media/VHF612114/gvukoki17j_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "c60ebdeb-a866-4c2d-8b61-df2e503079d8.png"
+    },
+    "u:gvukph2whp": {
+     "src": "overrides/media/VHF612114/gvukph2whp.jpg",
+     "thumb": "overrides/media/VHF612114/gvukph2whp_t.jpg",
+     "w": 1086,
+     "h": 1448,
+     "kind": "interior",
+     "role": "gallery",
+     "name": "d114cd0c-4658-4245-8dea-3ea7c7a45aac.png"
+    }
+   },
+   "room": null,
    "floor": null,
    "scene": ""
   }
