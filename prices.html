@@ -14,14 +14,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2611132150">
-<script src="config.js?v=2611132150"></script>
-<script src="brand.js?v=2611132150"></script>
-<script src="admin.js?v=2611132150"></script>
+<link rel="stylesheet" href="style.css?v=2611171353">
+<script src="config.js?v=2611171353"></script>
+<script src="brand.js?v=2611171353"></script>
+<script src="admin.js?v=2611171353"></script>
 </head>
 <body data-page="prices">
 <div class="progress" id="progress"></div>
-<div class="proto-flag" title="Цены с пометкой «пример» — демонстрационные, пока их не заменят в редакторе."><i></i>Цены с пометкой «пример»</div>
 <header class="nav solid" id="nav">
   <a class="logo" href="index.html" aria-label="Каталог плитки, на главную"><span class="logo-mark" aria-hidden="true"></span><span class="w">Каталог плитки<small>Каталог керамогранита</small></span></a>
   <nav class="nav-links" aria-label="Разделы">
@@ -48,7 +47,7 @@
 </header>
 <main class="adm"><div class="wrap">
   <div class="adm-hd"><p class="eyebrow">Только для администраторов</p><h2>Цены: <em>наличные</em> и безнал</h2>
-  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Модели без введённой цены показываются с пометкой «пример». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
+  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Для моделей без цены показывается «Цена по запросу». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
   <div class="adm-bar">
     <label>Безнал = нал + <input type="number" id="ruleX" value="12" min="0" max="100" step="0.5" inputmode="decimal"> %</label>
     <label>Округление <select id="ruleRound"><option value="1">до 1 ₽</option><option value="10" selected>до 10 ₽</option><option value="50">до 50 ₽</option></select></label>
@@ -60,6 +59,17 @@
     <button type="button" class="btn sm" id="resetBtn">Сбросить черновик</button>
     <input type="search" id="admQ" placeholder="Поиск модели" aria-label="Поиск модели">
   </div>
+  <section aria-label="Массовое заполнение цен">
+  <h3>Одна цена для группы моделей</h3>
+  <p>Выберите формат и поверхность, введите цену за м². Поиск также сужает группу. Отдельные исключения можно поправить в таблице перед сохранением.</p>
+  <div class="adm-bar">
+  <label>Формат <select id="bulkFormat"><option value="">Все</option><option>60×60</option><option>60×120</option></select></label>
+  <label>Поверхность <select id="bulkSurface"><option value="">Все</option></select></label>
+  <label>Наличные, ₽/м² <input id="bulkCash" type="number" min="0.01" step="0.01"></label>
+  <label><input id="bulkEmpty" type="checkbox" checked> Только без цены</label>
+  <button id="bulkApply" type="button" class="btn gold sm">Заполнить группу</button>
+  <span id="bulkCount" role="status"></span>
+  </div></section>
   <div class="pub-status" id="pubStatus" hidden></div>
   <div class="tblw"><table class="tbl"><thead><tr><th>Модель</th><th>Формат</th><th>Наличные, ₽/м²</th><th>Авто</th><th>Безнал с НДС, ₽/м²</th></tr></thead><tbody id="admRows"></tbody></table></div>
 </div></main>
@@ -67,7 +77,7 @@
   <span data-brand="legal">Каталог плитки</span>
   <span data-cfg="footer-line" hidden></span>
   <a data-cfg="email" hidden></a>
-  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Медиа и фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
+  <span class="r"><span id="stat"></span><a href="index.html#catalog">Весь каталог</a><a class="admin-only" hidden href="prices.html">Цены</a><a class="admin-only" hidden href="edit.html">Редактор фото</a><a class="admin-login-link" href="admin.html">Вход для админов</a></span>
 </footer>
 <div class="callbar" hidden>
   <a class="btn gold" data-cfg="phone">Позвонить</a>
@@ -93,9 +103,8 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="photos.js?v=2611132150"></script>
-<script src="data.js?v=2611132150"></script>
-<script src="media.js?v=2611132150"></script>
-<script src="app.js?v=2611132150"></script>
+<script src="photos.js?v=2611171353"></script>
+<script src="data.js?v=2611171353"></script>
+<script src="app.js?v=2611171353"></script>
 </body>
 </html>

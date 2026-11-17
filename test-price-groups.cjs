@@ -1,0 +1,16 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const source = fs.readFileSync(__dirname + '/app.js', 'utf8');
+const expression = source.match(/const matches = t => (.*);/)[1];
+const values = {bulkFormat:'60×60', bulkSurface:'Матовая', admQ:'альфа'};
+const $ = selector => ({value:values[selector.slice(1)]});
+const matches = eval('(t => ' + expression + ')');
+const tile = {format:'60×60', surface:'Матовая', name:'Альфа', art:'A1'};
+assert(matches(tile));
+assert(!matches({...tile,format:'60×120'}));
+assert(!matches({...tile,surface:'Глянец'}));
+values.admQ='A1'; assert(matches(tile));
+values.admQ=''; values.bulkFormat=''; values.bulkSurface=''; assert(matches(tile));
+assert(!source.includes('exampleCash'));
+assert(source.includes("return { cash: null, noncash: null"));
+console.log('Price group checks passed');

@@ -1,6 +1,6 @@
 <main class="adm"><div class="wrap">
   <div class="adm-hd"><p class="eyebrow">Только для администраторов</p><h2>Цены: <em>наличные</em> и безнал</h2>
-  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Модели без введённой цены показываются с пометкой «пример». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
+  <p>Черновик сохраняется в этом браузере. Чтобы цены увидели все посетители, нажмите «Сохранить на сайт» — пачка уйдёт одним коммитом в репозиторий. Для моделей без цены показывается «Цена по запросу». Защита — токен GitHub: без него сохранить на сайт нельзя.</p></div>
   <div class="adm-bar">
     <label>Безнал = нал + <input type="number" id="ruleX" value="12" min="0" max="100" step="0.5" inputmode="decimal"> %</label>
     <label>Округление <select id="ruleRound"><option value="1">до 1 ₽</option><option value="10" selected>до 10 ₽</option><option value="50">до 50 ₽</option></select></label>
@@ -12,6 +12,17 @@
     <button type="button" class="btn sm" id="resetBtn">Сбросить черновик</button>
     <input type="search" id="admQ" placeholder="Поиск модели" aria-label="Поиск модели">
   </div>
+  <section aria-label="Массовое заполнение цен">
+  <h3>Одна цена для группы моделей</h3>
+  <p>Выберите формат и поверхность, введите цену за м². Поиск также сужает группу. Отдельные исключения можно поправить в таблице перед сохранением.</p>
+  <div class="adm-bar">
+  <label>Формат <select id="bulkFormat"><option value="">Все</option><option>60×60</option><option>60×120</option></select></label>
+  <label>Поверхность <select id="bulkSurface"><option value="">Все</option></select></label>
+  <label>Наличные, ₽/м² <input id="bulkCash" type="number" min="0.01" step="0.01"></label>
+  <label><input id="bulkEmpty" type="checkbox" checked> Только без цены</label>
+  <button id="bulkApply" type="button" class="btn gold sm">Заполнить группу</button>
+  <span id="bulkCount" role="status"></span>
+  </div></section>
   <div class="pub-status" id="pubStatus" hidden></div>
   <div class="tblw"><table class="tbl"><thead><tr><th>Модель</th><th>Формат</th><th>Наличные, ₽/м²</th><th>Авто</th><th>Безнал с НДС, ₽/м²</th></tr></thead><tbody id="admRows"></tbody></table></div>
 </div></main>

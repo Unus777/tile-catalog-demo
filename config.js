@@ -7,7 +7,7 @@ window.CATALOG_CONFIG = {
   LEGAL_NAME: 'Каталог плитки',
   DESCRIPTION: 'Каталог керамогранита: форматы 60×60 и 60×120, интерьерные фото каждой модели.',
   LEAD: 'Форматы 60×60 и 60×120 под мрамор, бетон и камень. Каждую модель можно увидеть в интерьере.',
-  BASE_URL: '',
+  BASE_URL: 'https://unus777.github.io/tile-catalog-demo',
   PHONE: '',
   PHONE2: '',
   WHATSAPP: '',

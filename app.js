@@ -51,18 +51,16 @@ store = store && store.items ? store : { rule: { x: 12, round: 10 }, items: {} }
 const saveStore = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
 const roundTo = (v, r) => Math.round(v / r + 1e-9) * r;
 const ruleCalc = cash => roundTo(cash * (1 + store.rule.x / 100), store.rule.round);
-// В data.json цен нет → демонстрационная цена с пометкой «пример»
-function exampleCash(t) { let p = t.format === '60×120' ? 1390 : 1090; if (/карвинг/i.test(t.surface)) p += 100; else if (/Глянец|Сатин/.test(t.surface)) p += 50; return p; }
 function publishedPrice(t) {
   const p = window.CatalogAdmin && CatalogAdmin.published && CatalogAdmin.published[t.art];
   if (p && p.cash > 0) return { cash: +p.cash, noncash: p.noncash > 0 ? +p.noncash : ruleCalc(+p.cash), unit: 'м2', example: false };
 }
 function price(t) {
-  const it = store.items[t.art];
+  const it = PAGE === 'prices' ? store.items[t.art] : null;
   if (it && it.cash > 0) return { cash: +it.cash, noncash: it.auto !== false ? ruleCalc(+it.cash) : (+it.noncash || null), unit: 'м2', example: false };
   const pub = publishedPrice(t); if (pub) return pub;
   if (t.price && t.price.cash > 0) return { cash: +t.price.cash, noncash: t.price.noncash > 0 ? +t.price.noncash : ruleCalc(+t.price.cash), unit: t.price.unit || 'м2', example: false };
-  const c = exampleCash(t); return { cash: c, noncash: ruleCalc(c), unit: 'м2', example: true };
+  return { cash: null, noncash: null, unit: 'м2', example: false };
 }
 let mode = 'cash'; try { if (localStorage.getItem(MKEY) === 'noncash') mode = 'noncash'; } catch (e) {}
 const qp = new URLSearchParams(location.search);
@@ -70,8 +68,8 @@ if (qp.get('pay') === 'noncash' || qp.get('pay') === 'cash') mode = qp.get('pay'
 const LBL = { cash: 'Наличные', noncash: 'Безнал с НДС' };
 function priceHTML(t, extra) {
   const p = price(t), sq = pack(t.packing).sqm;
-  if (!extra) return ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>${m === 'cash' ? 'Наличные' : 'Безнал'}</span></small><b>${rub(p[m])}</b></div>`).join('');
-  return ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>${LBL[m]}</span>${p.example ? '<span class="ex">пример</span>' : ''}</small><b>${rub(p[m])}</b><span class="unit">за м² · упаковка ${sq && p[m] ? rub(p[m] * sq) : '—'}</span></div>`).join('');
+  if (!extra) return ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>${m === 'cash' ? 'Наличные' : 'Безнал'}</span></small><b>${p[m] == null ? 'Цена по запросу' : rub(p[m])}</b></div>`).join('');
+  return ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>${LBL[m]}</span>${p.example ? '<span class="ex">пример</span>' : ''}</small><b>${p[m] == null ? 'Цена по запросу' : rub(p[m])}</b><span class="unit">за м² · упаковка ${sq && p[m] ? rub(p[m] * sq) : '—'}</span></div>`).join('');
 }
 const listeners = [];
 function setMode(m, user) {
@@ -245,7 +243,7 @@ function pageIndex() {
   HERO.forEach((h, i) => { const d = document.createElement('div'); d.className = 'hero-slide'; d.style.setProperty('--ox', [62, 40, 55, 70, 45][i % 5] + '%'); d.innerHTML = pic(h.set, '100vw', '', i === 0, h.art + ':card'); slidesEl.appendChild(d);
     const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Слайд ' + (i + 1) + ': ' + byArt[h.art].name); b.onclick = () => show(i, true); dots.appendChild(b); });
   let cur = -1, timer;
-  function chip() { if (cur < 0) return; const t = byArt[HERO[cur].art], p = price(t); $('#chipPrice').textContent = `${mode === 'cash' ? 'Наличные' : 'Безнал'} ${rub(p[mode])} / м²${p.example ? ' · пример' : ''}`; }
+  function chip() { if (cur < 0) return; const t = byArt[HERO[cur].art], p = price(t); $('#chipPrice').textContent = `${mode === 'cash' ? 'Наличные' : 'Безнал'} ${p[mode] == null ? 'Цена по запросу' : rub(p[mode]) + ' / м²'}`; }
   function show(i, manual) {
     const ss = $$('.hero-slide'), ds = $$('#heroDots button'); if (!ss.length) return;
     ss.forEach((s, k) => s.classList.toggle('on', k === i)); ds.forEach((s, k) => { s.classList.remove('on'); if (k === i) { void s.offsetWidth; s.classList.add('on'); } });
@@ -401,7 +399,7 @@ function pageTile() {
   const need = $('#need');
   const recalc = () => { if (!need) return; const v = +need.value.replace(',', '.').replace(/[^\d.]/g, ''); const n = v > 0 ? Math.ceil(v / p.sqm - 1e-9) : 0, pr = price(t);
     $('#calcRes').innerHTML = n ? '= ' + parts([`<b>${n}${NB}уп.</b>`, `${nf(n * p.sqm)}${NB}м²`, p.kg && `${nf(n * p.kg, 0)}${NB}кг`]) : 'Введите площадь';
-    $('#calcTot').innerHTML = n ? ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>Итого · ${m === 'cash' ? 'нал' : 'безнал'}</span>${pr.example ? '<span class="ex">пример</span>' : ''}</small><b>${rub(pr[m] * n * p.sqm)}</b></div>`).join('') : ''; };
+    $('#calcTot').innerHTML = n ? ['cash', 'noncash'].map(m => `<div class="p${mode === m ? ' on' : ''}" data-m="${m}"><small><span>Итого · ${m === 'cash' ? 'нал' : 'безнал'}</span>${pr.example ? '<span class="ex">пример</span>' : ''}</small><b>${(pr[m] == null ? 'Цена по запросу' : rub(pr[m] * n * p.sqm))}</b></div>`).join('') : ''; };
   need?.addEventListener('input', recalc); recalc();
   listeners.push(() => { $('#bigprice').innerHTML = priceHTML(t, true); recalc(); $$('.similar .card').length && refreshCardPrices($('.similar')); });
   // галерея: свайп (scroll-snap), миниатюры, стрелки, лайтбокс
@@ -435,12 +433,24 @@ function pagePrices() {
   const rows = $('#admRows');
   applyPublishedToStore(false);
   $('#ruleX').value = store.rule.x; $('#ruleRound').value = store.rule.round;
-  const row = t => { const it = store.items[t.art] || {}, auto = it.auto !== false, ex = exampleCash(t);
+  const row = t => { const it = store.items[t.art] || {}, auto = it.auto !== false;
     return `<tr data-art="${t.art}"><td><div class="m">${t.icon ? `<img src="${t.icon}" alt="" loading="lazy">` : '<img alt="">'}<div><a href="tile.html?a=${t.art}" style="text-decoration:none">${esc(t.name)}</a><small>${t.art} · ${esc(t.surface)}</small></div></div></td><td>${t.format}</td>
-    <td><span class="pin"><input type="number" min="0" step="10" inputmode="numeric" class="in-cash" value="${it.cash || ''}" placeholder="пример ${ex}" aria-label="Наличные, ${esc(t.name)}"></span></td>
+    <td><span class="pin"><input type="number" min="0" step="10" inputmode="numeric" class="in-cash" value="${it.cash || ''}" placeholder="Не задана" aria-label="Наличные, ${esc(t.name)}"></span></td>
     <td><label class="switch" title="Безнал по правилу"><input type="checkbox" class="in-auto" ${auto ? 'checked' : ''} aria-label="Безнал по правилу"><span></span></label></td>
-    <td><span class="pin"><input type="number" min="0" step="10" inputmode="numeric" class="in-non" value="${it.cash ? (auto ? ruleCalc(+it.cash) : (it.noncash || '')) : ''}" placeholder="пример ${ruleCalc(ex)}" ${auto ? 'disabled' : ''} aria-label="Безнал, ${esc(t.name)}"></span><span class="saved">✓ сохранено</span></td></tr>`; };
-  const draw = () => { rows.innerHTML = T.map(row).join(''); };
+    <td><span class="pin"><input type="number" min="0" step="10" inputmode="numeric" class="in-non" value="${it.cash ? (auto ? ruleCalc(+it.cash) : (it.noncash || '')) : ''}" placeholder="Не задана" ${auto ? 'disabled' : ''} aria-label="Безнал, ${esc(t.name)}"></span><span class="saved">✓ сохранено</span></td></tr>`; };
+  const matches = t => (!$('#bulkFormat').value || t.format === $('#bulkFormat').value) && (!$('#bulkSurface').value || t.surface === $('#bulkSurface').value) && (t.name + ' ' + t.art).toLowerCase().includes($('#admQ').value.trim().toLowerCase());
+  $('#bulkSurface').innerHTML += [...new Set(T.map(t => t.surface))].map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+  const draw = () => { const list = T.filter(matches); rows.innerHTML = list.map(row).join(''); $('#bulkCount').textContent = `В группе: ${list.length} моделей`; };
+  $('#bulkFormat').onchange = draw; $('#bulkSurface').onchange = draw;
+  $('#bulkApply').onclick = () => {
+    const cash = Number($('#bulkCash').value);
+    if (!Number.isFinite(cash) || cash <= 0) return toast('Введите цену больше нуля');
+    const list = T.filter(matches).filter(t => !$('#bulkEmpty').checked || !(price(t).cash > 0));
+    if (!list.length) return toast('Нет моделей для заполнения');
+    if (!confirm(`Установить ${rub(cash)}/м² для ${list.length} моделей? Безнал будет рассчитан по текущему правилу.`)) return;
+    list.forEach(t => { store.items[t.art] = { cash, auto: true }; });
+    saveStore(); draw(); toast('Готово. Проверьте цены и нажмите «Сохранить на сайт»');
+  };
   draw();
   rows.addEventListener('input', e => { const tr = e.target.closest('tr'); if (!tr) return; const a = tr.dataset.art, it = store.items[a] || (store.items[a] = { auto: true });
     if (e.target.classList.contains('in-cash')) { it.cash = Math.max(0, +e.target.value || 0); if (it.auto !== false) $('.in-non', tr).value = it.cash ? ruleCalc(it.cash) : ''; }
@@ -449,7 +459,7 @@ function pagePrices() {
     if (!it.cash && !it.noncash) delete store.items[a];
     saveStore(); const s = $('.saved', tr); s.classList.add('on'); clearTimeout(s._h); s._h = setTimeout(() => s.classList.remove('on'), 1200); });
   $('#ruleApply').onclick = () => { store.rule.x = Math.max(0, +$('#ruleX').value || 0); store.rule.round = +$('#ruleRound').value; saveStore(); draw(); toast(`Безнал = нал + ${store.rule.x}% · пересчитано`); };
-  $('#admQ').addEventListener('input', e => { const q = e.target.value.toLowerCase(); $$('tr', rows).forEach(tr => { const t = byArt[tr.dataset.art]; tr.classList.toggle('hide', !!q && !(t.name + ' ' + t.art).toLowerCase().includes(q)); }); });
+  $('#admQ').addEventListener('input', draw);
   $('#exportBtn').onclick = () => { const out = {}; T.forEach(t => { const it = store.items[t.art]; if (it && it.cash > 0) { const p = price(t); out[t.art] = { price: { cash: p.cash, noncash: p.noncash, unit: 'м2' } }; } });
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ rule: store.rule, tiles: out }, null, 1)], { type: 'application/json' })); a.download = 'catalog-prices.json'; a.click(); toast(`Экспортировано: ${Object.keys(out).length}`); };
   $('#importIn').onchange = async e => { try { const j = JSON.parse(await e.target.files[0].text()); Object.entries(j.tiles || {}).forEach(([a, v]) => { if (byArt[a] && v.price) store.items[a] = { cash: +v.price.cash, noncash: +v.price.noncash, auto: false }; }); if (j.rule) store.rule = j.rule; saveStore(); draw(); toast('Цены загружены'); } catch (err) { toast('Не удалось прочитать файл'); } };
