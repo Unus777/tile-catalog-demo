@@ -255,7 +255,7 @@ h2 em{font-style:italic;color:var(--gold2)}
 .callbar{position:fixed;left:0;right:0;bottom:0;z-index:65;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--call-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
 .callbar .btn{height:44px}
 body{--cb:64px}
-.toast{position:fixed;left:50%;bottom:calc(84px + var(--cb,0px));z-index:95;transform:translate(-50%,20px);opacity:0;background:var(--cream);color:var(--ink);font-weight:700;font-size:13px;padding:10px 18px;border-radius:99px;box-shadow:0 20px 40px -10px rgba(0,0,0,.6);transition:opacity .4s,transform .5s var(--ease);pointer-events:none;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--cb,0px));z-index:95;transform:translate(-50%,20px);opacity:0;background:var(--chip-on-bg);color:var(--chip-on-fg);font-weight:700;font-size:13px;padding:10px 18px;border-radius:99px;box-shadow:0 20px 40px -10px rgba(0,0,0,.6);transition:opacity .4s,transform .5s var(--ease);pointer-events:none;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* СТРАНИЦА МОДЕЛИ */
