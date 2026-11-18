@@ -1844,6 +1844,53 @@
           "name": "Вуд Монтано 08.png"
         }
       }
+    },
+    "VHF612158": {
+      "order": [
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04"
+      ],
+      "hidden": [],
+      "files": {
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHF612158/dealer-20261118-01.jpg",
+          "thumb": "overrides/media/VHF612158/dealer-20261118-01.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Вуд Невада 01.jpg"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHF612158/dealer-20261118-02.jpg",
+          "thumb": "overrides/media/VHF612158/dealer-20261118-02.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Вуд Невада 02.jpg"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHF612158/dealer-20261118-03.jpg",
+          "thumb": "overrides/media/VHF612158/dealer-20261118-03.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Вуд Невада 03.jpg"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHF612158/dealer-20261118-04.jpg",
+          "thumb": "overrides/media/VHF612158/dealer-20261118-04.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Вуд Невада 04.jpg"
+        }
+      }
     }
   }
 }
