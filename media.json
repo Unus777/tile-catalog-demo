@@ -1415,15 +1415,15 @@
     },
     "VHF612114": {
       "order": [
-        "u:gvukmpsp1v",
-        "u:gvukjy4f4v",
-        "u:gvuknmt2e1",
-        "u:gvuki7yeq5",
-        "u:gvukj03v99",
-        "u:gvukkuyed6",
-        "u:gvukoki17j",
-        "u:gvukph2whp",
-        "u:gvuklstb2t"
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05",
+        "u:dealer-20261118-06",
+        "u:dealer-20261118-07",
+        "u:dealer-20261118-08",
+        "u:dealer-20261118-09"
       ],
       "hidden": [
         "g:01.9ef28828",
@@ -1516,6 +1516,87 @@
           "kind": "interior",
           "role": "gallery",
           "name": "d114cd0c-4658-4245-8dea-3ea7c7a45aac.png"
+        },
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHF612114/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHF612114/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHF612114/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHF612114/dealer-20261118-04.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-04.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 04.jpg"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHF612114/dealer-20261118-05.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-05.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 05.jpg"
+        },
+        "u:dealer-20261118-06": {
+          "src": "overrides/media/VHF612114/dealer-20261118-06.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-06.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 06.jpg"
+        },
+        "u:dealer-20261118-07": {
+          "src": "overrides/media/VHF612114/dealer-20261118-07.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-07.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 07.jpg"
+        },
+        "u:dealer-20261118-08": {
+          "src": "overrides/media/VHF612114/dealer-20261118-08.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-08.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 08.jpg"
+        },
+        "u:dealer-20261118-09": {
+          "src": "overrides/media/VHF612114/dealer-20261118-09.jpg",
+          "thumb": "overrides/media/VHF612114/dealer-20261118-09.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Галина Грей Мат 09.jpg"
         }
       },
       "room": null,
