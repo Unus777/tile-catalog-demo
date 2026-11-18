@@ -2598,6 +2598,68 @@
           "name": "Миррор Вайт 08.png"
         }
       }
+    },
+    "VHP612039": {
+      "order": [
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05"
+      ],
+      "hidden": [
+        "g:02.48e577a4",
+        "g:01.0393458d",
+        "g:03.3dbbda32",
+        "g:04.cd82f5a8"
+      ],
+      "files": {
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHP612039/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHP612039/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Оливия Грей 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHP612039/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHP612039/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Оливия Грей 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHP612039/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHP612039/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Оливия Грей 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHP612039/dealer-20261118-04.png",
+          "thumb": "overrides/media/VHP612039/dealer-20261118-04.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Оливия Грей 04.png"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHP612039/dealer-20261118-05.png",
+          "thumb": "overrides/media/VHP612039/dealer-20261118-05.png",
+          "w": 1024,
+          "h": 1536,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Оливия Грей 05.png"
+        }
+      }
     }
   }
 }
