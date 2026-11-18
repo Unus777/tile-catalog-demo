@@ -799,14 +799,14 @@
     },
     "VHF612503": {
       "order": [
-        "u:fczj6ahh5b",
-        "u:fczj3ftxyz",
-        "u:fczj12om1q",
-        "u:fczj4w0ois",
-        "u:fczj1vbmng",
-        "u:fczj2qjbe5",
-        "u:fczj45cfog",
-        "u:fczj5law63"
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05",
+        "u:dealer-20261118-06",
+        "u:dealer-20261118-07",
+        "u:dealer-20261118-08"
       ],
       "hidden": [
         "g:07.d80d3bcd",
@@ -888,6 +888,78 @@
           "kind": "interior",
           "role": "gallery",
           "name": "fbee06db-04b0-475c-aef0-356caccd979b.png"
+        },
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHF612503/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHF612503/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHF612503/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHF612503/dealer-20261118-04.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-04.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 04.png"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHF612503/dealer-20261118-05.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-05.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 05.png"
+        },
+        "u:dealer-20261118-06": {
+          "src": "overrides/media/VHF612503/dealer-20261118-06.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-06.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 06.png"
+        },
+        "u:dealer-20261118-07": {
+          "src": "overrides/media/VHF612503/dealer-20261118-07.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-07.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 07.png"
+        },
+        "u:dealer-20261118-08": {
+          "src": "overrides/media/VHF612503/dealer-20261118-08.png",
+          "thumb": "overrides/media/VHF612503/dealer-20261118-08.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Грей 08.png"
         }
       },
       "room": null,
