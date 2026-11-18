@@ -1830,14 +1830,86 @@
     },
     "VHP612390": {
       "order": [
-        "g:01.d3d6f123",
-        "g:02.5362e0d5",
-        "g:03.2ebf30f2",
-        "g:05.01e69025",
-        "g:06.acea26f3"
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05",
+        "u:dealer-20261118-06",
+        "u:dealer-20261118-07"
       ],
-      "hidden": [],
-      "files": {},
+      "hidden": [
+        "g:06.acea26f3",
+        "g:05.01e69025",
+        "g:03.2ebf30f2",
+        "g:02.5362e0d5",
+        "g:01.d3d6f123"
+      ],
+      "files": {
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHP612390/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHP612390/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHP612390/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHP612390/dealer-20261118-04.jpg",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-04.jpg",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 04.jpg"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHP612390/dealer-20261118-05.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-05.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 05.png"
+        },
+        "u:dealer-20261118-06": {
+          "src": "overrides/media/VHP612390/dealer-20261118-06.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-06.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 06.png"
+        },
+        "u:dealer-20261118-07": {
+          "src": "overrides/media/VHP612390/dealer-20261118-07.png",
+          "thumb": "overrides/media/VHP612390/dealer-20261118-07.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Лейла 07.png"
+        }
+      },
       "room": null,
       "floor": null,
       "scene": ""
