@@ -968,14 +968,14 @@
     },
     "VHFZ612810": {
       "order": [
-        "u:fd2fe76bkg",
-        "u:fd2fdh0d8w",
-        "u:fd2fco8hcx",
-        "u:fd2fgcus1r",
-        "u:fd2fexmymg",
-        "u:fd2ffk1zke",
-        "u:fd2fh01fye",
-        "u:fd2fho5z9y"
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05",
+        "u:dealer-20261118-06",
+        "u:dealer-20261118-07",
+        "u:dealer-20261118-08"
       ],
       "hidden": [
         "g:06.a8a141bd",
@@ -1059,6 +1059,78 @@
           "kind": "interior",
           "role": "gallery",
           "name": "e9d0ba13-239b-4012-be81-b829f7600eb8.png"
+        },
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-04.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-04.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 04.png"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-05.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-05.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 05.png"
+        },
+        "u:dealer-20261118-06": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-06.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-06.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 06.png"
+        },
+        "u:dealer-20261118-07": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-07.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-07.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 07.png"
+        },
+        "u:dealer-20261118-08": {
+          "src": "overrides/media/VHFZ612810/dealer-20261118-08.png",
+          "thumb": "overrides/media/VHFZ612810/dealer-20261118-08.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Бетон Крем 08.png"
         }
       },
       "room": null,
