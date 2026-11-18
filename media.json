@@ -2506,6 +2506,98 @@
           "name": "Минерал Грей 08.png"
         }
       }
+    },
+    "VHP612800": {
+      "order": [
+        "u:dealer-20261118-01",
+        "u:dealer-20261118-02",
+        "u:dealer-20261118-03",
+        "u:dealer-20261118-04",
+        "u:dealer-20261118-05",
+        "u:dealer-20261118-06",
+        "u:dealer-20261118-07",
+        "u:dealer-20261118-08"
+      ],
+      "hidden": [
+        "g:06.5e24c80a",
+        "g:07.2058de0c",
+        "g:08.0eb42388",
+        "g:03.7a329d50"
+      ],
+      "files": {
+        "u:dealer-20261118-01": {
+          "src": "overrides/media/VHP612800/dealer-20261118-01.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-01.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 01.png"
+        },
+        "u:dealer-20261118-02": {
+          "src": "overrides/media/VHP612800/dealer-20261118-02.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-02.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 02.png"
+        },
+        "u:dealer-20261118-03": {
+          "src": "overrides/media/VHP612800/dealer-20261118-03.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-03.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 03.png"
+        },
+        "u:dealer-20261118-04": {
+          "src": "overrides/media/VHP612800/dealer-20261118-04.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-04.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 04.png"
+        },
+        "u:dealer-20261118-05": {
+          "src": "overrides/media/VHP612800/dealer-20261118-05.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-05.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 05.png"
+        },
+        "u:dealer-20261118-06": {
+          "src": "overrides/media/VHP612800/dealer-20261118-06.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-06.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 06.png"
+        },
+        "u:dealer-20261118-07": {
+          "src": "overrides/media/VHP612800/dealer-20261118-07.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-07.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 07.png"
+        },
+        "u:dealer-20261118-08": {
+          "src": "overrides/media/VHP612800/dealer-20261118-08.png",
+          "thumb": "overrides/media/VHP612800/dealer-20261118-08.png",
+          "w": 1086,
+          "h": 1448,
+          "kind": "interior",
+          "role": "gallery",
+          "name": "Миррор Вайт 08.png"
+        }
+      }
     }
   }
 }
