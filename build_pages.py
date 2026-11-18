@@ -23,6 +23,6 @@ for page, (title, navcls) in P.items():
     h = head.replace('{{title}}', title).replace('{{page}}', page).replace('{{navcls}}', navcls).replace('{{cur_cat}}', ' aria-current="page"' if page == 'index' else '')
     html = (h + body + foot).replace('{{v}}', V)
     if page == 'edit':
-        html = html.replace('</body>', f'<script src="edit.js?v={V}"></script>\n</body>')
+        html = html.replace('</body>', f'<script src="edit.js?v={V}"></script>\n<script src="media-admin.js?v={V}"></script>\n</body>')
     (root/f'{page}.html').write_text(html)
 print('ok', V)
