@@ -5098,6 +5098,20 @@
         "u:dealer-20261121-05"
       ]
     },
+    "VHJ600006": {
+      "files": {
+        "u:dealer-20261122-01":{"src":"overrides/media/VHJ600006/01.png","thumb":"overrides/media/VHJ600006/01.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"01.png"},
+        "u:dealer-20261122-02":{"src":"overrides/media/VHJ600006/02.png","thumb":"overrides/media/VHJ600006/02.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"02.png"},
+        "u:dealer-20261122-03":{"src":"overrides/media/VHJ600006/03.png","thumb":"overrides/media/VHJ600006/03.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"03.png"},
+        "u:dealer-20261122-04":{"src":"overrides/media/VHJ600006/04.png","thumb":"overrides/media/VHJ600006/04.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"04.png"},
+        "u:dealer-20261122-05":{"src":"overrides/media/VHJ600006/05.png","thumb":"overrides/media/VHJ600006/05.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"05.png"},
+        "u:dealer-20261122-06":{"src":"overrides/media/VHJ600006/06.png","thumb":"overrides/media/VHJ600006/06.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"06.png"},
+        "u:dealer-20261122-07":{"src":"overrides/media/VHJ600006/07.png","thumb":"overrides/media/VHJ600006/07.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"07.png"},
+        "u:dealer-20261122-08":{"src":"overrides/media/VHJ600006/08.png","thumb":"overrides/media/VHJ600006/08.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"08.png"}
+      },
+      "hidden":["g:05.acdad398","g:06.0c369232","g:07.0c369232","g:02.71237c77","g:03.c15ab3ba","g:08.fb19d222"],
+      "order":["u:dealer-20261122-01","u:dealer-20261122-02","u:dealer-20261122-03","u:dealer-20261122-04","u:dealer-20261122-05","u:dealer-20261122-06","u:dealer-20261122-07","u:dealer-20261122-08"]
+    },
     "VHJ600014": {
       "files": {
         "u:dealer-20261122-01":{"src":"overrides/media/VHJ600014/01.png","thumb":"overrides/media/VHJ600014/01.png","w":1086,"h":1448,"kind":"interior","role":"gallery","name":"01.png"},
