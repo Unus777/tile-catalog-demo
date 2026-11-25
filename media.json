@@ -440,170 +440,28 @@
     },
     "VHF612803": {
       "order": [
-        "u:dealer-20261118-01",
-        "u:dealer-20261118-02",
-        "u:dealer-20261118-03",
-        "u:dealer-20261118-04",
-        "u:dealer-20261118-05",
-        "u:dealer-20261118-06",
-        "u:dealer-20261118-07",
-        "u:dealer-20261118-08"
+        "g:01.ef0219e415a3",
+        "g:02.f532c2ce3786",
+        "g:03.de7b827dff5b",
+        "g:04.c856040b7290",
+        "g:05.6bbf96bd7c9c",
+        "g:06.7655f263a0d8",
+        "g:07.94aad652e015",
+        "g:08.0c76514f323d"
       ],
       "hidden": [
-        "g:05.ac131214",
-        "g:07.9f18722b",
-        "g:08.13afd2af",
-        "g:06.70f9de0a",
+        "card",
+        "tile",
+        "g:01.b2b4099e",
+        "g:02.9277ec24",
         "g:03.5ab8891c",
         "g:04.e703dd7a",
-        "g:01.b2b4099e"
+        "g:05.ac131214",
+        "g:06.70f9de0a",
+        "g:07.9f18722b",
+        "g:08.13afd2af"
       ],
-      "files": {
-        "u:fcs3wwte27": {
-          "src": "overrides/media/VHF612803/fcs3wwte27.jpg",
-          "thumb": "overrides/media/VHF612803/fcs3wwte27_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "2b0c63b6-d4b8-4dd6-a622-74c69867c054.png"
-        },
-        "u:fcs3xrnj03": {
-          "src": "overrides/media/VHF612803/fcs3xrnj03.jpg",
-          "thumb": "overrides/media/VHF612803/fcs3xrnj03_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "4a59e69c-0c28-46cc-99e1-e4ac6b8e244b.png"
-        },
-        "u:fcs3ymrp90": {
-          "src": "overrides/media/VHF612803/fcs3ymrp90.jpg",
-          "thumb": "overrides/media/VHF612803/fcs3ymrp90_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "699e593d-2ba0-4b86-900f-865be44f9634.png"
-        },
-        "u:fcs3zb0agy": {
-          "src": "overrides/media/VHF612803/fcs3zb0agy.jpg",
-          "thumb": "overrides/media/VHF612803/fcs3zb0agy_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "44043581-227b-484f-8acd-f0705f512510.png"
-        },
-        "u:fcs400qh9x": {
-          "src": "overrides/media/VHF612803/fcs400qh9x.jpg",
-          "thumb": "overrides/media/VHF612803/fcs400qh9x_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "a971d994-8d38-4fa4-8b1d-bfb59b2af31a.png"
-        },
-        "u:fcs40qsv6n": {
-          "src": "overrides/media/VHF612803/fcs40qsv6n.jpg",
-          "thumb": "overrides/media/VHF612803/fcs40qsv6n_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "cc2181fb-b953-4c76-991e-3cba3d2428b5.png"
-        },
-        "u:fcs41e2ykb": {
-          "src": "overrides/media/VHF612803/fcs41e2ykb.jpg",
-          "thumb": "overrides/media/VHF612803/fcs41e2ykb_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "f8acbad2-4b60-438c-907b-16a869b8c387.png"
-        },
-        "u:fcs422b1up": {
-          "src": "overrides/media/VHF612803/fcs422b1up.jpg",
-          "thumb": "overrides/media/VHF612803/fcs422b1up_t.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "f290b48f-36b9-45bb-aa69-229c10dc3b55.png"
-        },
-        "u:dealer-20261118-01": {
-          "src": "overrides/media/VHF612803/dealer-20261118-01.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-01.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 01.png"
-        },
-        "u:dealer-20261118-02": {
-          "src": "overrides/media/VHF612803/dealer-20261118-02.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-02.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 02.png"
-        },
-        "u:dealer-20261118-03": {
-          "src": "overrides/media/VHF612803/dealer-20261118-03.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-03.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 03.png"
-        },
-        "u:dealer-20261118-04": {
-          "src": "overrides/media/VHF612803/dealer-20261118-04.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-04.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 04.png"
-        },
-        "u:dealer-20261118-05": {
-          "src": "overrides/media/VHF612803/dealer-20261118-05.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-05.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 05.png"
-        },
-        "u:dealer-20261118-06": {
-          "src": "overrides/media/VHF612803/dealer-20261118-06.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-06.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 06.png"
-        },
-        "u:dealer-20261118-07": {
-          "src": "overrides/media/VHF612803/dealer-20261118-07.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-07.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 07.png"
-        },
-        "u:dealer-20261118-08": {
-          "src": "overrides/media/VHF612803/dealer-20261118-08.png",
-          "thumb": "overrides/media/VHF612803/dealer-20261118-08.png",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "Асфальт Грей Дарк 08.png"
-        }
-      },
+      "files": {},
       "room": null,
       "floor": null,
       "scene": ""
