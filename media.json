@@ -3131,131 +3131,34 @@
       ]
     },
     "VHJ600001": {
-      "files": {
-        "u:dealer-20261118-01": {
-          "src": "overrides/media/VHJ600001/01.jpg",
-          "thumb": "overrides/media/VHJ600001/01.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "01.jpg"
-        },
-        "u:dealer-20261118-02": {
-          "src": "overrides/media/VHJ600001/02.jpg",
-          "thumb": "overrides/media/VHJ600001/02.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "02.jpg"
-        },
-        "u:dealer-20261118-03": {
-          "src": "overrides/media/VHJ600001/03.jpg",
-          "thumb": "overrides/media/VHJ600001/03.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "03.jpg"
-        },
-        "u:dealer-20261118-04": {
-          "src": "overrides/media/VHJ600001/04.jpg",
-          "thumb": "overrides/media/VHJ600001/04.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "04.jpg"
-        },
-        "u:dealer-20261118-05": {
-          "src": "overrides/media/VHJ600001/05.jpg",
-          "thumb": "overrides/media/VHJ600001/05.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "05.jpg"
-        },
-        "u:dealer-20261118-06": {
-          "src": "overrides/media/VHJ600001/06.jpg",
-          "thumb": "overrides/media/VHJ600001/06.jpg",
-          "w": 1086,
-          "h": 1448,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "06.jpg"
-        },
-        "u:dealer-20261118-07": {
-          "src": "overrides/media/VHJ600001/07.jpg",
-          "thumb": "overrides/media/VHJ600001/07.jpg",
-          "w": 1312,
-          "h": 1199,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "07.jpg"
-        },
-        "u:dealer-20261118-08": {
-          "src": "overrides/media/VHJ600001/08.jpg",
-          "thumb": "overrides/media/VHJ600001/08.jpg",
-          "w": 1600,
-          "h": 1600,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "08.jpg"
-        },
-        "u:dealer-20261118-09": {
-          "src": "overrides/media/VHJ600001/09.jpg",
-          "thumb": "overrides/media/VHJ600001/09.jpg",
-          "w": 1600,
-          "h": 1600,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "09.jpg"
-        },
-        "u:dealer-20261118-10": {
-          "src": "overrides/media/VHJ600001/10.jpg",
-          "thumb": "overrides/media/VHJ600001/10.jpg",
-          "w": 1600,
-          "h": 1600,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "10.jpg"
-        },
-        "u:dealer-20261118-11": {
-          "src": "overrides/media/VHJ600001/11.jpg",
-          "thumb": "overrides/media/VHJ600001/11.jpg",
-          "w": 1600,
-          "h": 1600,
-          "kind": "interior",
-          "role": "gallery",
-          "name": "11.jpg"
-        }
-      },
+      "files": {},
       "hidden": [
-        "g:05.4e6b1336",
-        "g:07.65fafaf2",
-        "g:06.42d94dc4",
+        "card",
+        "tile",
         "g:01.a5be7d4a",
         "g:02.3ccdcb64",
+        "g:03.aea59e8c",
         "g:04.419e303a",
+        "g:05.4e6b1336",
+        "g:06.42d94dc4",
+        "g:07.65fafaf2",
         "g:08.159649d9",
         "g:09.89ea8f7c",
         "g:10.63ae659f",
         "g:11.0562e1c3"
       ],
       "order": [
-        "u:dealer-20261118-01",
-        "u:dealer-20261118-02",
-        "u:dealer-20261118-03",
-        "u:dealer-20261118-04",
-        "u:dealer-20261118-05",
-        "u:dealer-20261118-06",
-        "u:dealer-20261118-07",
-        "u:dealer-20261118-08",
-        "u:dealer-20261118-09",
-        "u:dealer-20261118-10",
-        "u:dealer-20261118-11"
+        "g:01.e30b1c35fd8a",
+        "g:02.739a358ba5be",
+        "g:03.f3f1d4ea2696",
+        "g:04.3a152c8a3168",
+        "g:05.b6f431091e64",
+        "g:06.f0ed97328c29",
+        "g:07.c0958ba2e74e",
+        "g:08.8179bf63da9e",
+        "g:09.39ed59940c49",
+        "g:10.adab72e58eb5",
+        "g:11.c456fddba7b6"
       ]
     },
     "VHJ600010": {
